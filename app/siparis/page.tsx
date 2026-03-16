@@ -47,11 +47,18 @@ export default function SiparisPage() {
     hizmetler: [] as string[],
     ad: "", telefon: "", ilce: "", adres: "",
     tercih: "" as "arasin" | "onayla" | "",
+    referralCode: "",
   });
   const [orderNumber, setOrderNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+
+  // Referral state
+  const [referralLoading, setReferralLoading] = useState(false);
+  const [referralValid, setReferralValid] = useState<null | boolean>(null);
+  const [referralDiscount, setReferralDiscount] = useState(0);
+  const [referralMsg, setReferralMsg] = useState("");
 
   const secilenHizmetler = HIZMETLER.filter(h => form.hizmetler.includes(h.id));
   const toplamMin = secilenHizmetler.reduce((a, h) => a + h.fiyat, 0);
@@ -60,7 +67,37 @@ export default function SiparisPage() {
   const indirimliMin = kampanya ? Math.round(toplamMin * 0.8) : toplamMin;
   const indirimliMax = kampanya ? Math.round(toplamMax * 0.8) : toplamMax;
 
+  // Referans kodu indirimi
+  const referralIndirimliMin = referralValid && referralDiscount > 0
+    ? Math.round(indirimliMin * (1 - referralDiscount / 100))
+    : indirimliMin;
+  const referralIndirimliMax = referralValid && referralDiscount > 0
+    ? Math.round(indirimliMax * (1 - referralDiscount / 100))
+    : indirimliMax;
+
   const markaModeller = form.marka ? (MARKA_MODELLER[form.marka] || []) : [];
+
+  const checkReferralCode = async (code: string) => {
+    if (!code.trim()) {
+      setReferralValid(null); setReferralDiscount(0); setReferralMsg(""); return;
+    }
+    setReferralLoading(true);
+    const { data, error } = await supabase
+      .from("referral_codes")
+      .select("*")
+      .eq("code", code.toUpperCase().trim())
+      .eq("active", true)
+      .single();
+    if (error || !data) {
+      setReferralValid(false); setReferralDiscount(0); setReferralMsg("Geçersiz referans kodu");
+    } else if (data.max_uses !== null && data.used_count >= data.max_uses) {
+      setReferralValid(false); setReferralDiscount(0); setReferralMsg("Bu kod kullanım limitine ulaşti");
+    } else {
+      setReferralValid(true); setReferralDiscount(data.discount_percent);
+      setReferralMsg("%" + data.discount_percent + " indirim uygulandı!");
+    }
+    setReferralLoading(false);
+  };
 
   const toggleHizmet = (id: string) => {
     setForm(f => ({ ...f, hizmetler: f.hizmetler.includes(id) ? f.hizmetler.filter(h => h !== id) : [...f.hizmetler, id] }));
@@ -76,10 +113,12 @@ export default function SiparisPage() {
     const { error: dbError } = await supabase.from("orders").insert({
       order_number: no, brand: form.marka, model, color: form.renk,
       shoe_type: form.tur, services: form.hizmetler,
-      price: `₺${indirimliMin} - ₺${indirimliMax}`,
+      price: referralValid && referralDiscount > 0 ? `₺${referralIndirimliMin} - ₺${referralIndirimliMax}` : `₺${indirimliMin} - ₺${indirimliMax}`,
       price_choice: form.tercih,
       customer_info: { ad: form.ad, telefon: form.telefon, ilce: form.ilce, adres: form.adres },
       status: form.tercih === "arasin" ? "Teklif Bekleniyor" : "Onaylandı",
+      referral_code: referralValid && form.referralCode ? form.referralCode.toUpperCase().trim() : null,
+      referral_discount: referralValid ? referralDiscount : 0,
     });
     if (dbError) { setError(`Hata: ${dbError.message || "Sipariş gönderilemedi, tekrar deneyin."}`); setLoading(false); return; }
     setOrderNumber(no); setStep(4); setLoading(false);
@@ -316,6 +355,46 @@ export default function SiparisPage() {
               <div>
                 <label className="text-[11px] uppercase tracking-widest text-black/40 block mb-2">Adres *</label>
                 <textarea value={form.adres} onChange={e => setForm(f=>({...f,adres:e.target.value}))} className={inputCls + " h-24 resize-none"} placeholder="Mahalle, sokak, bina no, daire..." />
+              </div>
+
+              {/* REFERANS KODU */}
+              <div>
+                <label className="text-[11px] uppercase tracking-widest text-black/40 block mb-2">
+                  Referans Kodu <span className="normal-case text-black/25">(isteğe bağlı)</span>
+                </label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      value={form.referralCode}
+                      onChange={e => {
+                        const val = e.target.value.toUpperCase();
+                        setForm(f => ({...f, referralCode: val}));
+                        setReferralValid(null); setReferralDiscount(0); setReferralMsg("");
+                      }}
+                      className={inputCls + " pr-8"}
+                      placeholder="Örn: KAPIDA15"
+                      style={{
+                        borderColor: referralValid === true ? "#22c55e" : referralValid === false ? "#ef4444" : undefined
+                      }}
+                    />
+                    {referralValid === true && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 text-sm font-bold">✓</span>}
+                    {referralValid === false && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-400 text-sm font-bold">✗</span>}
+                  </div>
+                  <button
+                    onClick={() => checkReferralCode(form.referralCode)}
+                    disabled={referralLoading || !form.referralCode.trim()}
+                    className="px-4 py-3 text-sm font-bold rounded-xl border-2 transition-all disabled:opacity-40"
+                    style={{borderColor:"#FF6B35", color:"#FF6B35", background:"rgba(255,107,53,0.06)"}}>
+                    {referralLoading ? "..." : "Uygula"}
+                  </button>
+                </div>
+                {referralMsg ? (
+                  <p className={"text-xs mt-2 font-semibold " + (referralValid ? "text-green-600" : "text-red-500")}>
+                    {referralValid ? "🎁 " : "✗ "}{referralMsg}
+                  </p>
+                ) : (
+                  <p className="text-xs mt-1.5 text-black/30">Arkadaşından aldığın referans koduyla indirim kazan</p>
+                )}
               </div>
             </div>
 
