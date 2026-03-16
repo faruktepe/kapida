@@ -251,7 +251,7 @@ function GaleriOnizleme() {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {["Beyaz Sneaker","Deri Bot","Spor Ayakkabı"].map((label)=>(
         <div key={label} className="border border-black/8 rounded-2xl overflow-hidden">
-          <div className="h-56 bg-black/[0.03] flex flex-col items-center justify-center gap-2">
+          <div className="h-56 bg-black/[0.02] flex flex-col items-center justify-center gap-2">
             <p className="text-4xl grayscale opacity-20">👟</p>
             <p className="text-[10px] uppercase tracking-widest text-black/20">Yakında</p>
           </div>
@@ -320,14 +320,14 @@ export default function Home() {
                 Ücretsiz Fiyat Al
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border border-black/10 text-black/50 hover:border-black/25 hover:text-black transition-all">
+              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 border-black/15 text-black/60 hover:border-black/35 hover:text-black transition-all">
                 <span className="text-base">💬</span> WhatsApp
               </a>
             </div>
           </Reveal>
 
           <Reveal delay={350}>
-            <div className="flex flex-wrap gap-10 md:gap-16 pt-8 border-t-2 border-black/10">
+            <div className="flex flex-wrap gap-10 md:gap-16 pt-8 border-t border-black/8">
               {[
                 { val: 150, suffix: "+", label: "Mutlu müşteri" },
                 { val: 2, suffix: " gün", label: "Ort. teslim" },
@@ -345,7 +345,7 @@ export default function Home() {
         </div>
       </section>
       {/* ── MARQUEE ── */}{/* ── MARQUEE ── */}
-      <div className="overflow-hidden py-4 bg-black">
+      <div className="overflow-hidden py-3 bg-black">
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
             ["Temizlik","Bakım","Boya","Onarım","Restorasyon","Taban Değişimi","Kadıköy","Ataşehir","Üsküdar","Maltepe","Kartal"].map((item, i) => (
@@ -375,7 +375,7 @@ export default function Home() {
             <Reveal key={h.no} delay={i * 40}>
               <Link href={`/hizmetler/${h.slug}`} className="group block">
                 <div className="border border-black/10 rounded-2xl overflow-hidden hover:border-black/25 hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="h-1 w-full" style={{background: h.renk}} />
+                  <div className="h-[3px] w-full rounded-full" style={{background: h.renk}} />
                   <div className="p-7">
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -452,7 +452,7 @@ export default function Home() {
           ))}
         </div>
         <Reveal delay={240}>
-          <div className="p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4" style={{background:"rgba(255,107,53,0.12)", border:"1px solid rgba(255,107,53,0.2)"}}>
+          <div className="p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4" style={{background:"rgba(255,107,53,0.08)", border:"1.5px solid rgba(255,107,53,0.25)"}}>
             <div>
               <p className="text-white/40 text-xs">Hızlı başlamak ister misiniz?</p>
               <p className="font-bold text-lg mt-0.5">WhatsApp&apos;tan fotoğraf gönderin, fiyat verelim.</p>
@@ -525,7 +525,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {YORUMLAR.map((y, i) => (
             <Reveal key={i} delay={i * 50}>
-              <div className="relative p-8 rounded-2xl border border-black/8 hover:border-black/15 hover:shadow-sm transition-all duration-300" style={{background: i % 2 === 0 ? "#FAFAF9" : "#fff"}}>
+              <div className="relative p-8 rounded-2xl border border-black/8 hover:border-black/15 hover:shadow-sm transition-all duration-300" style={{background: i % 2 === 0 ? "#F9F7F4" : "#fff"}}>
                 {/* Büyük tırnak */}
                 <span className="absolute top-4 right-6 text-7xl font-black leading-none select-none" style={{color:"rgba(255,107,53,0.08)"}}>&rdquo;</span>
                 {/* Yıldızlar */}
@@ -567,7 +567,7 @@ export default function Home() {
                 Hemen Sipariş Ver
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 border-2 border-black/15 px-8 py-4 text-sm font-medium rounded-full hover:border-black/40 transition-colors text-black/50 hover:text-black">
+              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 border-2 border-black/20 px-8 py-4 text-sm font-medium rounded-full hover:border-black/40 transition-colors text-black/55 hover:text-black">
                 💬 WhatsApp
               </a>
             </div>
@@ -578,7 +578,7 @@ export default function Home() {
       <footer className="border-t border-black/8 px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
           <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "40px", width: "auto" }} />
-          <span className="text-[9px] text-black/25 uppercase tracking-wider">· Lostra & Bakım · 2025</span>
+          <span className="text-[9px] text-black/20 uppercase tracking-[0.2em]">Lostra & Bakım · 2025</span>
         </div>
         <div className="flex flex-wrap gap-6 text-[11px] uppercase tracking-widest text-black/30">
           <Link href="/hizmetler" className="hover:text-black transition-colors">Hizmetler</Link>
