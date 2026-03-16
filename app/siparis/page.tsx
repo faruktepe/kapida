@@ -76,10 +76,11 @@ export default function SiparisPage() {
       order_number: no, brand: form.marka, model, color: form.renk,
       shoe_type: form.tur, services: form.hizmetler,
       price: `₺${indirimliMin} - ₺${indirimliMax}`,
+      notes: form.tercih === "arasin" ? "Müşteri fiyat onayı istiyor - aranacak" : "",
       customer_info: { ad: form.ad, telefon: form.telefon, ilce: form.ilce, adres: form.adres },
       status: form.tercih === "arasin" ? "Teklif Bekleniyor" : "Onaylandı",
     });
-    if (dbError) { setError("Hata oluştu, tekrar deneyin."); setLoading(false); return; }
+    if (dbError) { setError(`Hata: ${dbError.message || "Sipariş gönderilemedi, tekrar deneyin."}`); setLoading(false); return; }
     setOrderNumber(no); setStep(4); setLoading(false);
   };
 

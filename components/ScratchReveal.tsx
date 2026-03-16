@@ -184,7 +184,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" suppressHydrationWarning>
       {children}
       {!revealed && (
         <>
