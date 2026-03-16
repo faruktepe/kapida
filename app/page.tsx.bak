@@ -1,0 +1,384 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+
+const WHATSAPP = "905319623790";
+
+function useInView(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, inView } = useInView();
+  return (
+    <div ref={ref} style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const step = target / 50;
+    const t = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(t); }
+      else setCount(Math.floor(start));
+    }, 20);
+    return () => clearInterval(t);
+  }, [inView, target]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
+const HIZMETLER = [
+  { no: "01", ad: "Temizlik & Bakım", aciklama: "Buhar temizlik, derin cila, bağcık değişimi dahil.", fiyat: "₺800+" },
+  { no: "02", ad: "Boya & Restorasyon", aciklama: "Profesyonel boya ve renk yenileme. Yıpranmışı sıfırlar.", fiyat: "₺1.200+" },
+  { no: "03", ad: "Taban Değişimi", aciklama: "Dış taban komple değişimi. Her tür ayakkabı.", fiyat: "₺600+" },
+  { no: "04", ad: "Dikiş & Onarım", aciklama: "Yırtık dikişler, çoraplık ve fort tamiri.", fiyat: "₺250+" },
+];
+
+const YORUMLAR = [
+  { ad: "A. Koç", ilce: "Kadıköy", yorum: "Nike'larımı mahvetmiştim sandım. Tertemiz geldi. İnanılmaz iş." },
+  { ad: "S. Tekin", ilce: "Ataşehir", yorum: "Kurye kapıya geldi, 2 gün sonra teslim. Fiyat-performans mükemmel." },
+  { ad: "M. Doğan", ilce: "Üsküdar", yorum: "Beyaz sneaker'lar sararmıştı. Bembeyaz döndüler." },
+  { ad: "E. Yılmaz", ilce: "Maltepe", yorum: "3 hizmet seçtim, %20 indirim geldi. Mantıklı sistem." },
+];
+
+const MARQUEE_ITEMS = ["Temizlik", "Bakım", "Boya", "Onarım", "Restorasyon", "Taban Değişimi", "Kadıköy", "Ataşehir", "Üsküdar"];
+
+export default function Home() {
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => setHeroVisible(true), 80);
+    const t = setInterval(() => setTick(i => i + 1), 2500);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-white text-black overflow-x-hidden">
+
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-white/95 backdrop-blur-md border-b border-black/8">
+        {/* LOGO */}
+        <div className="flex items-center gap-2">
+          <div style={{
+            background: "linear-gradient(135deg, #111 60%, #FF6B35 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontSize: "22px",
+            fontWeight: 800,
+            letterSpacing: "-0.04em",
+          }}>
+            Kapıda
+          </div>
+          <span style={{
+            fontSize: "9px",
+            fontWeight: 600,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#FF6B35",
+            borderLeft: "1.5px solid #FF6B35",
+            paddingLeft: "8px",
+            lineHeight: "1.2",
+          }}>
+            Lostra &<br />Bakım
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <Link href="/siparis-takip" className="hidden md:block px-3 py-1.5 text-xs text-black/40 hover:text-black transition-colors rounded-md">Takip</Link>
+          <Link href="/sss" className="hidden md:block px-3 py-1.5 text-xs text-black/40 hover:text-black transition-colors rounded-md">SSS</Link>
+          <Link href="/siparis" className="ml-2 px-5 py-2 text-xs font-semibold bg-black text-white rounded-full hover:bg-black/80 transition-all tracking-wide">
+            Sipariş Ver
+          </Link>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section className="min-h-screen flex flex-col justify-end px-6 md:px-12 pt-24 pb-16 relative border-b border-black/8">
+        <div className="max-w-5xl pb-8">
+
+          {/* Üst etiket */}
+          <div className={`transition-all duration-500 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+            <div className="inline-flex items-center gap-2 mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="text-[11px] uppercase tracking-[0.3em] text-black/35">
+                Kapıdan Kapıya Ayakkabı Bakımı · Anadolu Yakası
+              </span>
+            </div>
+          </div>
+
+          {/* Ana slogan */}
+          <div className="overflow-hidden mb-1">
+            <h1 className={`text-[clamp(3rem,10vw,8.5rem)] font-black leading-[0.88] tracking-tight transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"}`}
+              style={{ transitionDelay: "100ms" }}>
+              <span style={{ color: "#FF6B35" }}>Kapıda</span> bırak,
+            </h1>
+          </div>
+          <div className="overflow-hidden mb-6">
+            <h1 className={`text-[clamp(3rem,10vw,8.5rem)] font-black leading-[0.88] tracking-tight text-black/18 transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"}`}
+              style={{ transitionDelay: "180ms" }}>
+              biz halledelim.
+            </h1>
+          </div>
+
+          {/* Alt slogan */}
+          <div className={`transition-all duration-500 mb-10 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
+            style={{ transitionDelay: "280ms" }}>
+            <p className="text-base text-black/40 max-w-md leading-relaxed">
+              Ayakkabılarınızı kapınızdan alıyoruz. Profesyonel lostra, temizlik, boya ve onarım — tertemiz teslim.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-16 transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ transitionDelay: "350ms" }}>
+            <Link href="/siparis"
+              className="group inline-flex items-center gap-3 bg-black text-white px-8 py-4 text-sm font-semibold rounded-full hover:bg-black/80 transition-all">
+              Hemen Sipariş Ver
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-black/40 hover:text-black transition-colors">
+              <span className="w-5 h-px bg-black/20" />
+              WhatsApp&apos;tan sor
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className={`flex gap-12 md:gap-20 pt-8 border-t border-black/8 transition-all duration-700 ${heroVisible ? "opacity-100" : "opacity-0"}`}
+            style={{ transitionDelay: "500ms" }}>
+            {[
+              { val: 500, suffix: "+", label: "Mutlu müşteri" },
+              { val: 2, suffix: " gün", label: "Ort. teslim" },
+              { val: 100, suffix: "%", label: "Memnuniyet" },
+            ].map(s => (
+              <div key={s.label}>
+                <p className="text-3xl md:text-5xl font-bold tabular-nums tracking-tight">
+                  <Counter target={s.val} suffix={s.suffix} />
+                </p>
+                <p className="text-[10px] text-black/30 mt-1.5 uppercase tracking-widest">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3">
+          <div className="w-px h-20 bg-black/10" />
+          <p className="text-[9px] uppercase tracking-[0.4em] text-black/20 rotate-90 whitespace-nowrap">Anadolu Yakası</p>
+          <div className="w-px h-20 bg-black/10" />
+        </div>
+      </section>
+
+      {/* MARQUEE */}
+      <div className="border-b border-black/8 overflow-hidden py-4 bg-black">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+            <span key={i} className="text-[11px] uppercase tracking-[0.3em] text-white/40 mx-8">
+              {item} <span className="text-white/15 mx-4">·</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* HİZMETLER */}
+      <section className="px-6 md:px-12 py-24">
+        <Reveal>
+          <div className="flex items-end justify-between mb-16 border-b border-black/8 pb-8">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-3">Hizmetler</p>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-none">Ne yapıyoruz?</h2>
+            </div>
+            <Link href="/siparis" className="hidden md:flex items-center gap-2 text-xs uppercase tracking-widest text-black/30 hover:text-black transition-colors">
+              Seç & sipariş ver →
+            </Link>
+          </div>
+        </Reveal>
+
+        <div>
+          {HIZMETLER.map((h, i) => (
+            <Reveal key={h.no} delay={i * 50}>
+              <div
+                onMouseEnter={() => setHoverIdx(i)}
+                onMouseLeave={() => setHoverIdx(null)}
+                className="border-b border-black/8 last:border-0">
+                <div className={`flex items-center justify-between py-7 px-6 transition-all duration-300 rounded-xl ${hoverIdx === i ? "bg-black text-white" : ""}`}>
+                  <div className="flex items-center gap-8">
+                    <span className={`text-[10px] font-mono tracking-widest ${hoverIdx === i ? "text-white/30" : "text-black/20"}`}>{h.no}</span>
+                    <div>
+                      <p className="font-bold text-xl md:text-2xl">{h.ad}</p>
+                      <p className={`text-sm mt-0.5 ${hoverIdx === i ? "text-white/50" : "text-black/35"}`}>{h.aciklama}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-6 shrink-0 ml-4">
+                    <span className="font-bold text-lg md:text-xl">{h.fiyat}</span>
+                    <span className={`text-sm transition-all duration-300 ${hoverIdx === i ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"}`}>→</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={250}>
+          <div className="mt-10 flex items-center gap-4 p-5 border border-black/8 bg-black/[0.02] rounded-xl">
+            <div className="w-1 h-8 rounded-full shrink-0" style={{ background: "#FF6B35" }} />
+            <p className="text-sm text-black/60">
+              <span className="font-semibold text-black">3+ hizmet</span> seçin — otomatik{" "}
+              <span className="font-semibold" style={{ color: "#FF6B35" }}>%20 indirim.</span>
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* NASIL ÇALIŞIR */}
+      <section className="border-t border-black/8 bg-black text-white px-6 md:px-12 py-24">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-3">Süreç</p>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-none mb-20">3 adım, o kadar.</h2>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-0 md:divide-x divide-white/8">
+          {[
+            { n: "1", t: "Sipariş ver", a: "Formu doldur. 2 dakika. Marka, renk ve hizmet seç." },
+            { n: "2", t: "Biz alalım", a: "24 saat içinde kurye kapına gelir." },
+            { n: "3", t: "Teslim edelim", a: "Tertemiz, paketli. Kapına kadar." },
+          ].map((s, i) => (
+            <Reveal key={s.n} delay={i * 100}>
+              <div className="md:px-12 first:pl-0 last:pr-0">
+                <p className="text-[6rem] font-bold leading-none mb-6 select-none" style={{ color: "#FF6B35", opacity: 0.2 }}>{s.n}</p>
+                <p className="font-bold text-2xl mb-3">{s.t}</p>
+                <p className="text-white/40 text-sm leading-relaxed">{s.a}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* BEFORE / AFTER */}
+      <section className="border-t border-black/8 px-6 md:px-12 py-24">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-3">Sonuçlar</p>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-none mb-4">Fark görünür.</h2>
+          <p className="text-sm text-black/30 mb-16">Gerçek fotoğraflar yakında — şimdilik temsili.</p>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/8">
+          {["Beyaz Sneaker", "Deri Bot", "Spor Ayakkabı"].map((label, i) => (
+            <Reveal key={label} delay={i * 60}>
+              <div className="bg-white overflow-hidden">
+                <div className="relative h-52 bg-black/[0.02] overflow-hidden">
+                  <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-500 ${!tick % 2 ? "opacity-100" : "opacity-0"}`}>
+                    <p className="text-[3rem] mb-2 grayscale opacity-30">👟</p>
+                    <p className="text-[9px] uppercase tracking-widest text-black/25">Önce</p>
+                  </div>
+                  <div className={`absolute inset-0 flex flex-col items-center justify-center bg-white transition-all duration-500 ${tick % 2 === 1 ? "opacity-100" : "opacity-0"}`}>
+                    <p className="text-[3rem] mb-2">✨</p>
+                    <p className="text-[9px] uppercase tracking-widest text-black/25">Sonra</p>
+                  </div>
+                </div>
+                <div className="p-5 border-t border-black/8">
+                  <p className="text-sm font-semibold">{label}</p>
+                  <p className="text-[11px] text-black/35 mt-1 uppercase tracking-wider">Lostra & Bakım</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* YORUMLAR */}
+      <section className="border-t border-black/8 px-6 md:px-12 py-24 bg-black/[0.015]">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-3">Yorumlar</p>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-none mb-16">Onlar anlatsın.</h2>
+        </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
+          {YORUMLAR.map((y, i) => (
+            <Reveal key={i} delay={i * 60}>
+              <div className={`p-10 ${i % 2 === 0 ? "bg-black text-white" : "bg-white"}`}>
+                <div className="flex gap-0.5 mb-6">
+                  {[...Array(5)].map((_, j) => (
+                    <span key={j} className="text-xs" style={{ color: "#FF6B35" }}>★</span>
+                  ))}
+                </div>
+                <p className="text-xl md:text-2xl font-medium leading-snug mb-8 tracking-tight">
+                  &ldquo;{y.yorum}&rdquo;
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-px" style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)" }} />
+                  <p className={`text-[10px] uppercase tracking-[0.3em] ${i % 2 === 0 ? "text-white/30" : "text-black/35"}`}>
+                    {y.ad} · {y.ilce}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="border-t border-black/8 px-6 md:px-12 py-32">
+        <Reveal>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-8">Hazır mısın?</p>
+          <h2 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.88] mb-12">
+            <span style={{ color: "#FF6B35" }}>Kapıda</span> bırak,<br />
+            <span className="text-black/15">biz halledelim.</span>
+          </h2>
+          <div className="flex gap-4 flex-wrap">
+            <Link href="/siparis"
+              className="group inline-flex items-center gap-4 bg-black text-white px-10 py-5 text-sm font-semibold rounded-full hover:bg-black/80 transition-all">
+              Sipariş Ver
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-4 border border-black/15 px-10 py-5 text-sm font-medium rounded-full hover:border-black transition-colors text-black/40 hover:text-black">
+              WhatsApp
+            </a>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-black/8 px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="flex items-center gap-2">
+          <div style={{
+            background: "linear-gradient(135deg, #111 60%, #FF6B35 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontSize: "18px",
+            fontWeight: 800,
+            letterSpacing: "-0.04em",
+          }}>Kapıda</div>
+          <span className="text-[9px] text-black/25 uppercase tracking-wider">· Lostra & Bakım · 2025</span>
+        </div>
+        <div className="flex gap-8 text-[10px] uppercase tracking-widest text-black/30">
+          <Link href="/siparis-takip" className="hover:text-black transition-colors">Takip</Link>
+          <Link href="/sss" className="hover:text-black transition-colors">SSS</Link>
+          <a href={`https://wa.me/${WHATSAPP}`} target="_blank" className="hover:text-black transition-colors">WhatsApp</a>
+        </div>
+      </footer>
+
+      {/* FLOATING WA */}
+      <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-transform shadow-xl text-white text-base font-bold"
+        style={{ background: "#FF6B35" }}>
+        💬
+      </a>
+    </div>
+  );
+}
