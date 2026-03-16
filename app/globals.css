@@ -57,3 +57,35 @@ button {
     color: inherit !important;
   }
 }
+
+/* iOS dark mode ve renk sorunlarını önle */
+:root {
+  color-scheme: light only;
+}
+
+html, body {
+  color-scheme: light only;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+button, input, textarea, select, a {
+  color-scheme: light only;
+}
+
+button {
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+}
+
+input, textarea {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-color: #ffffff !important;
+  color-scheme: light only;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(0,0,0,0.35) !important;
+  -webkit-text-fill-color: rgba(0,0,0,0.35) !important;
+}
