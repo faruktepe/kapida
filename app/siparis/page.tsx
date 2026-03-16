@@ -76,7 +76,6 @@ export default function SiparisPage() {
       order_number: no, brand: form.marka, model, color: form.renk,
       shoe_type: form.tur, services: form.hizmetler,
       price: `₺${indirimliMin} - ₺${indirimliMax}`,
-      notes: form.tercih === "arasin" ? "Müşteri fiyat onayı istiyor - aranacak" : "",
       customer_info: { ad: form.ad, telefon: form.telefon, ilce: form.ilce, adres: form.adres },
       status: form.tercih === "arasin" ? "Teklif Bekleniyor" : "Onaylandı",
     });
