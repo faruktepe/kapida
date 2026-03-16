@@ -50,6 +50,7 @@ export default function SiparisPage() {
   });
   const [orderNumber, setOrderNumber] = useState("");
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
 
   const secilenHizmetler = HIZMETLER.filter(h => form.hizmetler.includes(h.id));
@@ -93,7 +94,20 @@ export default function SiparisPage() {
         <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-8" style={{background:"#FF6B35"}}>✓</div>
         <h1 className="text-4xl font-black mb-3 tracking-tight">Sipariş Alındı!</h1>
         <p className="text-black/40 mb-2 text-sm">Sipariş numaranız</p>
-        <p className="font-mono font-bold text-xl mb-3 px-6 py-3 bg-white rounded-2xl border border-black/8 inline-block">{orderNumber}</p>
+        <div className="flex items-center gap-2 mb-3">
+          <p className="font-mono font-bold text-xl px-6 py-3 bg-white rounded-2xl border border-black/8">{orderNumber}</p>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(orderNumber);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }}
+            className="px-4 py-3 rounded-2xl border-2 transition-all text-sm font-semibold"
+            style={copied ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.08)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.1)", color:"rgba(0,0,0,0.5)"}}
+          >
+            {copied ? "✓ Kopyalandı" : "Kopyala"}
+          </button>
+        </div>
         <p className="text-sm text-black/50 mb-10 mt-4">
           {form.tercih === "arasin" ? "En kısa sürede arayarak net teklif vereceğiz." : "Kuryemiz yakında kapınıza gelecek."}
         </p>
