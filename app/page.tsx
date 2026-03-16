@@ -287,7 +287,7 @@ export default function Home() {
       <Nav active="/" />
 
       {/* ── HERO ── */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20 pb-8 relative overflow-hidden" style={{background:"linear-gradient(135deg, #fff 60%, #fff5f0 100%)"}}>
+      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 pb-8 relative overflow-hidden" style={{background:"linear-gradient(135deg, #fff 60%, #fff5f0 100%)"}}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.07] rounded-full" style={{background:"radial-gradient(circle, #FF6B35 0%, transparent 70%)", transform:"translate(30%, -30%)"}} />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full" style={{background:"radial-gradient(circle, #FF6B35 0%, transparent 70%)", transform:"translate(-30%, 30%)"}} />

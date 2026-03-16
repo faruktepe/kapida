@@ -15,10 +15,10 @@ export default function Nav({ active }: { active?: string }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-5 bg-white border-b border-black/8">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-white border-b border-black/8">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
+          <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "48px", width: "auto", objectFit: "contain" }} />
         </Link>
 
         {/* Desktop linkler */}
@@ -27,9 +27,9 @@ export default function Nav({ active }: { active?: string }) {
             <Link
               key={link.href}
               href={link.href}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg transition-all"
+              className="px-3 py-1.5 text-sm transition-all " + (active === link.href ? "font-semibold" : "font-medium")
               style={active === link.href
-                ? { color: "#FF6B35", background: "rgba(255,107,53,0.08)" }
+                ? { color: "#FF6B35" }
                 : { color: "rgba(0,0,0,0.5)" }
               }
             >
