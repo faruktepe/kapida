@@ -34,3 +34,26 @@ input::placeholder, textarea::placeholder {
   color: rgba(0,0,0,0.3) !important;
   -webkit-text-fill-color: rgba(0,0,0,0.3) !important;
 }
+
+button {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Siparis formu buton stilleri */
+.siparis-btn-unselected {
+  color: rgba(0,0,0,0.75) !important;
+  -webkit-text-fill-color: rgba(0,0,0,0.75) !important;
+  background-color: #ffffff !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  input, textarea, select {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background-color: #fff !important;
+  }
+  button {
+    color: inherit !important;
+  }
+}
