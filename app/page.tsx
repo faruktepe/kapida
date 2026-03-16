@@ -470,7 +470,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-10 pb-6 border-b border-black/8">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-2">Hizmet bölgesi</p>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Bölgenize <span style={{color:"#FF6B35"}}>geliyoruz.</span></h2>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Bölgenize <span style={{color:"#FF6B35"}}>geliyoruz.</span></h2>
               <p className="text-sm text-black/40 mt-2">Anadolu Yakası'nın tüm ilçelerine kapıdan kapıya hizmet.</p>
             </div>
           </div>
