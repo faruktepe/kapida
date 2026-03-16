@@ -18,7 +18,7 @@ export default function Nav({ active }: { active?: string }) {
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-5 bg-white border-b border-black/8">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
-          <img src="/logo-clean.png" alt="Kapıda" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
+          <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "64px", width: "auto", objectFit: "contain" }} />
         </Link>
 
         {/* Desktop linkler */}

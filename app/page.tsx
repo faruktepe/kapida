@@ -577,7 +577,7 @@ export default function Home() {
       {/* ── FOOTER ── */}{/* ── FOOTER ── */}
       <footer className="border-t border-black/8 px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
-          <img src="/logo-clean.png" alt="Kapıda" style={{ height: "40px", width: "auto" }} />
+          <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "40px", width: "auto" }} />
           <span className="text-[9px] text-black/25 uppercase tracking-wider">· Lostra & Bakım · 2025</span>
         </div>
         <div className="flex flex-wrap gap-6 text-[11px] uppercase tracking-widest text-black/30">

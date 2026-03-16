@@ -113,7 +113,7 @@ export default function SiparisPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 h-16 border-b border-black/8 bg-white/95 backdrop-blur-md">
         <Link href="/" className="flex items-center">
-          <img src="/logo-clean.png" alt="Kapıda" style={{ height: "44px", width: "auto" }} />
+          <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "44px", width: "auto" }} />
         </Link>
         <div className="flex items-center gap-2">
           {["Ayakkabı", "Hizmet", "İletişim"].map((l, i) => (
