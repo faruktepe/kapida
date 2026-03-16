@@ -145,7 +145,7 @@ export default function SiparisPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {MARKALAR.filter(m => m !== "Diğer").map(m => (
                     <button key={m} onClick={() => setForm(f => ({...f, marka:m, model:""}))}
-                      className="px-3 py-2.5 text-xs font-medium rounded-xl border-2 transition-all text-left"
+                      className="px-4 py-3 text-sm font-semibold rounded-2xl border-2 transition-all text-left hover:border-black/20"
                       style={form.marka === m ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.06)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {m}
                     </button>
@@ -165,7 +165,7 @@ export default function SiparisPage() {
                   <div className="grid grid-cols-2 gap-2">
                     {markaModeller.map(m => (
                       <button key={m} onClick={() => setForm(f => ({...f, model:m}))}
-                        className="px-3 py-2.5 text-xs font-medium rounded-xl border-2 transition-all text-left"
+                        className="px-4 py-3 text-sm font-semibold rounded-2xl border-2 transition-all text-left hover:border-black/20"
                         style={form.model === m ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.06)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
                         {m}
                       </button>
@@ -184,7 +184,7 @@ export default function SiparisPage() {
                 <div className="flex flex-wrap gap-2">
                   {RENKLER.map(r => (
                     <button key={r} onClick={() => setForm(f=>({...f,renk:r}))}
-                      className="px-3 py-2 text-xs font-medium rounded-full border-2 transition-all"
+                      className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
                       style={form.renk === r ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.06)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {r}
                     </button>
@@ -198,7 +198,7 @@ export default function SiparisPage() {
                 <div className="flex flex-wrap gap-2">
                   {TURLER.map(t => (
                     <button key={t} onClick={() => setForm(f=>({...f,tur:t}))}
-                      className="px-3 py-2 text-xs font-medium rounded-full border-2 transition-all"
+                      className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
                       style={form.tur === t ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.06)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {t}
                     </button>
@@ -211,7 +211,7 @@ export default function SiparisPage() {
             <button onClick={() => {
               if (!form.marka || !form.renk || !form.tur) { setError("Lütfen marka, renk ve tür seçin."); return; }
               setError(""); setStep(2);
-            }} className="mt-8 w-full py-4 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{background:"#FF6B35"}}>
+            }} className="mt-8 w-full py-5 text-base font-bold text-white rounded-full hover:opacity-90 transition-all shadow-lg" style={{background:"#FF6B35", boxShadow:"0 8px 24px rgba(255,107,53,0.3)"}}>
               Devam →
             </button>
           </div>
@@ -233,7 +233,7 @@ export default function SiparisPage() {
             <div className="space-y-2 mb-8">
               {HIZMETLER.map(h => (
                 <button key={h.id} onClick={() => toggleHizmet(h.id)}
-                  className="w-full flex items-center gap-4 p-4 border-2 rounded-2xl transition-all text-left"
+                  className="w-full flex items-center gap-4 p-5 border-2 rounded-2xl transition-all text-left"
                   style={form.hizmetler.includes(h.id) ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.04)"} : {borderColor:"rgba(0,0,0,0.08)"}}>
                   <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all text-[11px] font-bold"
                     style={form.hizmetler.includes(h.id) ? {borderColor:"#FF6B35", background:"#FF6B35", color:"#fff"} : {borderColor:"rgba(0,0,0,0.2)"}}>
@@ -262,7 +262,7 @@ export default function SiparisPage() {
 
             {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
             <div className="flex gap-3">
-              <button onClick={() => setStep(1)} className="flex-1 border-2 border-black/10 py-4 text-sm font-medium rounded-full hover:border-black/30 transition-all text-black/50">← Geri</button>
+              <button onClick={() => setStep(1)} className="flex-1 border-2 border-black/15 py-4 text-sm font-semibold rounded-full hover:border-black/40 transition-all text-black/60">← Geri</button>
               <button onClick={() => {
                 if (!form.hizmetler.length) { setError("En az bir hizmet seçin."); return; }
                 setError(""); setStep(3);
@@ -292,7 +292,7 @@ export default function SiparisPage() {
                 <div className="flex flex-wrap gap-2">
                   {ILCELER.map(i => (
                     <button key={i} onClick={() => setForm(f=>({...f,ilce:i}))}
-                      className="px-3 py-2 text-xs font-medium rounded-full border-2 transition-all"
+                      className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
                       style={form.ilce === i ? {borderColor:"#FF6B35", background:"rgba(255,107,53,0.06)", color:"#FF6B35"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {i}
                     </button>
@@ -343,8 +343,8 @@ export default function SiparisPage() {
 
             {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
             <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="flex-1 border-2 border-black/10 py-4 text-sm font-medium rounded-full hover:border-black/30 transition-all text-black/50">← Geri</button>
-              <button onClick={handleSubmit} disabled={loading} className="flex-1 py-4 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all disabled:opacity-50" style={{background:"#FF6B35"}}>
+              <button onClick={() => setStep(2)} className="flex-1 border-2 border-black/15 py-4 text-sm font-semibold rounded-full hover:border-black/40 transition-all text-black/60">← Geri</button>
+              <button onClick={handleSubmit} disabled={loading} className="flex-1 py-5 text-base font-bold text-white rounded-full hover:opacity-90 transition-all disabled:opacity-50" style={{background:"#FF6B35", boxShadow:"0 8px 24px rgba(255,107,53,0.3)"}}>
                 {loading ? "Gönderiliyor..." : "Siparişi Tamamla ✓"}
               </button>
             </div>
