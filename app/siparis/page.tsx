@@ -84,7 +84,7 @@ export default function SiparisPage() {
     setOrderNumber(no); setStep(4); setLoading(false);
   };
 
-  const inputCls = "w-full border-2 border-black/8 bg-white px-4 py-3.5 text-sm focus:outline-none focus:border-black/30 transition-all rounded-xl";
+  const inputCls = "w-full border-2 border-black/8 bg-white px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/30 transition-all rounded-xl appearance-none";
 
   // Başarı sayfası
   if (step === 4) return (
