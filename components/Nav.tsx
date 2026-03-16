@@ -27,7 +27,7 @@ export default function Nav({ active }: { active?: string }) {
             <Link
               key={link.href}
               href={link.href}
-              className="px-3 py-1.5 text-sm transition-all " + (active === link.href ? "font-semibold" : "font-medium")
+              className="px-3 py-1.5 text-sm font-medium transition-all"
               style={active === link.href
                 ? { color: "#FF6B35" }
                 : { color: "rgba(0,0,0,0.5)" }
