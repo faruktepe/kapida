@@ -64,7 +64,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       ctx.fillRect(0, 0, W, H);
       // Turuncu glow
       const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.5);
-      g.addColorStop(0, "rgba(255,107,53,0.18)");
+      g.addColorStop(0, "rgba(91,45,110,0.15)");
       g.addColorStop(1, "transparent");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
@@ -87,7 +87,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       cctx.stroke();
       cctx.beginPath();
       cctx.arc(x, y, R - 2, 0, Math.PI * 2);
-      cctx.fillStyle = press ? "rgba(255,107,53,0.18)" : "rgba(255,255,255,0.05)";
+      cctx.fillStyle = press ? "rgba(107,39,55,0.2)" : "rgba(255,255,255,0.05)";
       cctx.fill();
       cctx.textAlign = "center";
       cctx.textBaseline = "middle";
@@ -121,11 +121,13 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       const pct = t / total;
       if (pct > (isMobile ? 0.45 : 0.52)) {
         revealedRef.current = true;
-        // Küçük gecikme ile reveal - tıklama tetiklenmemesi için
         setTimeout(() => {
-          setRevealed(true);
-          document.getElementById("sbg")?.remove();
-        }, 300);
+          const sbg = document.getElementById("sbg");
+          if (sbg) sbg.remove();
+          if (canvas) { canvas.style.opacity = "0"; canvas.style.pointerEvents = "none"; }
+          if (cursorCanvas) cursorCanvas.style.opacity = "0";
+          setTimeout(() => setRevealed(true), 150);
+        }, 200);
       }
     };
 
