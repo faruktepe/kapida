@@ -29,7 +29,7 @@ export default function Nav({ active }: { active?: string }) {
               href={link.href}
               className="px-3 py-1.5 text-sm font-medium transition-all"
               style={active === link.href
-                ? { color: "#FF6B35" }
+                ? { color: "#5B2D6E" }
                 : { color: "rgba(0,0,0,0.5)" }
               }
             >
@@ -37,14 +37,14 @@ export default function Nav({ active }: { active?: string }) {
             </Link>
           ))}
           <div className="w-px h-5 bg-black/10 mx-2" />
-          <Link href="/siparis" className="px-5 py-2 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{ background: "#FF6B35" }}>
+          <Link href="/siparis" className="px-5 py-2 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{ background: "#5B2D6E" }}>
             Sipariş Ver →
           </Link>
         </div>
 
         {/* Mobil sağ taraf */}
         <div className="flex md:hidden items-center gap-3">
-          <Link href="/siparis" className="px-4 py-2 text-xs font-bold text-white rounded-full" style={{ background: "#FF6B35" }}>
+          <Link href="/siparis" className="px-4 py-2 text-xs font-bold text-white rounded-full" style={{ background: "#5B2D6E" }}>
             Sipariş Ver
           </Link>
           {/* Hamburger */}
@@ -68,7 +68,7 @@ export default function Nav({ active }: { active?: string }) {
                   onClick={() => setOpen(false)}
                   className="flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all"
                   style={active === link.href
-                    ? { color: "#FF6B35", background: "rgba(255,107,53,0.08)" }
+                    ? { color: "#5B2D6E", background: "rgba(91,45,110,0.08)" }
                     : { color: "rgba(0,0,0,0.6)" }
                   }
                 >
@@ -80,7 +80,7 @@ export default function Nav({ active }: { active?: string }) {
                   href="/siparis"
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-center w-full py-3.5 text-sm font-bold text-white rounded-2xl hover:opacity-90 transition-all"
-                  style={{ background: "#FF6B35" }}
+                  style={{ background: "#5B2D6E" }}
                 >
                   Sipariş Ver →
                 </Link>

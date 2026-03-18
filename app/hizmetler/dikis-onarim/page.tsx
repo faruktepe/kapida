@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-white text-black">
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-white/95 backdrop-blur-md border-b border-black/8">
-        <Link href="/" style={{ background: "linear-gradient(135deg, #111 60%, #FF6B35 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "20px", fontWeight: 800, letterSpacing: "-0.04em" }}>Kapıda</Link>
+        <Link href="/" style={{ background: "linear-gradient(135deg, #111 60%, #5B2D6E 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "20px", fontWeight: 800, letterSpacing: "-0.04em" }}>Kapıda</Link>
         <div className="flex items-center gap-2">
           <Link href="/hizmetler" className="hidden md:block px-3 py-1.5 text-xs text-black/40 hover:text-black transition-colors">← Hizmetler</Link>
           <Link href="/siparis" className="px-5 py-2 text-xs font-semibold bg-black text-white rounded-full hover:bg-black/80 transition-all">Sipariş Ver</Link>
@@ -41,7 +41,7 @@ export default function Page() {
             <div className="space-y-3">
               {DETAYLAR.map(d => (
                 <div key={d} className="flex items-center gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6B35" }} />
+                  <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#5B2D6E" }} />
                   <p className="text-sm">{d}</p>
                 </div>
               ))}
@@ -68,7 +68,7 @@ export default function Page() {
                   <div className="relative h-48 overflow-hidden">
                     {item.before_url && <img src={item.before_url} alt="önce" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hover === item.id ? "opacity-0" : "opacity-100"}`} />}
                     {item.after_url && <img src={item.after_url} alt="sonra" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hover === item.id ? "opacity-100" : "opacity-0"}`} />}
-                    <span className={`absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full font-medium ${hover === item.id ? "text-white" : "bg-black/50 text-white/70"}`} style={hover === item.id ? { background: "#FF6B35" } : {}}>{hover === item.id ? "Sonra" : "Önce"}</span>
+                    <span className={`absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full font-medium ${hover === item.id ? "text-white" : "bg-black/50 text-white/70"}`} style={hover === item.id ? { background: "#5B2D6E" } : {}}>{hover === item.id ? "Sonra" : "Önce"}</span>
                   </div>
                   <div className="p-4 border-t border-black/8"><p className="text-sm font-medium">{item.title}</p></div>
                 </div>

@@ -26,7 +26,7 @@ export default function SSSPage() {
       <div className="bg-black text-white px-6 md:px-12 pt-32 pb-16">
         <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-4">Yardım</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4">
-          Sık sorulan <span style={{ color: "#FF6B35" }}>sorular.</span>
+          Sık sorulan <span style={{ color: "#5B2D6E" }}>sorular.</span>
         </h1>
         <p className="text-white/40 text-base max-w-lg">Aklınızdaki soruların cevabını bulamadıysanız WhatsApp'tan yazın.</p>
       </div>
@@ -40,7 +40,7 @@ export default function SSSPage() {
                 className="w-full flex justify-between items-center p-6 text-left hover:bg-black/[0.02] transition-colors"
               >
                 <span className="font-semibold pr-4 text-base">{item.s}</span>
-                <span className={`text-2xl font-light shrink-0 transition-transform duration-300 ${open === i ? "rotate-45" : ""}`} style={{ color: "#FF6B35" }}>+</span>
+                <span className={`text-2xl font-light shrink-0 transition-transform duration-300 ${open === i ? "rotate-45" : ""}`} style={{ color: "#5B2D6E" }}>+</span>
               </button>
               {open === i && (
                 <div className="px-6 pb-6">
@@ -56,7 +56,7 @@ export default function SSSPage() {
           <h2 className="font-black text-2xl mb-2">Başka sorunuz var mı?</h2>
           <p className="text-white/50 text-sm mb-6">WhatsApp üzerinden 7/24 ulaşabilirsiniz.</p>
           <div className="flex gap-3 flex-wrap">
-            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" className="px-6 py-3 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{ background: "#FF6B35" }}>
+            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" className="px-6 py-3 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{ background: "#5B2D6E" }}>
               WhatsApp ile Yaz →
             </a>
             <Link href="/siparis" className="px-6 py-3 text-sm font-medium border border-white/20 text-white/70 rounded-full hover:border-white hover:text-white transition-all">
@@ -66,7 +66,7 @@ export default function SSSPage() {
         </div>
       </div>
 
-      <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full text-white font-bold hover:scale-110 transition-transform" style={{ background: "#FF6B35" }}>💬</a>
+      <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full text-white font-bold hover:scale-110 transition-transform" style={{ background: "#5B2D6E" }}>💬</a>
     </main>
   );
 }

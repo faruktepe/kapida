@@ -82,7 +82,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       cctx.clearRect(0, 0, W, H);
       cctx.beginPath();
       cctx.arc(x, y, R, 0, Math.PI * 2);
-      cctx.strokeStyle = press ? "#FF6B35" : "rgba(255,255,255,0.9)";
+      cctx.strokeStyle = press ? "#5B2D6E" : "rgba(255,255,255,0.9)";
       cctx.lineWidth = press ? 3 : 2;
       cctx.stroke();
       cctx.beginPath();
@@ -91,7 +91,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       cctx.fill();
       cctx.textAlign = "center";
       cctx.textBaseline = "middle";
-      cctx.fillStyle = press ? "#FF6B35" : "rgba(255,255,255,0.9)";
+      cctx.fillStyle = press ? "#5B2D6E" : "rgba(255,255,255,0.9)";
       cctx.font = `bold ${isMobile ? 11 : 13}px system-ui`;
       cctx.fillText("FIRÇA", x, y);
     };

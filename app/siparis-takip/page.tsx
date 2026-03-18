@@ -11,7 +11,7 @@ const DURUMLAR: Record<string, { label: string; bg: string; color: string; desc:
   "Teklif Bekleniyor": { label: "Teklif Bekleniyor", bg: "#FFF7ED", color: "#C2410C", desc: "Fiyat teklifinizi hazırlıyoruz." },
   "Onaylandı": { label: "Onaylandı", bg: "#EFF6FF", color: "#1D4ED8", desc: "Siparişiniz onaylandı, kurye yolda." },
   "Kuryede": { label: "Kuryede", bg: "#F5F3FF", color: "#6D28D9", desc: "Kurye ayakkabınızı teslim almaya geliyor." },
-  "İşlemde": { label: "İşlemde", bg: "#FFF7ED", color: "#FF6B35", desc: "Ayakkabınız bakımda, özenle çalışıyoruz." },
+  "İşlemde": { label: "İşlemde", bg: "#FFF7ED", color: "#5B2D6E", desc: "Ayakkabınız bakımda, özenle çalışıyoruz." },
   "Tamamlandı": { label: "Tamamlandı", bg: "#F0FDF4", color: "#15803D", desc: "Bakım tamamlandı, kurye yola çıkıyor." },
   "Teslim Edildi": { label: "Teslim Edildi", bg: "#111", color: "#fff", desc: "Ayakkabınız kapınıza teslim edildi." },
 };
@@ -44,7 +44,7 @@ export default function SiparisTakipPage() {
       <div className="bg-black text-white px-6 md:px-12 pt-32 pb-16">
         <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-4">Takip</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4">
-          Siparişin <span style={{ color: "#FF6B35" }}>nerede?</span>
+          Siparişin <span style={{ color: "#5B2D6E" }}>nerede?</span>
         </h1>
         <p className="text-white/40 text-base">Sipariş numaranı girerek durumunu öğren.</p>
       </div>
@@ -63,7 +63,7 @@ export default function SiparisTakipPage() {
             onClick={sorgula}
             disabled={loading}
             className="px-8 py-3.5 text-sm font-bold text-white rounded-xl hover:opacity-90 transition-all disabled:opacity-50"
-            style={{ background: "#FF6B35" }}
+            style={{ background: "#5B2D6E" }}
           >
             {loading ? "..." : "Sorgula"}
           </button>
@@ -92,12 +92,12 @@ export default function SiparisTakipPage() {
                   <div key={adim} className="flex items-center flex-1">
                     <div className="flex flex-col items-center flex-1">
                       <div className={`w-3 h-3 rounded-full transition-all ${i <= aktifAdim ? "" : "bg-black/10"}`}
-                        style={i <= aktifAdim ? { background: "#FF6B35" } : {}} />
+                        style={i <= aktifAdim ? { background: "#5B2D6E" } : {}} />
                       <p className="text-[8px] text-center text-black/30 mt-1 hidden md:block leading-tight max-w-[60px]">{adim}</p>
                     </div>
                     {i < ADIMLAR.length - 1 && (
                       <div className={`h-0.5 flex-1 mx-1 ${i < aktifAdim ? "" : "bg-black/8"}`}
-                        style={i < aktifAdim ? { background: "#FF6B35" } : {}} />
+                        style={i < aktifAdim ? { background: "#5B2D6E" } : {}} />
                     )}
                   </div>
                 ))}
