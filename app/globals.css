@@ -1,28 +1,21 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    KAPIDA — PANTONE RENK SİSTEMİ
-   Primary:   #5B2D6E  (PANTONE 262)
-   Secondary: #6B2737  (PANTONE 5155)
-   Stone:     #D4C5B0  (PANTONE 7527)
-   Bg:        #F5F0E8  (7527 açık)
-   Dark:      #160820  (mor koyu - siyah yerine)
-   Text:      #1A0A1E  (koyu mor metin)
-═══════════════════════════════════════════ */
+   PRI  #5B2D6E  PANTONE 262C  Ana buton, logo, vurgu, seçili, fiyat
+   MUV  #BFA5B8  PANTONE 5155C Buton yazısı, dark vurgu, badge, accent
+   STN  #D4C5B0  PANTONE 7527C Border, nav bg, kart bg, neutral
+   BG   #F5F0E8               Sayfa arka planı (7527 açık)
+   DRK  #2D1A2E               Dark section, ana metin (262 koyu)
+═══════════════════════════════════════════════ */
 
 :root {
-  --pri: #5B2D6E;
-  --sec: #6B2737;
-  --stone: #D4C5B0;
-  --bg: #F5F0E8;
-  --dark: #160820;
-  --text: #1A0A1E;
   color-scheme: light only;
 }
 
 @theme inline {
   --color-background: #F5F0E8;
-  --color-foreground: #1A0A1E;
+  --color-foreground: #2D1A2E;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -30,24 +23,21 @@
 html, body {
   color-scheme: light only;
   background-color: #F5F0E8;
-  color: #1A0A1E;
-}
-
-body {
+  color: #2D1A2E;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Form elemanları */
 input, textarea, select {
-  color: #1A0A1E !important;
-  -webkit-text-fill-color: #1A0A1E !important;
+  color: #2D1A2E !important;
+  -webkit-text-fill-color: #2D1A2E !important;
   background-color: #ffffff !important;
   color-scheme: light only;
 }
 
 input::placeholder, textarea::placeholder {
-  color: rgba(91,45,110,0.35) !important;
-  -webkit-text-fill-color: rgba(91,45,110,0.35) !important;
+  color: rgba(45,26,46,0.35) !important;
+  -webkit-text-fill-color: rgba(45,26,46,0.35) !important;
 }
 
 button, a {
@@ -63,20 +53,20 @@ button {
 @media (prefers-color-scheme: dark) {
   html, body {
     background-color: #F5F0E8 !important;
-    color: #1A0A1E !important;
+    color: #2D1A2E !important;
   }
   input, textarea, select {
-    color: #1A0A1E !important;
-    -webkit-text-fill-color: #1A0A1E !important;
+    color: #2D1A2E !important;
+    -webkit-text-fill-color: #2D1A2E !important;
     background-color: #ffffff !important;
   }
 }
 
-/* Marquee animasyonu */
+/* Marquee */
 @keyframes marquee {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: marquee 30s linear infinite;
 }
