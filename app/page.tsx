@@ -193,7 +193,7 @@ function FiyatHesapla() {
             <button key={hizmet} onClick={() => toggle(hizmet)}
               className="flex items-center justify-between p-4 rounded-2xl border-2 text-left transition-all"
               style={secili.includes(hizmet)
-                ? { borderColor: "#5B2D6E", background: "rgba(255,107,53,0.05)" }
+                ? { borderColor: "#5B2D6E", background: "rgba(91,45,110,0.05)" }
                 : { borderColor: "rgba(0,0,0,0.08)", background: "#fff" }
               }>
               <div className="flex items-center gap-3">
@@ -345,12 +345,12 @@ export default function Home() {
         </div>
       </section>
       {/* ── MARQUEE ── */}{/* ── MARQUEE ── */}
-      <div className="overflow-hidden py-3 bg-black">
+      <div className="overflow-hidden py-3" style={{background:"#1A0A1E"}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
-            ["Temizlik","Bakım","Boya","Onarım","Restorasyon","Taban Değişimi","Kadıköy","Ataşehir","Üsküdar","Maltepe","Kartal"].map((item, i) => (
-              <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] text-white/60 mx-8 font-medium">
-                {item} <span className="text-white/15 mx-3">·</span>
+            ["Kapıdan Kapıya Hizmet","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
+              <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] mx-8 font-medium" style={{color:"rgba(212,197,176,0.8)"}}>
+                {item} <span className="mx-3" style={{color:"rgba(107,39,55,0.6)"}}>✦</span>
               </span>
             ))
           ))}
@@ -358,7 +358,7 @@ export default function Home() {
       </div>
 
       {/* ── HİZMETLER ── */}
-      <section className="px-6 md:px-12 py-20 bg-white">
+      <section className="px-6 md:px-12 py-20" style={{background:"#F5F0E8"}}>
         <Reveal>
           <div className="flex items-end justify-between mb-10 pb-6 border-b-2 border-black/10">
             <div>
@@ -420,11 +420,11 @@ export default function Home() {
       </section>
 
       {/* ── NASIL ÇALIŞIR ── */}
-      <section className="px-6 md:px-12 py-20" style={{background:"#1A0A1E", color:"white"}}>
+      <section className="px-6 md:px-12 py-20" style={{background:"#160820", color:"white"}}>
         <Reveal>
           <div className="mb-12">
             <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-2">Süreç</p>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">3 adım, <span style={{color:"#5B2D6E"}}>o kadar.</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">3 adım, <span style={{color:"#D4C5B0"}}>o kadar.</span></h2>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
@@ -436,16 +436,16 @@ export default function Home() {
             <Reveal key={s.n} delay={i * 80}>
               <div className="p-8 border-b md:border-b-0 md:border-r border-white/8 last:border-0">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{background:"#5B2D6E"}}>{s.n}</div>
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0" style={{background:"#6B2737"}}>{s.n}</div>
                   <div className="flex-1 h-px bg-white/8" />
                 </div>
                 <div className="text-3xl mb-3">{s.icon}</div>
                 <h3 className="text-lg font-bold mb-2">{s.t}</h3>
                 <p className="text-white/40 text-sm leading-relaxed mb-5">{s.a}</p>
                 {s.ext ? (
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color:"#5B2D6E"}}>{s.cta} →</a>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color:"#D4C5B0"}}>{s.cta} →</a>
                 ) : (
-                  <Link href={s.href} className="text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color:"#5B2D6E"}}>{s.cta} →</Link>
+                  <Link href={s.href} className="text-xs font-semibold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color:"#D4C5B0"}}>{s.cta} →</Link>
                 )}
               </div>
             </Reveal>
@@ -554,7 +554,7 @@ export default function Home() {
         </div>
       </section>
       {/* ── SON CTA ── */}{/* ── SON CTA ── */}
-      <section className="px-6 md:px-12 py-24 relative overflow-hidden" style={{background:"#F0EBF5"}}>
+      <section className="px-6 md:px-12 py-24 relative overflow-hidden" style={{background:"#EDE5D8"}}>
         <Reveal>
           <div className="max-w-3xl relative">
             <p className="text-[11px] uppercase tracking-[0.4em] text-black/30 mb-6">Hazır mısın?</p>
@@ -590,7 +590,7 @@ export default function Home() {
       </footer>
 
       {/* Floating WA */}
-      <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full text-white font-bold hover:scale-110 active:scale-95 transition-transform shadow-xl" style={{background:"#5B2D6E"}}>
+      <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full text-white font-bold hover:scale-110 active:scale-95 transition-transform shadow-xl" style={{background:"#6B2737"}}>
         💬
       </a>
     </div>
