@@ -66,7 +66,7 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
 
   const inp = "w-full border border-black/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:border-black transition-colors";
   return (
-    <div className="bg-white border border-black/10 p-6">
+    <div className="bg-white border border-stone-200 p-6">
       <h2 className="font-bold mb-6">Yeni Fotoğraf Ekle</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {[
@@ -194,7 +194,7 @@ export default function AdminPage() {
           <>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               {["Tümü", "Teklif Bekleniyor", "İşlemde", "Teslim Edildi"].map(s => (
-                <div key={s} className="bg-white border border-black/10 p-4">
+                <div key={s} className="bg-white border border-stone-200 p-4">
                   <p className="text-2xl font-bold">{s === "Tümü" ? orders.length : orders.filter(o => o.status === s).length}</p>
                   <p className="text-xs text-black/40 mt-1">{s}</p>
                 </div>
@@ -217,7 +217,7 @@ export default function AdminPage() {
                     const hizmetler = Array.isArray(order.services) ? order.services : JSON.parse(order.services as string);
                     const tarih = new Date(order.created_at as string).toLocaleDateString("tr-TR");
                     return (
-                      <div key={order.id as string} className="bg-white border border-black/10 p-6">
+                      <div key={order.id as string} className="bg-white border border-stone-200 p-6">
                         <div className="flex justify-between items-start flex-wrap gap-4">
                           <div>
                             <p className="font-mono font-bold text-sm">{order.order_number as string}</p>
@@ -260,10 +260,10 @@ export default function AdminPage() {
               {gallery.length === 0 ? <p className="text-black/30 text-sm py-10 text-center">Henüz fotoğraf eklenmedi.</p> : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {gallery.map(item => (
-                    <div key={item.id} className={`bg-white border p-4 ${item.active ? "border-black/10" : "border-black/5 opacity-50"}`}>
+                    <div key={item.id} className={`bg-white border p-4 ${item.active ? "border-stone-200" : "border-black/5 opacity-50"}`}>
                       <div className="grid grid-cols-2 gap-1 h-24 mb-3">
                         {[item.before_url, item.after_url].map((url, i) => (
-                          <div key={i} className="bg-black/[0.03] overflow-hidden">
+                          <div key={i} className="bg-stone-50 overflow-hidden">
                             {url ? <img src={url} alt="" className="w-full h-full object-cover" /> : (
                               <div className="w-full h-full flex items-center justify-center text-black/15 text-xs">{i === 0 ? "Önce" : "Sonra"}</div>
                             )}

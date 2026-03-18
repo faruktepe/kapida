@@ -14,8 +14,8 @@ export default function Page() {
     supabase.from("gallery").select("id,title,before_url,after_url").eq("active", true).eq("category", "spor").limit(3).then(({ data }) => setGaleri(data ?? []));
   }, []);
   return (
-    <main className="min-h-screen bg-white text-black">
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-white/95 backdrop-blur-md border-b border-black/8">
+    <main className="min-h-screen" style={{background:"#F5F0E8", color:"#1A0A1E"}}>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 bg-white/95 backdrop-blur-md border-b border-stone-200">
         <Link href="/" style={{ background: "linear-gradient(135deg, #111 60%, #5B2D6E 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "20px", fontWeight: 800, letterSpacing: "-0.04em" }}>Kapıda</Link>
         <div className="flex items-center gap-2">
           <Link href="/hizmetler" className="hidden md:block px-3 py-1.5 text-xs text-black/40 hover:text-black transition-colors">← Hizmetler</Link>
@@ -23,7 +23,7 @@ export default function Page() {
         </div>
       </nav>
       <div className="max-w-5xl mx-auto px-6 md:px-12 pt-28 pb-24">
-        <div className="border-b border-black/8 pb-12 mb-12">
+        <div className="border-b border-stone-200 pb-12 mb-12">
           <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-3">03 · Hizmet</p>
           <h1 className="text-4xl md:text-7xl font-bold tracking-tight leading-none mb-6">Taban Değişimi</h1>
           <p className="text-base text-black/50 max-w-lg leading-relaxed mb-8">Aşınmış veya yırtılmış tabanları tamamen yeniliyoruz. Her marka ve model için uygun taban seçeneği.</p>
@@ -70,13 +70,13 @@ export default function Page() {
                     {item.after_url && <img src={item.after_url} alt="sonra" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hover === item.id ? "opacity-100" : "opacity-0"}`} />}
                     <span className={`absolute top-3 left-3 text-[9px] px-2 py-1 rounded-full font-medium ${hover === item.id ? "text-white" : "bg-black/50 text-white/70"}`} style={hover === item.id ? { background: "#5B2D6E" } : {}}>{hover === item.id ? "Sonra" : "Önce"}</span>
                   </div>
-                  <div className="p-4 border-t border-black/8"><p className="text-sm font-medium">{item.title}</p></div>
+                  <div className="p-4 border-t border-stone-200"><p className="text-sm font-medium">{item.title}</p></div>
                 </div>
               ))}
             </div>
           </div>
         )}
-        <div className="border-t border-black/8 pt-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="border-t border-stone-200 pt-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <p className="font-bold text-xl tracking-tight">Ayakkabınız için en iyisini yapıyoruz.</p>
             <p className="text-sm text-black/40 mt-1">Kapıdan kapıya — 24 saat içinde teslim alıyoruz.</p>

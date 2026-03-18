@@ -124,7 +124,7 @@ export default function SiparisPage() {
     setOrderNumber(no); setStep(4); setLoading(false);
   };
 
-  const inputCls = "w-full border-2 border-black/8 bg-white px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/30 transition-all rounded-xl appearance-none";
+  const inputCls = "w-full border-2 border-stone-200 bg-white px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/30 transition-all rounded-xl appearance-none";
 
   // Başarı sayfası
   if (step === 4) return (
@@ -134,7 +134,7 @@ export default function SiparisPage() {
         <h1 className="text-4xl font-black mb-3 tracking-tight">Sipariş Alındı!</h1>
         <p className="text-black/40 mb-2 text-sm">Sipariş numaranız</p>
         <div className="flex items-center gap-2 mb-3">
-          <p className="font-mono font-bold text-xl px-6 py-3 bg-white rounded-2xl border border-black/8">{orderNumber}</p>
+          <p className="font-mono font-bold text-xl px-6 py-3 bg-white rounded-2xl border border-stone-200">{orderNumber}</p>
           <button
             onClick={() => {
               navigator.clipboard.writeText(orderNumber);
@@ -142,7 +142,7 @@ export default function SiparisPage() {
               setTimeout(() => setCopied(false), 2000);
             }}
             className="px-4 py-3 rounded-2xl border-2 transition-all text-sm font-semibold"
-            style={copied ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.08)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.1)", color:"rgba(0,0,0,0.5)"}}
+            style={copied ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.08)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.1)", color:"rgba(26,10,30,0.5)"}}
           >
             {copied ? "✓ Kopyalandı" : "Kopyala"}
           </button>
@@ -154,7 +154,7 @@ export default function SiparisPage() {
           <Link href={`/siparis-takip?no=${orderNumber}`} className="px-6 py-3.5 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all" style={{background:"#5B2D6E"}}>
             Siparişi Takip Et
           </Link>
-          <Link href="/" className="border-2 border-black/10 px-6 py-3.5 text-sm font-medium rounded-full hover:border-black/30 transition-all text-black/60">
+          <Link href="/" className="border-2 border-stone-200 px-6 py-3.5 text-sm font-medium rounded-full hover:border-black/30 transition-all text-black/60">
             Ana Sayfa
           </Link>
         </div>
@@ -163,9 +163,9 @@ export default function SiparisPage() {
   );
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen" style={{background:"#F5F0E8"}}>
       {/* Header */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 h-16 border-b border-black/8 bg-white/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 h-16 border-b border-stone-200 bg-white/95 backdrop-blur-md">
         <Link href="/" className="flex items-center">
           <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "44px", width: "auto" }} />
         </Link>
@@ -176,7 +176,7 @@ export default function SiparisPage() {
                 style={step >= i+1 ? {background:"#5B2D6E"} : {}}>
                 {step > i+1 ? "✓" : i+1}
               </div>
-              <span className={`text-[11px] hidden md:block font-medium ${step === i+1 ? "text-black" : "text-black/25"}`}>{l}</span>
+              <span className={`text-[11px] hidden md:block font-medium ${step === i+1 ? "" style={{color:"#1A0A1E"}} : ""}`}>{l}</span>
               {i < 2 && <div className="w-6 h-px bg-black/8 mx-1 hidden md:block" />}
             </div>
           ))}
@@ -199,13 +199,13 @@ export default function SiparisPage() {
                   {MARKALAR.filter(m => m !== "Diğer").map(m => (
                     <button key={m} onClick={() => setForm(f => ({...f, marka:m, model:""}))}
                       className="px-4 py-3 text-sm font-semibold rounded-2xl border-2 transition-all text-left hover:border-black/20"
-                      style={form.marka === m ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                      style={form.marka === m ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {m}
                     </button>
                   ))}
                   <button onClick={() => setForm(f => ({...f, marka:"Diğer", model:""}))}
                     className="px-3 py-2.5 text-xs font-medium rounded-xl border-2 transition-all"
-                    style={form.marka === "Diğer" ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                    style={form.marka === "Diğer" ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                     Diğer
                   </button>
                 </div>
@@ -219,7 +219,7 @@ export default function SiparisPage() {
                     {markaModeller.map(m => (
                       <button key={m} onClick={() => setForm(f => ({...f, model:m}))}
                         className="px-4 py-3 text-sm font-semibold rounded-2xl border-2 transition-all text-left hover:border-black/20"
-                        style={form.model === m ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                        style={form.model === m ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                         {m}
                       </button>
                     ))}
@@ -238,7 +238,7 @@ export default function SiparisPage() {
                   {RENKLER.map(r => (
                     <button key={r} onClick={() => setForm(f=>({...f,renk:r}))}
                       className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
-                      style={form.renk === r ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                      style={form.renk === r ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {r}
                     </button>
                   ))}
@@ -252,7 +252,7 @@ export default function SiparisPage() {
                   {TURLER.map(t => (
                     <button key={t} onClick={() => setForm(f=>({...f,tur:t}))}
                       className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
-                      style={form.tur === t ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                      style={form.tur === t ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {t}
                     </button>
                   ))}
@@ -287,15 +287,15 @@ export default function SiparisPage() {
               {HIZMETLER.map(h => (
                 <button key={h.id} onClick={() => toggleHizmet(h.id)}
                   className="w-full flex items-center gap-4 p-5 border-2 rounded-2xl transition-all text-left"
-                  style={form.hizmetler.includes(h.id) ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.04)"} : {borderColor:"rgba(0,0,0,0.08)"}}>
+                  style={form.hizmetler.includes(h.id) ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.04)"} : {borderColor:"rgba(26,10,30,0.08)"}}>
                   <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all text-[11px] font-bold"
-                    style={form.hizmetler.includes(h.id) ? {borderColor:"#5B2D6E", background:"#5B2D6E", color:"#fff"} : {borderColor:"rgba(0,0,0,0.2)"}}>
+                    style={form.hizmetler.includes(h.id) ? {borderColor:"#5B2D6E", background:"#5B2D6E", color:"#fff"} : {borderColor:"rgba(26,10,30,0.2)"}}>
                     {form.hizmetler.includes(h.id) ? "✓" : ""}
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-sm">{h.label}</span>
-                      <span className="text-sm font-bold" style={{color: form.hizmetler.includes(h.id) ? "#5B2D6E" : "rgba(0,0,0,0.35)"}}>₺{h.fiyat}+</span>
+                      <span className="text-sm font-bold" style={{color: form.hizmetler.includes(h.id) ? "#5B2D6E" : "rgba(26,10,30,0.35)"}}>₺{h.fiyat}+</span>
                     </div>
                     <p className="text-xs text-black/35 mt-0.5">{h.desc}</p>
                   </div>
@@ -346,7 +346,7 @@ export default function SiparisPage() {
                   {ILCELER.map(i => (
                     <button key={i} onClick={() => setForm(f=>({...f,ilce:i}))}
                       className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
-                      style={form.ilce === i ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.08)", color:"rgba(0,0,0,0.6)"}}>
+                      style={form.ilce === i ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.06)", color:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.08)", color:"rgba(0,0,0,0.6)"}}>
                       {i}
                     </button>
                   ))}
@@ -399,15 +399,15 @@ export default function SiparisPage() {
             </div>
 
             {/* Özet */}
-            <div className="border-2 border-black/8 rounded-2xl p-5 my-6">
+            <div className="border-2 border-stone-200 rounded-2xl p-5 my-6">
               <p className="text-[10px] uppercase tracking-widest text-black/30 mb-3">Sipariş özeti</p>
               {secilenHizmetler.map(h => (
                 <div key={h.id} className="flex justify-between text-sm py-1.5 border-b border-black/5 last:border-0">
-                  <span className="text-black/70">{h.label}</span>
+                  <span className="">{h.label}</span>
                   <span className="text-black/40 font-medium">₺{h.fiyat}+</span>
                 </div>
               ))}
-              <div className="flex justify-between font-black mt-3 pt-3 border-t-2 border-black/8 text-base">
+              <div className="flex justify-between font-black mt-3 pt-3 border-t-2 border-stone-200 text-base">
                 <span>Toplam</span>
                 <span style={{color:"#5B2D6E"}}>₺{indirimliMin} — ₺{indirimliMax}</span>
               </div>
@@ -421,9 +421,9 @@ export default function SiparisPage() {
               ].map(opt => (
                 <button key={opt.val} onClick={() => setForm(f=>({...f,tercih:opt.val as "arasin"|"onayla"}))}
                   className="w-full flex gap-4 p-4 border-2 rounded-2xl transition-all text-left"
-                  style={form.tercih === opt.val ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.04)"} : {borderColor:"rgba(0,0,0,0.08)"}}>
+                  style={form.tercih === opt.val ? {borderColor:"#5B2D6E", background:"rgba(91,45,110,0.04)"} : {borderColor:"rgba(26,10,30,0.08)"}}>
                   <div className="w-6 h-6 rounded-full border-2 mt-0.5 flex items-center justify-center shrink-0"
-                    style={form.tercih === opt.val ? {borderColor:"#5B2D6E", background:"#5B2D6E"} : {borderColor:"rgba(0,0,0,0.2)"}}>
+                    style={form.tercih === opt.val ? {borderColor:"#5B2D6E", background:"#5B2D6E"} : {borderColor:"rgba(26,10,30,0.2)"}}>
                     {form.tercih === opt.val && <span className="w-2 h-2 bg-white rounded-full block" />}
                   </div>
                   <div>

@@ -71,15 +71,15 @@ export default function HizmetlerPage() {
                 <div className="p-8">
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <span className="text-[10px] font-mono tracking-widest" style={{color:"rgba(0,0,0,0.2)"}}>{h.no}</span>
+                      <span className="text-[10px] font-mono tracking-widest" style={{color:"rgba(26,10,30,0.2)"}}>{h.no}</span>
                       <h2 className="text-2xl font-bold mt-1">{h.ad}</h2>
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-black" style={{color: h.renk}}>{h.fiyat}</p>
-                      <p className="text-[11px] mt-0.5" style={{color:"rgba(0,0,0,0.35)"}}>{h.sure}</p>
+                      <p className="text-[11px] mt-0.5" style={{color:"rgba(26,10,30,0.35)"}}>{h.sure}</p>
                     </div>
                   </div>
-                  <p className="text-sm mb-6 leading-relaxed" style={{color:"rgba(0,0,0,0.5)"}}>{h.kisa}</p>
+                  <p className="text-sm mb-6 leading-relaxed" style={{color:"rgba(26,10,30,0.5)"}}>{h.kisa}</p>
                   <div className="grid grid-cols-2 gap-2 mb-6">
                     {h.items.map(item => (
                       <div key={item} className="flex items-center gap-2">
@@ -88,8 +88,8 @@ export default function HizmetlerPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between pt-4" style={{borderTop:"1px solid rgba(0,0,0,0.06)"}}>
-                    <span className="text-xs uppercase tracking-wider" style={{color:"rgba(0,0,0,0.3)"}}>Detayları gör</span>
+                  <div className="flex items-center justify-between pt-4" style={{borderTop:"1px solid rgba(26,10,30,0.06)"}}>
+                    <span className="text-xs uppercase tracking-wider" style={{color:"rgba(26,10,30,0.3)"}}>Detayları gör</span>
                     <span className="text-sm font-medium group-hover:translate-x-1 transition-transform" style={{color: h.renk}}>→</span>
                   </div>
                 </div>

@@ -94,7 +94,7 @@ function BolgeKontrol() {
             style={
               secili === ilce.id
                 ? { background: ilce.aktif ? "#5B2D6E" : "#666", borderColor: ilce.aktif ? "#5B2D6E" : "#666", color: "#fff" }
-                : { borderColor: "rgba(0,0,0,0.1)", color: "rgba(0,0,0,0.5)", background: "#fff" }
+                : { borderColor: "rgba(26,10,30,0.1)", color: "rgba(26,10,30,0.5)", background: "#fff" }
             }
           >
             {ilce.label}
@@ -103,7 +103,7 @@ function BolgeKontrol() {
       </div>
 
       {!secili && (
-        <div className="p-6 rounded-2xl bg-black/[0.02] border border-black/8 text-center">
+        <div className="p-6 rounded-2xl bg-stone-50 border border-stone-200 text-center">
           <p className="text-sm text-black/35">İlçenizi seçin, hizmet verip vermediğimizi öğrenin</p>
         </div>
       )}
@@ -124,7 +124,7 @@ function BolgeKontrol() {
       )}
 
       {secili && !seciliIlce?.aktif && (
-        <div className="p-6 rounded-2xl border-2 border-black/10 bg-black/[0.02] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="p-6 rounded-2xl border-2 border-stone-200 bg-stone-50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
@@ -132,7 +132,7 @@ function BolgeKontrol() {
             </div>
             <p className="text-sm text-black/45">Şu an bu bölgede hizmet vermiyoruz ama WhatsApp&apos;tan yazabilirsiniz.</p>
           </div>
-          <a href="https://wa.me/905319623790" target="_blank" rel="noopener noreferrer" className="shrink-0 px-7 py-3.5 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all whitespace-nowrap bg-black">
+          <a href="https://wa.me/905319623790" target="_blank" rel="noopener noreferrer" className="shrink-0 px-7 py-3.5 text-sm font-bold text-white rounded-full hover:opacity-90 transition-all whitespace-nowrap style={{background:"#1A0A1E"}}>
             WhatsApp&apos;tan Sor →
           </a>
         </div>
@@ -177,7 +177,7 @@ function FiyatHesapla() {
               className="px-4 py-2 text-sm font-medium rounded-full border transition-all"
               style={tip === t.id
                 ? { background: "#5B2D6E", borderColor: "#5B2D6E", color: "#fff" }
-                : { borderColor: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.5)" }
+                : { borderColor: "rgba(26,10,30,0.12)", color: "rgba(26,10,30,0.5)" }
               }>
               {t.label}
             </button>
@@ -194,19 +194,19 @@ function FiyatHesapla() {
               className="flex items-center justify-between p-4 rounded-2xl border-2 text-left transition-all"
               style={secili.includes(hizmet)
                 ? { borderColor: "#5B2D6E", background: "rgba(91,45,110,0.05)" }
-                : { borderColor: "rgba(0,0,0,0.08)", background: "#fff" }
+                : { borderColor: "rgba(26,10,30,0.08)", background: "#fff" }
               }>
               <div className="flex items-center gap-3">
                 <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all"
                   style={secili.includes(hizmet)
                     ? { borderColor: "#5B2D6E", background: "#5B2D6E" }
-                    : { borderColor: "rgba(0,0,0,0.2)" }
+                    : { borderColor: "rgba(26,10,30,0.2)" }
                   }>
                   {secili.includes(hizmet) && <span className="text-white text-xs font-bold">✓</span>}
                 </div>
                 <span className="text-sm font-medium">{hizmet}</span>
               </div>
-              <span className="text-sm font-bold" style={{ color: secili.includes(hizmet) ? "#5B2D6E" : "rgba(0,0,0,0.4)" }}>
+              <span className="text-sm font-bold" style={{ color: secili.includes(hizmet) ? "#5B2D6E" : "rgba(26,10,30,0.4)" }}>
                 ₺{fiyatlar[tip as keyof typeof fiyatlar].toLocaleString()}+
               </span>
             </button>
@@ -215,7 +215,7 @@ function FiyatHesapla() {
       </div>
 
       {/* Sonuç */}
-      <div className="p-6 rounded-2xl border-2 transition-all" style={{ borderColor: secili.length > 0 ? "#5B2D6E" : "rgba(0,0,0,0.08)", background: secili.length > 0 ? "rgba(91,45,110,0.04)" : "#f9f9f9" }}>
+      <div className="p-6 rounded-2xl border-2 transition-all" style={{ borderColor: secili.length > 0 ? "#5B2D6E" : "rgba(26,10,30,0.08)", background: secili.length > 0 ? "rgba(91,45,110,0.04)" : "#f9f9f9" }}>
         {secili.length === 0 ? (
           <p className="text-sm text-black/30 text-center py-2">Hizmet seçerek fiyat görün</p>
         ) : (
@@ -250,8 +250,8 @@ function GaleriOnizleme() {
   if(items.length===0) return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {["Beyaz Sneaker","Deri Bot","Spor Ayakkabı"].map((label)=>(
-        <div key={label} className="border border-black/8 rounded-2xl overflow-hidden">
-          <div className="h-56 bg-black/[0.02] flex flex-col items-center justify-center gap-2">
+        <div key={label} className="border border-stone-200 rounded-2xl overflow-hidden">
+          <div className="h-56 bg-stone-50 flex flex-col items-center justify-center gap-2">
             <p className="text-4xl grayscale opacity-20">👟</p>
             <p className="text-[10px] uppercase tracking-widest text-black/20">Yakında</p>
           </div>
@@ -263,11 +263,11 @@ function GaleriOnizleme() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {items.map((item)=>(
-        <div key={item.id} className="border border-black/8 rounded-2xl overflow-hidden cursor-pointer hover:border-black/20 hover:shadow-md transition-all" onMouseEnter={()=>setHover(item.id)} onMouseLeave={()=>setHover(null)}>
+        <div key={item.id} className="border border-stone-200 rounded-2xl overflow-hidden cursor-pointer hover:border-black/20 hover:shadow-md transition-all" onMouseEnter={()=>setHover(item.id)} onMouseLeave={()=>setHover(null)}>
           <div className="relative h-56 overflow-hidden">
             {item.before_url&&<img src={item.before_url} alt="önce" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hover===item.id?"opacity-0":"opacity-100"}`}/>}
             {item.after_url&&<img src={item.after_url} alt="sonra" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hover===item.id?"opacity-100":"opacity-0"}`}/>}
-            {!item.before_url&&!item.after_url&&<div className="w-full h-full flex items-center justify-center bg-black/[0.03]"><p className="text-4xl grayscale opacity-20">👟</p></div>}
+            {!item.before_url&&!item.after_url&&<div className="w-full h-full flex items-center justify-center bg-stone-50"><p className="text-4xl grayscale opacity-20">👟</p></div>}
             <span className={`absolute top-3 left-3 text-[9px] font-medium px-2 py-1 rounded-full transition-all duration-300 ${hover===item.id?"text-white":"bg-black/50 text-white/70"}`} style={hover===item.id?{background:"#5B2D6E"}:{}}>{hover===item.id?"Sonra":"Önce"}</span>
           </div>
           <div className="p-5"><p className="text-sm font-semibold">{item.title}</p><p className="text-[11px] text-black/35 mt-1 uppercase tracking-wider">{item.service}</p></div>
@@ -295,7 +295,7 @@ export default function Home() {
 
         <div className="max-w-5xl relative">
           <Reveal>
-            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-black/8 bg-black/[0.02]">
+            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-stone-200 bg-stone-50">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[11px] uppercase tracking-[0.25em] text-black/45">Kapıdan Kapıya · Anadolu Yakası</span>
             </div>
@@ -327,14 +327,14 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={350}>
-            <div className="flex flex-wrap gap-10 md:gap-16 pt-8 border-t border-black/8">
+            <div className="flex flex-wrap gap-10 md:gap-16 pt-8 border-t border-stone-200">
               {[
                 { val: 150, suffix: "+", label: "Mutlu müşteri" },
                 { val: 2, suffix: " gün", label: "Ort. teslim" },
                 { val: 100, suffix: "%", label: "Memnuniyet" },
               ].map(s => (
                 <div key={s.label}>
-                  <p className="text-3xl md:text-4xl font-black tabular-nums" style={{color:"#111"}}>
+                  <p className="text-3xl md:text-4xl font-black tabular-nums" style={{color:"#160820"}}>
                     <Counter target={s.val} suffix={s.suffix} />
                   </p>
                   <p className="text-[11px] text-black/30 mt-1 uppercase tracking-widest">{s.label}</p>
@@ -345,7 +345,7 @@ export default function Home() {
         </div>
       </section>
       {/* ── MARQUEE ── */}{/* ── MARQUEE ── */}
-      <div className="overflow-hidden py-3" style={{background:"#1A0A1E"}}>
+      <div className="overflow-hidden py-3" style={{background:"#160820"}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
             ["Kapıdan Kapıya Hizmet","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
@@ -360,7 +360,7 @@ export default function Home() {
       {/* ── HİZMETLER ── */}
       <section className="px-6 md:px-12 py-20" style={{background:"#F5F0E8"}}>
         <Reveal>
-          <div className="flex items-end justify-between mb-10 pb-6 border-b-2 border-black/10">
+          <div className="flex items-end justify-between mb-10 pb-6 border-b-2 border-stone-200">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-2">Hizmetler</p>
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Ne <span style={{color:"#5B2D6E"}}>yapıyoruz?</span></h2>
@@ -374,7 +374,7 @@ export default function Home() {
           {HIZMETLER.map((h, i) => (
             <Reveal key={h.no} delay={i * 40}>
               <Link href={`/hizmetler/${h.slug}`} className="group block">
-                <div className="border border-black/10 rounded-2xl overflow-hidden hover:border-black/25 hover:shadow-lg transition-all duration-300 h-full">
+                <div className="border border-stone-200 rounded-2xl overflow-hidden hover:border-black/25 hover:shadow-lg transition-all duration-300 h-full">
                   <div className="h-[3px] w-full rounded-full" style={{background: h.renk}} />
                   <div className="p-7">
                     <div className="flex items-start justify-between mb-3">
@@ -396,7 +396,7 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between pt-3 border-t border-black/6">
+                    <div className="flex items-center justify-between pt-3 border-t border-stone-100">
                       <span className="text-[11px] text-black/30 uppercase tracking-wider">Detay ve fiyat</span>
                       <span className="text-sm group-hover:translate-x-1 transition-transform" style={{color: h.renk}}>→</span>
                     </div>
@@ -467,7 +467,7 @@ export default function Home() {
       {/* ── BÖLGE ── */}
       <section className="px-6 md:px-12 py-20 font-sans">
         <Reveal>
-          <div className="flex items-end justify-between mb-10 pb-6 border-b border-black/8">
+          <div className="flex items-end justify-between mb-10 pb-6 border-b border-stone-200">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-2">Hizmet bölgesi</p>
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Bölgenize <span style={{color:"#5B2D6E"}}>geliyoruz.</span></h2>
@@ -478,9 +478,9 @@ export default function Home() {
         <BolgeKontrol />
       </section>
       {/* ── FİYAT HESAPLA ── */}
-      <section className="px-6 md:px-12 py-20 bg-white">
+      <section className="px-6 md:px-12 py-20" style={{background:"#FAF7F4"}}>
         <Reveal>
-          <div className="flex items-start justify-between mb-10 pb-6 border-b border-black/10">
+          <div className="flex items-start justify-between mb-10 pb-6 border-b border-stone-200">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/30 mb-2">Anlık fiyat</p>
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Ne kadar <span style={{color:"#5B2D6E"}}>tutar?</span></h2>
@@ -498,7 +498,7 @@ export default function Home() {
       {/* ── GALERİ ── */}
       <section className="px-6 md:px-12 py-20">
         <Reveal>
-          <div className="flex items-end justify-between mb-10 pb-6 border-b border-black/8">
+          <div className="flex items-end justify-between mb-10 pb-6 border-b border-stone-200">
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-2">Sonuçlar</p>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Fark <span style={{color:"#5B2D6E"}}>görünür.</span></h2>
@@ -515,9 +515,9 @@ export default function Home() {
       </section>
 
             {/* ── YORUMLAR ── */}
-      <section className="px-6 md:px-12 py-20 bg-white">
+      <section className="px-6 md:px-12 py-20" style={{background:"#FAF7F4"}}>
         <Reveal>
-          <div className="mb-12 pb-6 border-b border-black/8">
+          <div className="mb-12 pb-6 border-b border-stone-200">
             <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-2">Müşteriler</p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Onlar <span style={{color:"#5B2D6E"}}>anlatsın.</span></h2>
           </div>
@@ -525,7 +525,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {YORUMLAR.map((y, i) => (
             <Reveal key={i} delay={i * 50}>
-              <div className="relative p-8 rounded-2xl border border-black/8 hover:border-black/15 hover:shadow-sm transition-all duration-300" style={{background: i % 2 === 0 ? "#F9F7F4" : "#fff"}}>
+              <div className="relative p-8 rounded-2xl border border-stone-200 hover:border-black/15 hover:shadow-sm transition-all duration-300" style={{background: i % 2 === 0 ? "#F9F7F4" : "#fff"}}>
                 {/* Büyük tırnak */}
                 <span className="absolute top-4 right-6 text-7xl font-black leading-none select-none" style={{color:"rgba(91,45,110,0.08)"}}>&rdquo;</span>
                 {/* Yıldızlar */}
@@ -539,7 +539,7 @@ export default function Home() {
                   &ldquo;{y.yorum}&rdquo;
                 </p>
                 {/* Kişi */}
-                <div className="flex items-center gap-3 pt-4 border-t border-black/6">
+                <div className="flex items-center gap-3 pt-4 border-t border-stone-100">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0" style={{background:"#5B2D6E"}}>
                     {y.ad.charAt(0)}
                   </div>
@@ -575,7 +575,7 @@ export default function Home() {
         </Reveal>
       </section>
       {/* ── FOOTER ── */}{/* ── FOOTER ── */}
-      <footer className="border-t border-black/8 px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <footer className="border-t border-stone-200 px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex items-center gap-3">
           <img src="/logo-clean.png?v=3" alt="Kapıda" style={{ height: "40px", width: "auto" }} />
           <span className="text-[9px] text-black/20 uppercase tracking-[0.2em]">Lostra & Bakım · 2025</span>

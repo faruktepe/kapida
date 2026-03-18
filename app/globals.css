@@ -1,66 +1,30 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════
+   KAPIDA — PANTONE RENK SİSTEMİ
+   Primary:   #5B2D6E  (PANTONE 262)
+   Secondary: #6B2737  (PANTONE 5155)
+   Stone:     #D4C5B0  (PANTONE 7527)
+   Bg:        #F5F0E8  (7527 açık)
+   Dark:      #160820  (mor koyu - siyah yerine)
+   Text:      #1A0A1E  (koyu mor metin)
+═══════════════════════════════════════════ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --pri: #5B2D6E;
+  --sec: #6B2737;
+  --stone: #D4C5B0;
+  --bg: #F5F0E8;
+  --dark: #160820;
+  --text: #1A0A1E;
+  color-scheme: light only;
 }
 
 @theme inline {
   --color-background: #F5F0E8;
-  --color-foreground: var(--foreground);
+  --color-foreground: #1A0A1E;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: #F5F0E8;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-input, textarea, select {
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  background-color: #fff !important;
-}
-input::placeholder, textarea::placeholder {
-  color: rgba(0,0,0,0.3) !important;
-  -webkit-text-fill-color: rgba(0,0,0,0.3) !important;
-}
-
-button {
-  color: inherit !important;
-  -webkit-text-fill-color: inherit !important;
-}
-
-/* Siparis formu buton stilleri */
-.siparis-btn-unselected {
-  color: rgba(0,0,0,0.75) !important;
-  -webkit-text-fill-color: rgba(0,0,0,0.75) !important;
-  background-color: #ffffff !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  input, textarea, select {
-    color: #000 !important;
-    -webkit-text-fill-color: #000 !important;
-    background-color: #fff !important;
-  }
-  button {
-    color: inherit !important;
-  }
-}
-
-/* iOS dark mode ve renk sorunlarını önle */
-:root {
-  color-scheme: light only;
 }
 
 html, body {
@@ -69,7 +33,24 @@ html, body {
   color: #1A0A1E;
 }
 
-button, input, textarea, select, a {
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Form elemanları */
+input, textarea, select {
+  color: #1A0A1E !important;
+  -webkit-text-fill-color: #1A0A1E !important;
+  background-color: #ffffff !important;
+  color-scheme: light only;
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(91,45,110,0.35) !important;
+  -webkit-text-fill-color: rgba(91,45,110,0.35) !important;
+}
+
+button, a {
   color-scheme: light only;
 }
 
@@ -78,14 +59,24 @@ button {
   -webkit-text-fill-color: currentColor;
 }
 
-input, textarea {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  background-color: #ffffff !important;
-  color-scheme: light only;
+/* Dark mode engelle */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #F5F0E8 !important;
+    color: #1A0A1E !important;
+  }
+  input, textarea, select {
+    color: #1A0A1E !important;
+    -webkit-text-fill-color: #1A0A1E !important;
+    background-color: #ffffff !important;
+  }
 }
 
-input::placeholder, textarea::placeholder {
-  color: rgba(0,0,0,0.35) !important;
-  -webkit-text-fill-color: rgba(0,0,0,0.35) !important;
+/* Marquee animasyonu */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
 }

@@ -48,7 +48,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     document.body.appendChild(bg);
 
     // Önce siyah doldur, sonra before yükle
-    ctx.fillStyle = "#111";
+    ctx.fillStyle = "#160820";
     ctx.fillRect(0, 0, W, H);
 
     const paintBefore = (img: HTMLImageElement) => {
@@ -60,7 +60,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       else { dw = W; dh = W / ir; dx = 0; dy = (H - dh) / 2; }
       ctx.drawImage(img, dx, dy, dw, dh);
       // Koyu overlay
-      ctx.fillStyle = "rgba(0,0,0,0.45)";
+      ctx.fillStyle = "rgba(26,10,30,0.45)";
       ctx.fillRect(0, 0, W, H);
       // Turuncu glow
       const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.5);
