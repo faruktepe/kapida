@@ -205,7 +205,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       {!revealed && (
         <>
           <canvas ref={canvasRef} className="fixed inset-0 z-[60]"
-            style={{ cursor: "none", touchAction: "none" }} />
+            style={{ cursor: "none", touchAction: "none", WebkitTouchCallout: "none", WebkitUserSelect: "none" }} />
           <canvas ref={cursorRef} className="fixed inset-0 z-[61] pointer-events-none" />
           {!started && (
             <div className="fixed inset-0 z-[62] flex items-end justify-center pb-20 pointer-events-none">
