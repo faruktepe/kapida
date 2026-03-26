@@ -27,7 +27,7 @@ export default function HizmetlerPage() {
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
           Ne <span style={{color: MUV}}>yapıyoruz?</span>
         </h1>
-        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Temiz Gelsinn kapıya ayakkabı bakım ve onarım. Anadolu Yakası genelinde hizmet.</p>
+        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Temiz Gelsin kapıya ayakkabı bakım ve onarım. Anadolu Yakası genelinde hizmet.</p>
       </div>
 
       {/* Kartlar */}

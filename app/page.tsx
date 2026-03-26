@@ -311,7 +311,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
               style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
               <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
-              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Temiz Gelsinn Kapıya · Anadolu Yakası</span>
+              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Temiz Gelsin Kapıya · Anadolu Yakası</span>
             </div>
           </Reveal>
           <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>

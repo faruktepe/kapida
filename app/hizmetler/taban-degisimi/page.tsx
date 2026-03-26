@@ -108,7 +108,7 @@ export default function Page() {
         <div className="pt-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6" style={{borderTop:`1px solid ${STN}`}}>
           <div>
             <p className="font-black text-xl tracking-tight" style={{color: DRK}}>Ayakkabınız için en iyisini yapıyoruz.</p>
-            <p className="text-sm mt-1" style={{color:`rgba(45,26,46,0.4)`}}>Temiz Gelsinn kapıya — 24 saat içinde teslim alıyoruz.</p>
+            <p className="text-sm mt-1" style={{color:`rgba(45,26,46,0.4)`}}>Temiz Gelsin kapıya — 24 saat içinde teslim alıyoruz.</p>
           </div>
           <Link href="/siparis" className="inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 transition-all" style={{background: MUV, color: DRK}}>
             Sipariş Ver →

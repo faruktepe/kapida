@@ -6,7 +6,7 @@ const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700", "800"
 
 export const metadata: Metadata = {
   title: "Temiz Gelsin — Ayakkabı Bakım & Onarım",
-  description: "Temiz Gelsinn kapıya premium ayakkabı bakım, temizlik ve onarım hizmeti. Temiz Gelsin — bırak biz halledelim.",
+  description: "Temiz Gelsin kapıya premium ayakkabı bakım, temizlik ve onarım hizmeti. Temiz Gelsin — bırak biz halledelim.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
