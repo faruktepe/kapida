@@ -88,9 +88,9 @@ export default function GaleriPage() {
       <div className="px-6 md:px-12 pt-32 pb-16" style={{background: DRK}}>
         <p className="text-[10px] uppercase tracking-[0.4em] mb-4" style={{color:`rgba(191,165,184,0.4)`}}>Sonuçlar</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
-          Fark <span style={{color: MUV}}>görünür.</span>
+          Gözlerinize <span style={{color: MUV}}>inanın.</span>
         </h1>
-        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Kirli gönderildi, temiz geldi. Kendisi anlatıyor.</p>
+        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Kirli gönderildi, temiz geldi. Fotoğraflar yalan söylemez.</p>
       </div>
 
       <div className="px-6 md:px-12 py-12 max-w-6xl mx-auto">
@@ -129,7 +129,7 @@ export default function GaleriPage() {
         <div className="mt-20 p-8 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
           style={{background: DRK}}>
           <div>
-            <p className="font-black text-xl" style={{color:"#fff"}}>Sıradaki sen olabilirsin.</p>
+            <p className="font-black text-xl" style={{color:"#fff"}}>Sıradaki senin ayakkabın olsun.</p>
             <p className="text-sm mt-1" style={{color:`rgba(191,165,184,0.6)`}}>Temiz Gelsin kapıya — 2 gün içinde teslim.</p>
           </div>
           <Link href="/siparis"

@@ -49,9 +49,9 @@ export default function SiparisTakipPage() {
       <div className="px-6 md:px-12 pt-32 pb-16" style={{background: DRK}}>
         <p className="text-[10px] uppercase tracking-[0.4em] mb-4" style={{color:`rgba(191,165,184,0.4)`}}>Takip</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
-          Siparişin <span style={{color: MUV}}>nerede?</span>
+          Ayakkabın <span style={{color: MUV}}>nerede?</span>
         </h1>
-        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Gönderdin, şimdi nerede? Hemen gör.</p>
+        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Kirli gönderdin, temiz geliyor. Şu an nerede?</p>
       </div>
 
       <div className="max-w-2xl mx-auto px-6 md:px-12 py-16">

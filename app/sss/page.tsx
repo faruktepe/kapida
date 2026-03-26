@@ -32,9 +32,9 @@ export default function SSSPage() {
       <div className="px-6 md:px-12 pt-32 pb-16" style={{background: DRK}}>
         <p className="text-[10px] uppercase tracking-[0.4em] mb-4" style={{color:`rgba(191,165,184,0.4)`}}>Yardım</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
-          Aklında ne <span style={{color: MUV}}>var?</span>
+          Aklında soru <span style={{color: MUV}}>mu var?</span>
         </h1>
-        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Aklında soru mu var? Yaz, halledelim.</p>
+        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Bulamadın mı? WhatsApp'tan bir mesaj yeter.</p>
       </div>
 
       <div className="max-w-3xl mx-auto px-6 md:px-12 py-16">
@@ -62,7 +62,7 @@ export default function SSSPage() {
         {/* CTA */}
         <div className="mt-12 p-8 rounded-2xl" style={{background: PRI}}>
           <h2 className="font-black text-2xl mb-2" style={{color:"#fff"}}>Başka sorunuz var mı?</h2>
-          <p className="text-sm mb-6" style={{color:`rgba(191,165,184,0.75)`}}>WhatsApp üzerinden 7/24 ulaşabilirsiniz.</p>
+          <p className="text-sm mb-6" style={{color:`rgba(191,165,184,0.75)`}}>Kirli ayakkabılar beklemez. Hemen yaz.</p>
           <div className="flex gap-3 flex-wrap">
             <a href={`https://wa.me/${WHATSAPP}`} target="_blank"
               className="px-6 py-3 text-sm font-bold rounded-full hover:opacity-90 transition-all"

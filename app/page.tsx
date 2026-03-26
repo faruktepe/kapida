@@ -311,7 +311,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
               style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
               <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
-              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Temiz Gelsin Kapıya · Anadolu Yakası</span>
+              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Anadolu Yakası · Kapıdan Kapıya</span>
             </div>
           </Reveal>
           <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
@@ -364,7 +364,7 @@ export default function Home() {
       <div className="overflow-hidden py-3" style={{background: DRK}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
-            ["Kirli Gönder · Temiz Gelsin","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
+            ["Kirli Gönder, Temiz Gelsin","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
               <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] mx-8 font-semibold" style={{color: MUV}}>
                 {item} <span className="mx-3" style={{color:`rgba(191,165,184,0.35)`}}>✦</span>
               </span>
@@ -432,9 +432,9 @@ export default function Home() {
             style={{borderColor: PRI, background:`rgba(91,45,110,0.05)`}}>
             <div className="flex-1">
               <p className="font-black text-base" style={{color: DRK}}>
-                3+ hizmet seçin — <span style={{color: PRI}}>%20 indirim otomatik</span>
+                Kirli ne varsa gönderin — <span style={{color: PRI}}>3+ hizmette %20 indirim</span>
               </p>
-              <p className="text-xs mt-0.5" style={{color:`rgba(45,26,46,0.45)`}}>Birden fazla hizmet alırsanız indirim uygulanır.</p>
+              <p className="text-xs mt-0.5" style={{color:`rgba(45,26,46,0.45)`}}>Temizlik, boya, taban — hepsini bir seferde halledelim.</p>
             </div>
             <Link href="/siparis"
               className="shrink-0 px-5 py-2.5 font-bold text-xs rounded-full hover:opacity-90 transition-all whitespace-nowrap"
@@ -451,15 +451,15 @@ export default function Home() {
           <div className="mb-12">
             <p className="text-[10px] uppercase tracking-[0.4em] mb-2" style={{color:`rgba(191,165,184,0.4)`}}>Süreç</p>
             <h2 className="text-3xl md:text-5xl font-black tracking-tight" style={{color:"#fff"}}>
-              3 adım, <span style={{color: MUV}}>o kadar.</span>
+              Bu kadar <span style={{color: MUV}}>basit.</span>
             </h2>
           </div>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
           {[
-            { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp üzerinden ayakkabı fotoğrafınızı gönderin, hızlıca fiyat verelim.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
-            { n:"02", icon:"🚗", t:"Kapıdan Teslim",  a:"Anlaştığımız gün kuryemiz gelir. Ayakkabını teslim alır, işe koyuluruz.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
-            { n:"03", icon:"✨", t:"Tertemiz Teslim", a:"2 gün içinde özenle paketlenmiş, tertemiz — temiz gelsin.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
+            { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
+            { n:"02", icon:"🚗", t:"Kirli Bırak",  a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
+            { n:"03", icon:"✨", t:"Temiz Gelsin", a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
               <div className="p-8 border-b md:border-b-0 md:border-r last:border-0" style={{borderColor:`rgba(191,165,184,0.12)`}}>
@@ -502,9 +502,9 @@ export default function Home() {
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] mb-2" style={{color:`rgba(45,26,46,0.3)`}}>Hizmet bölgesi</p>
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none" style={{color: DRK}}>
-                Bölgenize <span style={{color: PRI}}>geliyoruz.</span>
+                Mahallenize <span style={{color: PRI}}>geliyoruz.</span>
               </h2>
-              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Anadolu Yakası&apos;nın tüm ilçelerine kapıdan kapıya hizmet.</p>
+              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kirli gönder, temiz gelsin. Anadolu Yakası'nın tüm ilçelerine.</p>
             </div>
           </div>
         </Reveal>
@@ -539,7 +539,7 @@ export default function Home() {
             <div>
               <p className="text-[10px] uppercase tracking-[0.4em] mb-2" style={{color:`rgba(45,26,46,0.3)`}}>Sonuçlar</p>
               <h2 className="text-3xl md:text-5xl font-black tracking-tight" style={{color: DRK}}>
-                Fark <span style={{color: PRI}}>görünür.</span>
+                Fark <span style={{color: PRI}}>gözle görülür.</span>
               </h2>
             </div>
             <Link href="/galeri"
@@ -563,7 +563,7 @@ export default function Home() {
           <div className="mb-12 pb-6" style={{borderBottom:`1px solid ${STN}`}}>
             <p className="text-[10px] uppercase tracking-[0.4em] mb-2" style={{color:`rgba(45,26,46,0.3)`}}>Müşteriler</p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none" style={{color: DRK}}>
-              Onlar <span style={{color: PRI}}>anlatsın.</span>
+              Müşteriler <span style={{color: PRI}}>konuşuyor.</span>
             </h2>
           </div>
         </Reveal>
@@ -602,7 +602,7 @@ export default function Home() {
       <section className="px-6 md:px-12 py-24 relative overflow-hidden" style={{background: DRK}}>
         <Reveal>
           <div className="max-w-3xl relative">
-            <p className="text-[11px] uppercase tracking-[0.4em] mb-6" style={{color:`rgba(191,165,184,0.4)`}}>Hazır mısın?</p>
+            <p className="text-[11px] uppercase tracking-[0.4em] mb-6" style={{color:`rgba(191,165,184,0.4)`}}>Ne bekliyorsun?</p>
             <h2 className="text-4xl md:text-7xl font-black tracking-tight leading-[0.9] mb-10" style={{color:"#fff"}}>
               Kirli gönder,<br />
               <span style={{color: MUV}}>temiz gelsin.</span>

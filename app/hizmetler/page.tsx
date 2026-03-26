@@ -25,7 +25,7 @@ export default function HizmetlerPage() {
       <div className="px-6 md:px-12 pt-32 pb-16" style={{background: DRK}}>
         <p className="text-[10px] uppercase tracking-[0.4em] mb-4" style={{color:`rgba(191,165,184,0.4)`}}>Hizmetler</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
-          Ne <span style={{color: MUV}}>yapıyoruz?</span>
+          Neyi <span style={{color: MUV}}>temizleriz?</span>
         </h1>
         <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Temiz Gelsin kapıya ayakkabı bakım ve onarım. Anadolu Yakası genelinde hizmet.</p>
       </div>
@@ -72,7 +72,7 @@ export default function HizmetlerPage() {
         <div className="mt-8 p-6 rounded-2xl flex items-center gap-4" style={{background: PRI}}>
           <div>
             <p className="font-black text-xl" style={{color:"#fff"}}>3+ hizmet seçin — %20 indirim</p>
-            <p className="text-sm mt-1" style={{color:`rgba(191,165,184,0.75)`}}>Birden fazla hizmet alırsanız otomatik indirim uygulanır.</p>
+            <p className="text-sm mt-1" style={{color:`rgba(191,165,184,0.75)`}}>Temizlik, boya, taban — hepsini bir seferde. Otomatik %20 indirim.</p>
           </div>
           <Link href="/siparis"
             className="ml-auto shrink-0 px-6 py-3 font-bold text-sm rounded-full hover:opacity-90 transition-all whitespace-nowrap"
