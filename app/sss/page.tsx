@@ -32,9 +32,9 @@ export default function SSSPage() {
       <div className="px-6 md:px-12 pt-32 pb-16" style={{background: DRK}}>
         <p className="text-[10px] uppercase tracking-[0.4em] mb-4" style={{color:`rgba(191,165,184,0.4)`}}>Yardım</p>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
-          Sık sorulan <span style={{color: MUV}}>sorular.</span>
+          Aklında ne <span style={{color: MUV}}>var?</span>
         </h1>
-        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Aklınızdaki soruların cevabını bulamadıysanız WhatsApp'tan yazın.</p>
+        <p className="text-base max-w-lg" style={{color:`rgba(191,165,184,0.6)`}}>Aklında soru mu var? Yaz, halledelim.</p>
       </div>
 
       <div className="max-w-3xl mx-auto px-6 md:px-12 py-16">

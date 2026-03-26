@@ -51,7 +51,7 @@ export default function SiparisTakipPage() {
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-4" style={{color:"#fff"}}>
           Siparişin <span style={{color: MUV}}>nerede?</span>
         </h1>
-        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Sipariş numaranı girerek durumunu öğren.</p>
+        <p className="text-base" style={{color:`rgba(191,165,184,0.6)`}}>Gönderdin, şimdi nerede? Hemen gör.</p>
       </div>
 
       <div className="max-w-2xl mx-auto px-6 md:px-12 py-16">

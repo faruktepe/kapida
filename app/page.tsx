@@ -122,7 +122,7 @@ function BolgeKontrol() {
               <span className="w-2.5 h-2.5 rounded-full" style={{background: PRI}} />
               <p className="font-bold text-base" style={{color: DRK}}>{seciliIlce.label}&apos;e hizmet veriyoruz!</p>
             </div>
-            <p className="text-sm" style={{color:`rgba(45,26,46,0.5)`}}>Kapınızdan alıp 2 gün içinde teslim ediyoruz.</p>
+            <p className="text-sm" style={{color:`rgba(45,26,46,0.5)`}}>2 gün içinde tertemiz — kirli gönder, temiz gelsin.</p>
           </div>
           <Link href="/siparis"
             className="shrink-0 px-7 py-3.5 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
@@ -316,14 +316,14 @@ export default function Home() {
           </Reveal>
           <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h1 className="font-black leading-[0.88] tracking-tight mb-8" style={{fontSize:"clamp(2.8rem, 8vw, 7.5rem)", color: DRK}}>
-              Ayakkabının özlediği bakım<br />
-              <span style={{color: PRI}}>Temiz Gelsin.</span>
+              Kirli gönder,<br />
+              <span style={{color: PRI}}>temiz gelsin.</span>
             </h1>
           </div>
           <Reveal delay={150}>
             <p className="text-base md:text-lg max-w-xl leading-relaxed mb-10" style={{color:`rgba(45,26,46,0.55)`}}>
-              Kapınızdan alıyoruz, profesyonel bakımdan geçirip{" "}
-              <strong style={{color:`rgba(45,26,46,0.8)`, fontWeight:700}}>tertemiz teslim ediyoruz</strong>. Siz hiçbir yere gitmeyin.
+              Ayakkabını bırak, biz halledelim.{" "}
+              <strong style={{color:`rgba(45,26,46,0.8)`, fontWeight:700}}>Kapıdan kapıya, 2 günde tertemiz teslim.</strong>
             </p>
           </Reveal>
           <Reveal delay={250}>
@@ -364,7 +364,7 @@ export default function Home() {
       <div className="overflow-hidden py-3" style={{background: DRK}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
-            ["Temiz Gelsinn Kapıya Hizmet","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
+            ["Kirli Gönder · Temiz Gelsin","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
               <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] mx-8 font-semibold" style={{color: MUV}}>
                 {item} <span className="mx-3" style={{color:`rgba(191,165,184,0.35)`}}>✦</span>
               </span>
@@ -458,8 +458,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
           {[
             { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp üzerinden ayakkabı fotoğrafınızı gönderin, hızlıca fiyat verelim.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
-            { n:"02", icon:"🚗", t:"Temiz Gelsinn Teslim",  a:"Anlaştığımız gün kuryemiz gelir. Siz hiçbir yere gitmeyin.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
-            { n:"03", icon:"✨", t:"Tertemiz Teslim", a:"2 gün içinde özenle paketlenmiş, tertemiz kapınıza.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
+            { n:"02", icon:"🚗", t:"Kapıdan Teslim",  a:"Anlaştığımız gün kuryemiz gelir. Ayakkabını teslim alır, işe koyuluruz.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
+            { n:"03", icon:"✨", t:"Tertemiz Teslim", a:"2 gün içinde özenle paketlenmiş, tertemiz — temiz gelsin.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
               <div className="p-8 border-b md:border-b-0 md:border-r last:border-0" style={{borderColor:`rgba(191,165,184,0.12)`}}>
@@ -484,7 +484,7 @@ export default function Home() {
             style={{background:`rgba(191,165,184,0.08)`, border:`1.5px solid rgba(191,165,184,0.2)`}}>
             <div>
               <p className="text-xs mb-0.5" style={{color:`rgba(191,165,184,0.5)`}}>Hızlı başlamak ister misiniz?</p>
-              <p className="font-bold text-lg" style={{color:"#fff"}}>WhatsApp&apos;tan fotoğraf gönderin, fiyat verelim.</p>
+              <p className="font-bold text-lg" style={{color:"#fff"}}>Bir fotoğraf yeter. Gerisini biz halledelim.</p>
             </div>
             <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
               className="shrink-0 flex items-center gap-2 px-6 py-3 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
@@ -604,8 +604,8 @@ export default function Home() {
           <div className="max-w-3xl relative">
             <p className="text-[11px] uppercase tracking-[0.4em] mb-6" style={{color:`rgba(191,165,184,0.4)`}}>Hazır mısın?</p>
             <h2 className="text-4xl md:text-7xl font-black tracking-tight leading-[0.9] mb-10" style={{color:"#fff"}}>
-              Ayakkabının özlediği bakım<br />
-              <span style={{color: MUV}}>Temiz Gelsin.</span>
+              Kirli gönder,<br />
+              <span style={{color: MUV}}>temiz gelsin.</span>
             </h2>
             <div className="flex flex-wrap gap-4">
               <Link href="/siparis"
