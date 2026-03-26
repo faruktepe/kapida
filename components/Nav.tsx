@@ -25,7 +25,7 @@ export default function Nav({ active }: { active?: string }) {
         style={{background:`rgba(245,240,232,0.97)`, borderColor: STN}}>
 
         <Link href="/" className="flex items-center shrink-0 gap-2">
-          <img src="/logo-clean.png?v=4" alt="Temiz Gelsin" style={{height:"48px", width:"auto", objectFit:"contain"}} />
+          <img src="/temizgelsinlogo.png?v=1" alt="Temiz Gelsin" style={{height:"48px", width:"auto", objectFit:"contain"}} />
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

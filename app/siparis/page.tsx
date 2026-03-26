@@ -184,7 +184,7 @@ export default function SiparisPage() {
       <header className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 h-16 border-b backdrop-blur-md"
         style={{borderColor:STN, background:`rgba(245,240,232,0.97)`}}>
         <Link href="/" className="flex items-center">
-          <img src="/logo-clean.png?v=4" alt="Temiz Gelsin" style={{height:"44px",width:"auto"}} />
+          <img src="/temizgelsinlogo.png?v=1" alt="Temiz Gelsin" style={{height:"44px",width:"auto"}} />
         </Link>
         {/* Adım göstergesi */}
         <div className="flex items-center gap-2">
