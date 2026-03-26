@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useState } from "react";
 
-// PANTONE 262C #5B2D6E | PANTONE 5155C #BFA5B8 | PANTONE 7527C #D4C5B0
 const PRI = "#5B2D6E";
 const MUV = "#BFA5B8";
 const STN = "#D4C5B0";
@@ -10,11 +9,11 @@ const BG  = "#F5F0E8";
 const DRK = "#2D1A2E";
 
 const NAV_LINKS = [
-  { href: "/",             label: "Ana Sayfa" },
-  { href: "/hizmetler",    label: "Hizmetler" },
-  { href: "/galeri",       label: "Galeri" },
-  { href: "/siparis-takip",label: "Takip" },
-  { href: "/sss",          label: "SSS" },
+  { href: "/",              label: "Ana Sayfa" },
+  { href: "/hizmetler",     label: "Hizmetler" },
+  { href: "/galeri",        label: "Galeri" },
+  { href: "/siparis-takip", label: "Takip" },
+  { href: "/sss",           label: "SSS" },
 ];
 
 export default function Nav({ active }: { active?: string }) {
@@ -25,12 +24,10 @@ export default function Nav({ active }: { active?: string }) {
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b"
         style={{background:`rgba(245,240,232,0.97)`, borderColor: STN}}>
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          <img src="/logo-clean.png?v=4" alt="Kapıda" style={{height:"48px", width:"auto", objectFit:"contain"}} />
+        <Link href="/" className="flex items-center shrink-0 gap-2">
+          <img src="/logo-clean.png?v=4" alt="Temiz Gelsin" style={{height:"48px", width:"auto", objectFit:"contain"}} />
         </Link>
 
-        {/* Desktop linkler */}
         <div className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map(link => (
             <Link key={link.href} href={link.href}
@@ -49,7 +46,6 @@ export default function Nav({ active }: { active?: string }) {
           </Link>
         </div>
 
-        {/* Mobil sağ */}
         <div className="flex md:hidden items-center gap-3">
           <Link href="/siparis"
             className="px-4 py-2 text-xs font-bold rounded-full"
@@ -66,7 +62,6 @@ export default function Nav({ active }: { active?: string }) {
         </div>
       </nav>
 
-      {/* Mobil menü */}
       {open && (
         <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)}>
           <div className="absolute top-[65px] left-0 right-0 border-b shadow-lg" onClick={e => e.stopPropagation()}

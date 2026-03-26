@@ -311,13 +311,13 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
               style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
               <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
-              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Kapıdan Kapıya · Anadolu Yakası</span>
+              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Temiz Gelsinn Kapıya · Anadolu Yakası</span>
             </div>
           </Reveal>
           <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h1 className="font-black leading-[0.88] tracking-tight mb-8" style={{fontSize:"clamp(2.8rem, 8vw, 7.5rem)", color: DRK}}>
               Ayakkabının özlediği bakım<br />
-              <span style={{color: PRI}}>Kapıda.</span>
+              <span style={{color: PRI}}>Temiz Gelsin.</span>
             </h1>
           </div>
           <Reveal delay={150}>
@@ -364,7 +364,7 @@ export default function Home() {
       <div className="overflow-hidden py-3" style={{background: DRK}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
-            ["Kapıdan Kapıya Hizmet","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
+            ["Temiz Gelsinn Kapıya Hizmet","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
               <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] mx-8 font-semibold" style={{color: MUV}}>
                 {item} <span className="mx-3" style={{color:`rgba(191,165,184,0.35)`}}>✦</span>
               </span>
@@ -458,7 +458,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
           {[
             { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp üzerinden ayakkabı fotoğrafınızı gönderin, hızlıca fiyat verelim.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
-            { n:"02", icon:"🚗", t:"Kapıdan Teslim",  a:"Anlaştığımız gün kuryemiz gelir. Siz hiçbir yere gitmeyin.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
+            { n:"02", icon:"🚗", t:"Temiz Gelsinn Teslim",  a:"Anlaştığımız gün kuryemiz gelir. Siz hiçbir yere gitmeyin.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
             { n:"03", icon:"✨", t:"Tertemiz Teslim", a:"2 gün içinde özenle paketlenmiş, tertemiz kapınıza.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
@@ -605,7 +605,7 @@ export default function Home() {
             <p className="text-[11px] uppercase tracking-[0.4em] mb-6" style={{color:`rgba(191,165,184,0.4)`}}>Hazır mısın?</p>
             <h2 className="text-4xl md:text-7xl font-black tracking-tight leading-[0.9] mb-10" style={{color:"#fff"}}>
               Ayakkabının özlediği bakım<br />
-              <span style={{color: MUV}}>Kapıda.</span>
+              <span style={{color: MUV}}>Temiz Gelsin.</span>
             </h2>
             <div className="flex flex-wrap gap-4">
               <Link href="/siparis"
@@ -628,7 +628,7 @@ export default function Home() {
       <footer className="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
         style={{background:`rgba(45,26,46,0.95)`, borderTop:`1px solid rgba(191,165,184,0.15)`}}>
         <div className="flex items-center gap-3">
-          <img src="/logo-clean.png?v=4" alt="Kapıda" style={{height:"36px", width:"auto"}} />
+          <img src="/logo-clean.png?v=4" alt="Temiz Gelsin" style={{height:"36px", width:"auto"}} />
           <span className="text-[9px] uppercase tracking-[0.2em]" style={{color:`rgba(191,165,184,0.4)`}}>Lostra & Bakım · 2025</span>
         </div>
         <div className="flex flex-wrap gap-6 text-[11px] uppercase tracking-widest" style={{color:`rgba(191,165,184,0.5)`}}>

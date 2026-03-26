@@ -158,7 +158,7 @@ export default function AdminPage() {
   if (!giris) return (
     <main className="min-h-screen flex items-center justify-center bg-black">
       <div className="bg-white p-10 max-w-sm w-full mx-4">
-        <h1 className="text-2xl font-bold mb-2">Kapıda Admin</h1>
+        <h1 className="text-2xl font-bold mb-2">Temiz Gelsin Admin</h1>
         <p className="text-black/40 text-sm mb-6">Yönetici girişi yapın.</p>
         <input type="password" value={sifre} onChange={e => { setSifre(e.target.value); setSifreHata(false); }}
           onKeyDown={e => e.key === "Enter" && handleGiris()}
@@ -173,7 +173,7 @@ export default function AdminPage() {
     <main className="min-h-screen bg-gray-50">
       <header className="bg-black text-white px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-6">
-          <h1 className="font-bold">Kapıda Admin</h1>
+          <h1 className="font-bold">Temiz Gelsin Admin</h1>
           <div className="flex gap-1">
             {(["siparisler", "galeri"] as const).map(t => (
               <button key={t} onClick={() => setTab(t)}

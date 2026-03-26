@@ -130,7 +130,7 @@ export default function GaleriPage() {
           style={{background: DRK}}>
           <div>
             <p className="font-black text-xl" style={{color:"#fff"}}>Ayakkabınız da burada olabilir.</p>
-            <p className="text-sm mt-1" style={{color:`rgba(191,165,184,0.6)`}}>Kapıdan kapıya — 2 gün içinde teslim.</p>
+            <p className="text-sm mt-1" style={{color:`rgba(191,165,184,0.6)`}}>Temiz Gelsinn kapıya — 2 gün içinde teslim.</p>
           </div>
           <Link href="/siparis"
             className="shrink-0 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 transition-all"

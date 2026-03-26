@@ -18,7 +18,7 @@ function HizmetNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b"
       style={{background:`rgba(245,240,232,0.97)`, borderColor: STN}}>
-      <Link href="/" className="font-black text-xl tracking-tight" style={{color: PRI}}>Kapıda</Link>
+      <Link href="/" className="font-black text-xl tracking-tight" style={{color: PRI}}>Temiz Gelsin</Link>
       <div className="flex items-center gap-2">
         <Link href="/hizmetler" className="hidden md:block px-3 py-1.5 text-xs transition-colors" style={{color:`rgba(45,26,46,0.4)`}}>← Hizmetler</Link>
         <Link href="/siparis" className="px-5 py-2 text-xs font-bold rounded-full hover:opacity-90 transition-all" style={{background: PRI, color: MUV}}>Sipariş Ver</Link>
@@ -108,7 +108,7 @@ export default function Page() {
         <div className="pt-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6" style={{borderTop:`1px solid ${STN}`}}>
           <div>
             <p className="font-black text-xl tracking-tight" style={{color: DRK}}>Ayakkabınız için en iyisini yapıyoruz.</p>
-            <p className="text-sm mt-1" style={{color:`rgba(45,26,46,0.4)`}}>Kapıdan kapıya — 24 saat içinde teslim alıyoruz.</p>
+            <p className="text-sm mt-1" style={{color:`rgba(45,26,46,0.4)`}}>Temiz Gelsinn kapıya — 24 saat içinde teslim alıyoruz.</p>
           </div>
           <Link href="/siparis" className="inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 transition-all" style={{background: MUV, color: DRK}}>
             Sipariş Ver →
