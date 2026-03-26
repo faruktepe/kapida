@@ -21,11 +21,15 @@ export default function Nav({ active }: { active?: string }) {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 backdrop-blur-md border-b"
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-3 backdrop-blur-md border-b"
         style={{background:`rgba(245,240,232,0.97)`, borderColor: STN}}>
 
-        <Link href="/" className="flex items-center shrink-0 gap-2">
-          <img src="/temizgelsin%20logo.png?v=1" alt="Temiz Gelsin" style={{height:"auto", width:"180px", objectFit:"contain"}} />
+        <Link href="/" className="flex items-center shrink-0">
+          <img
+            src="/temizgelsin%20logo.png?v=1"
+            alt="Temiz Gelsin"
+            style={{height:"44px", width:"auto", objectFit:"contain", maxWidth:"160px"}}
+          />
         </Link>
 
         <div className="hidden md:flex items-center gap-1">
@@ -64,7 +68,7 @@ export default function Nav({ active }: { active?: string }) {
 
       {open && (
         <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)}>
-          <div className="absolute top-[65px] left-0 right-0 border-b shadow-lg" onClick={e => e.stopPropagation()}
+          <div className="absolute top-[57px] left-0 right-0 border-b shadow-lg" onClick={e => e.stopPropagation()}
             style={{background: BG, borderColor: STN}}>
             <div className="px-6 py-4 space-y-1">
               {NAV_LINKS.map(link => (
