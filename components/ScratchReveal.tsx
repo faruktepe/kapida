@@ -11,7 +11,7 @@ const BRUSH_RADIUS_DESKTOP = 160;
 export default function ScratchReveal({ children }: { children: React.ReactNode }) {
   const canvasRef   = useRef<HTMLCanvasElement>(null);
   const cursorRef   = useRef<HTMLCanvasElement>(null);
-  const [revealed, setRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(() => { try { return sessionStorage.getItem("scratch_done") === "1"; } catch { return false; } });
   const [started,  setStarted]  = useState(false);
   const [ready,    setReady]    = useState(false); // resim yüklendi mi?
   const drawing     = useRef(false);
@@ -123,7 +123,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
         cursorCanvas.style.transition = "opacity 0.5s";
         cursorCanvas.style.opacity = "0";
       }
-      setTimeout(() => setRevealed(true), 500);
+      setTimeout(() => { try { sessionStorage.setItem("scratch_done", "1"); } catch {} setRevealed(true); }, 500);
     };
 
     const scratch = (x: number, y: number) => {
