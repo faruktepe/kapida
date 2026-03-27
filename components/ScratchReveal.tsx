@@ -4,21 +4,22 @@ import { useEffect, useRef, useState } from "react";
 const BEFORE = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/before/Gemini_Generated_Image_g7kumcg7kumcg7ku.png";
 const AFTER  = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/after/Gemini_Generated_Image_4ndoex4ndoex4ndo.png";
 
-// Kaç sürükleme sonrası açılsın
-const REVEAL_THRESHOLD = 0.08; // %8 temizlendi mi açıl
-const BRUSH_RADIUS_MOBILE  = 140; // mobil fırça çok büyük
-const BRUSH_RADIUS_DESKTOP = 160; // masaüstü de büyük
+const REVEAL_THRESHOLD     = 0.08;
+const BRUSH_RADIUS_MOBILE  = 140;
+const BRUSH_RADIUS_DESKTOP = 160;
 
 export default function ScratchReveal({ children }: { children: React.ReactNode }) {
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
-  const cursorRef  = useRef<HTMLCanvasElement>(null);
+  const canvasRef   = useRef<HTMLCanvasElement>(null);
+  const cursorRef   = useRef<HTMLCanvasElement>(null);
   const [revealed, setRevealed] = useState(false);
   const [started,  setStarted]  = useState(false);
+  const [ready,    setReady]    = useState(false); // resim yüklendi mi?
   const drawing     = useRef(false);
   const lastPos     = useRef({ x: -999, y: -999 });
   const revealedRef = useRef(false);
   const checkFrame  = useRef(0);
   const isMobileRef = useRef(false);
+  const readyRef    = useRef(false); // sync ref
 
   useEffect(() => {
     const canvas       = canvasRef.current;
@@ -52,9 +53,14 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     bg.style.cssText = `position:fixed;inset:0;z-index:58;background:#160820 url('${AFTER}') center/cover no-repeat;`;
     document.body.appendChild(bg);
 
-    // Before yükle
+    // Önce koyu arka plan
     ctx.fillStyle = "#160820";
     ctx.fillRect(0, 0, W, H);
+
+    const markReady = () => {
+      readyRef.current = true;
+      setReady(true);
+    };
 
     const paintBefore = (img: HTMLImageElement) => {
       ctx.globalCompositeOperation = "source-over";
@@ -62,7 +68,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       const sr = W / H;
       let dw, dh, dx, dy;
       if (ir > sr) { dh = H; dw = H * ir; dx = (W - dw) / 2; dy = 0; }
-      else          { dw = W; dh = W / ir; dx = 0; dy = (H - dh) / 2; }
+      else         { dw = W; dh = W / ir; dx = 0; dy = (H - dh) / 2; }
       ctx.drawImage(img, dx, dy, dw, dh);
       ctx.fillStyle = "rgba(26,10,30,0.45)";
       ctx.fillRect(0, 0, W, H);
@@ -72,14 +78,19 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = "destination-out";
+      markReady(); // ← resim yüklendi, scratch aktif
     };
 
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload  = () => paintBefore(img);
-    img.onerror = () => { ctx.globalCompositeOperation = "destination-out"; };
+    img.onerror = () => {
+      // Resim yüklenemese bile scratch aktif et
+      ctx.globalCompositeOperation = "destination-out";
+      markReady();
+    };
     img.src = BEFORE + "?t=" + Date.now();
 
-    // Cursor çiz
     const drawCursor = (x: number, y: number, press: boolean) => {
       cctx.clearRect(0, 0, W, H);
       cctx.beginPath();
@@ -94,39 +105,38 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       cctx.fillText("FIRÇA", x, y);
     };
 
-    // Çizim + threshold kontrolü
     const doReveal = () => {
+      if (revealedRef.current) return;
       revealedRef.current = true;
       const sbg = document.getElementById("sbg");
       if (sbg) {
-        sbg.style.transition = "opacity 0.4s";
+        sbg.style.transition = "opacity 0.5s";
         sbg.style.opacity = "0";
-        setTimeout(() => sbg.remove(), 400);
+        setTimeout(() => sbg.remove(), 500);
       }
       if (canvas) {
-        canvas.style.transition = "opacity 0.4s";
+        canvas.style.transition = "opacity 0.5s";
         canvas.style.opacity = "0";
         canvas.style.pointerEvents = "none";
       }
       if (cursorCanvas) {
-        cursorCanvas.style.transition = "opacity 0.4s";
+        cursorCanvas.style.transition = "opacity 0.5s";
         cursorCanvas.style.opacity = "0";
       }
-      setTimeout(() => setRevealed(true), 400);
+      setTimeout(() => setRevealed(true), 500);
     };
 
     const scratch = (x: number, y: number) => {
+      if (!readyRef.current) return; // resim yüklenmeden scratch yapma
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
       ctx.arc(x, y, R, 0, Math.PI * 2);
       ctx.fill();
 
-      // Her 5 frame'de bir kontrol — daha sık
       checkFrame.current++;
       if (checkFrame.current % 5 !== 0) return;
       if (revealedRef.current) return;
 
-      // Küçük sample — hızlı
       const sw = Math.floor(W * dpr * 0.6);
       const sh = Math.floor(H * dpr * 0.6);
       const sx = Math.floor(W * dpr * 0.2);
@@ -145,7 +155,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     const getXY = (e: MouseEvent | TouchEvent) => {
       const r = canvas.getBoundingClientRect();
       if ("touches" in e) {
-        const t = e.touches[0] || e.changedTouches?.[0];
+        const t = e.touches[0] || (e as TouchEvent).changedTouches?.[0];
         return { x: t.clientX - r.left, y: t.clientY - r.top };
       }
       return { x: (e as MouseEvent).clientX - r.left, y: (e as MouseEvent).clientY - r.top };
@@ -154,6 +164,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     const onDown = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      if (!readyRef.current) return; // hazır değilse yok say
       drawing.current = true;
       setStarted(true);
       const p = getXY(e);
@@ -166,18 +177,20 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       if ("touches" in e) e.preventDefault();
       const p = getXY(e);
       lastPos.current = p;
-      drawCursor(p.x, p.y, drawing.current);
-      if (!drawing.current) return;
+      if (readyRef.current) drawCursor(p.x, p.y, drawing.current);
+      if (!drawing.current || !readyRef.current) return;
       scratch(p.x, p.y);
     };
 
     const onUp = (e: MouseEvent | TouchEvent) => {
       e.stopPropagation();
       drawing.current = false;
-      drawCursor(lastPos.current.x, lastPos.current.y, false);
+      if (readyRef.current) drawCursor(lastPos.current.x, lastPos.current.y, false);
     };
 
-    setTimeout(() => drawCursor(W / 2, H / 2, false), 600);
+    setTimeout(() => {
+      if (readyRef.current) drawCursor(W / 2, H / 2, false);
+    }, 800);
 
     canvas.addEventListener("mousedown",  onDown as EventListener, { capture: true });
     canvas.addEventListener("mousemove",  onMove as EventListener);
@@ -207,7 +220,19 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
           <canvas ref={canvasRef} className="fixed inset-0 z-[60]"
             style={{ cursor: "none", touchAction: "none" }} />
           <canvas ref={cursorRef} className="fixed inset-0 z-[61] pointer-events-none" />
-          {!started && (
+
+          {/* Hazır değilken yükleniyor göstergesi */}
+          {!ready && (
+            <div className="fixed inset-0 z-[63] flex items-center justify-center pointer-events-none">
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-10 h-10 rounded-full border-2 border-t-transparent animate-spin"
+                  style={{borderColor:"rgba(191,165,184,0.4)", borderTopColor:"transparent"}} />
+              </div>
+            </div>
+          )}
+
+          {/* Hazır olunca fırça ipucu */}
+          {ready && !started && (
             <div className="fixed inset-0 z-[62] flex items-end justify-center pb-20 pointer-events-none">
               <div className="flex flex-col items-center gap-3 animate-bounce">
                 <div className="w-20 h-20 rounded-full border-2 flex items-center justify-center"
