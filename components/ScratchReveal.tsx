@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 const BEFORE = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/before/Gemini_Generated_Image_g7kumcg7kumcg7ku.png";
 const AFTER  = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/after/Gemini_Generated_Image_4ndoex4ndoex4ndo.png";
 
-const REVEAL_THRESHOLD     = 0.08;
+const REVEAL_THRESHOLD     = 0.25;
 const BRUSH_RADIUS_MOBILE  = 140;
 const BRUSH_RADIUS_DESKTOP = 160;
 
