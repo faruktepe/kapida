@@ -477,47 +477,110 @@ export default function Home() {
       <section className="px-6 md:px-12 py-20" style={{background: DRK, color:"#fff"}}>
         <Reveal>
           <div className="mb-12">
-            <p className="text-[10px] uppercase tracking-[0.4em] mb-2" style={{color:`rgba(191,165,184,0.4)`}}>Süreç</p>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight" style={{color:"#fff"}}>
+            <p className="text-[10px] uppercase tracking-[0.4em] mb-3" style={{color:`rgba(191,165,184,0.4)`}}>Süreç</p>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-3" style={{color:"#fff"}}>
               Bu kadar <span style={{color: MUV}}>basit.</span>
             </h2>
+            <p className="text-sm md:text-base max-w-xl" style={{color:`rgba(191,165,184,0.55)`}}>
+              Kapından alıyor, temizleyip 2 gün içinde geri getiriyoruz.
+            </p>
           </div>
         </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
           {[
-            { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
-            { n:"02", icon:"🚗", t:"Kirli Bırak",     a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
-            { n:"03", icon:"✨", t:"Temiz Gelsin",    a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
+            {
+              n:"01",
+              icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><path d="M8 6h8M8 10h5"/></svg>,
+              t:"Fotoğraf Gönder",
+              a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.",
+              href:`https://wa.me/${WHATSAPP}`,
+              cta:"Fiyat Al",
+              ext:true
+            },
+            {
+              n:"02",
+              icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>,
+              t:"Kirli Bırak",
+              a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.",
+              href:"/siparis",
+              cta:"Sipariş Ver",
+              ext:false
+            },
+            {
+              n:"03",
+              icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>,
+              t:"Temiz Gelsin",
+              a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.",
+              href:"/siparis-takip",
+              cta:"Takip Et",
+              ext:false
+            },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
-              <div className="p-8 border-b md:border-b-0 md:border-r last:border-0" style={{borderColor:`rgba(191,165,184,0.12)`}}>
+              <div className="group p-7 rounded-2xl border transition-all duration-300 h-full flex flex-col"
+                style={{
+                  borderColor:`rgba(191,165,184,0.12)`,
+                  background:`rgba(255,255,255,0.03)`
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(91,45,110,0.6)`;
+                  (e.currentTarget as HTMLDivElement).style.background = `rgba(91,45,110,0.08)`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(191,165,184,0.12)`;
+                  (e.currentTarget as HTMLDivElement).style.background = `rgba(255,255,255,0.03)`;
+                }}>
+
+                {/* Numara + çizgi */}
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0"
                     style={{background: PRI, color: MUV}}>{s.n}</div>
-                  <div className="flex-1 h-px" style={{background:`rgba(191,165,184,0.12)`}} />
+                  <div className="flex-1 h-px" style={{background:`rgba(191,165,184,0.08)`}} />
                 </div>
-                <div className="text-3xl mb-3">{s.icon}</div>
-                <h3 className="text-lg font-bold mb-2" style={{color:"#fff"}}>{s.t}</h3>
-                <p className="text-sm leading-relaxed mb-5" style={{color:`rgba(191,165,184,0.55)`}}>{s.a}</p>
+
+                {/* İkon */}
+                <div className="mb-4 flex items-center justify-start" style={{color: MUV}}>
+                  {s.icon}
+                </div>
+
+                {/* İçerik */}
+                <h3 className="text-base font-bold mb-2" style={{color:"#fff"}}>{s.t}</h3>
+                <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(191,165,184,0.55)`}}>{s.a}</p>
+
+                {/* CTA */}
                 {s.ext
-                  ? <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color: MUV}}>{s.cta}</a>
-                  : <Link href={s.href} className="text-xs font-bold uppercase tracking-wider hover:opacity-70 transition-opacity" style={{color: MUV}}>{s.cta}</Link>
+                  ? <a href={s.href} target="_blank" rel="noopener noreferrer"
+                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
+                      style={{color: MUV}}>
+                      {s.cta}
+                      <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                    </a>
+                  : <Link href={s.href}
+                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
+                      style={{color: MUV}}>
+                      {s.cta}
+                      <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                    </Link>
                 }
               </div>
             </Reveal>
           ))}
         </div>
+
+        {/* WhatsApp CTA */}
         <Reveal delay={240}>
           <div className="p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-            style={{background:`rgba(191,165,184,0.08)`, border:`1.5px solid rgba(191,165,184,0.2)`}}>
+            style={{background:`rgba(91,45,110,0.2)`, border:`1.5px solid rgba(91,45,110,0.4)`}}>
             <div>
-              <p className="text-xs mb-0.5" style={{color:`rgba(191,165,184,0.5)`}}>Hızlı başlamak ister misiniz?</p>
-              <p className="font-bold text-lg" style={{color:"#fff"}}>Bir fotoğraf yeter. Gerisini biz halledelim.</p>
+              <p className="font-bold text-base mb-1" style={{color:"#fff"}}>Hazırsan ilk fotoğrafı gönder.</p>
+              <p className="text-sm" style={{color:`rgba(191,165,184,0.6)`}}>WhatsApp&apos;tan fiyatı anında paylaşalım.</p>
             </div>
             <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
-              className="shrink-0 flex items-center gap-2 px-6 py-3 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
+              className="group/btn shrink-0 inline-flex items-center gap-2 px-6 py-3 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
               style={{background: PRI, color: MUV}}>
-              💬 WhatsApp&apos;ta Başla →
+              WhatsApp&apos;ta Başla
+              <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
             </a>
           </div>
         </Reveal>
