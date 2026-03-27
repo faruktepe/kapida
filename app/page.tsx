@@ -454,7 +454,7 @@ export default function Home() {
               Bu kadar <span style={{color: MUV}}>basit.</span>
             </h2>
             <p className="text-sm md:text-base max-w-lg" style={{color:`rgba(191,165,184,0.5)`}}>
-              Kapından alıyor, temizleyip 2 gün içinde geri getiriyoruz.
+              Kapından alıyor, bakımını yapıyor ve 2 gün içinde geri getiriyoruz.
             </p>
           </div>
         </Reveal>
@@ -462,28 +462,30 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {[
             { n:"01", ikon: SUREC_IKONLARI.kamera, t:"Fotoğraf Gönder", a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al", ext:true },
-            { n:"02", ikon: SUREC_IKONLARI.kurye,  t:"Kirli Bırak",     a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver", ext:false },
-            { n:"03", ikon: SUREC_IKONLARI.sparkle,t:"Temiz Gelsin",    a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et", ext:false },
+            { n:"02", ikon: SUREC_IKONLARI.kurye,  t:"Kapıda Teslim Et",     a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver", ext:false },
+            { n:"03", ikon: SUREC_IKONLARI.sparkle,t:"Temiz Geri Al",    a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
               <div className="p-7 rounded-2xl border h-full flex flex-col transition-all duration-300"
                 style={{borderColor:`rgba(191,165,184,0.12)`, background:`rgba(255,255,255,0.03)`}}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(91,45,110,0.5)`;
-                  (e.currentTarget as HTMLDivElement).style.background = `rgba(91,45,110,0.08)`;
+                  (e.currentTarget as HTMLDivElement).style.background = `rgba(91,45,110,0.1)`;
+                  (e.currentTarget as HTMLDivElement).style.transform = `translateY(-2px)`;
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(191,165,184,0.12)`;
                   (e.currentTarget as HTMLDivElement).style.background = `rgba(255,255,255,0.03)`;
+                  (e.currentTarget as HTMLDivElement).style.transform = `translateY(0)`;
                 }}>
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0"
                     style={{background: PRI, color: MUV}}>{s.n}</div>
                   <div className="flex-1 h-px" style={{background:`rgba(191,165,184,0.08)`}} />
                 </div>
-                <div className="mb-4" style={{color: MUV}}>{s.ikon}</div>
+                <div className="mb-5 w-12 h-12 rounded-xl flex items-center justify-center" style={{background:`rgba(191,165,184,0.1)`, color: MUV}}><div style={{transform:"scale(1.4)"}}>{s.ikon}</div></div>
                 <h3 className="text-base font-bold mb-2" style={{color:"#fff"}}>{s.t}</h3>
-                <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(191,165,184,0.5)`}}>{s.a}</p>
+                <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(191,165,184,0.75)`}}>{s.a}</p>
                 {s.ext
                   ? <a href={s.href} target="_blank" rel="noopener noreferrer"
                       className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest hover:opacity-70 transition-all"
