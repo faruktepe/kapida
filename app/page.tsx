@@ -7,14 +7,6 @@ import { useEffect, useRef, useState } from "react";
 
 export const dynamic = "force-dynamic";
 
-// ═══════════════════════════════════════
-// PANTONE RENK SİSTEMİ
-// PRI  #5B2D6E  PANTONE 262C  — Ana buton, logo, vurgu, seçili state, fiyat
-// MUV  #BFA5B8  PANTONE 5155C — Buton yazısı, dark vurgu, accent 02/04, badge
-// STN  #D4C5B0  PANTONE 7527C — Border, nav bg, kart bg, neutral
-// BG   #F5F0E8               — Sayfa arka planı (7527 açık tonu)
-// DRK  #2D1A2E               — Dark section bg, ana metin (262 koyu)
-// ═══════════════════════════════════════
 const PRI = "#5B2D6E";
 const MUV = "#BFA5B8";
 const STN = "#D4C5B0";
@@ -60,7 +52,6 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
-// Hizmet 01,03 → PRI accent | Hizmet 02,04 → MUV accent
 const HIZMETLER = [
   { slug: "temizlik-bakim",  no: "01", ad: "Temizlik & Bakım",    aciklama: "Buhar temizlik, derin cila, bağcık değişimi dahil.", fiyat: "₺800+",   sure: "1-2 gün", accent: PRI, detaylar: ["Buhar ile derin temizlik", "Profesyonel cila ve parlatma", "Bağcık değişimi", "Koku giderme"] },
   { slug: "boya-restorasyon",no: "02", ad: "Boya & Restorasyon",  aciklama: "Profesyonel boya ve renk yenileme. Yıpranmışı sıfırlar.", fiyat: "₺1.200+",sure: "2-3 gün", accent: MUV, detaylar: ["Orijinal renk eşleştirme", "Deri yüzey onarımı", "Profesyonel boya uygulaması", "Koruyucu vernik"] },
@@ -108,7 +99,6 @@ function BolgeKontrol() {
           </button>
         ))}
       </div>
-
       {!secili && (
         <div className="p-6 rounded-2xl text-center" style={{background:`rgba(212,197,176,0.2)`, border:`1px solid ${STN}`}}>
           <p className="text-sm" style={{color:`rgba(45,26,46,0.4)`}}>İlçenizi seçin, hizmet verip vermediğimizi öğrenin</p>
@@ -299,64 +289,105 @@ export default function Home() {
       <Nav active="/" />
 
       {/* ── HERO ── */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 pb-8 relative overflow-hidden" style={{background: BG}}>
+      <section className="min-h-screen flex items-center px-6 md:px-12 pt-20 pb-8 relative overflow-hidden" style={{background: BG}}>
+        {/* Arka plan mor glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
-            style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform:"translate(30%,-30%)"}} />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
-            style={{background:`radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform:"translate(-30%,30%)"}} />
+          <div className="absolute top-1/2 right-0 w-[700px] h-[700px] opacity-[0.07] rounded-full"
+            style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform:"translate(20%,-50%)"}} />
         </div>
-        <div className="max-w-5xl relative">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
-              style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
-              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Anadolu Yakası · Kapıdan Kapıya</span>
+
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+
+          {/* Sol — Metin */}
+          <div className="relative z-10">
+            <Reveal>
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border"
+                style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
+                <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Anadolu Yakası · Kapıdan Kapıya</span>
+              </div>
+            </Reveal>
+
+            <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <h1 className="font-black leading-[0.9] tracking-tight mb-6" style={{fontSize:"clamp(2.8rem, 6vw, 5.5rem)", color: DRK}}>
+                Kirli gönder,<br />
+                <span style={{color: PRI}}>temiz gelsin.</span>
+              </h1>
             </div>
-          </Reveal>
-          <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h1 className="font-black leading-[0.88] tracking-tight mb-8" style={{fontSize:"clamp(2.8rem, 8vw, 7.5rem)", color: DRK}}>
-              Kirli gönder,<br />
-              <span style={{color: PRI}}>temiz gelsin.</span>
-            </h1>
+
+            <Reveal delay={150}>
+              <p className="text-base md:text-lg max-w-md leading-relaxed mb-8" style={{color:`rgba(45,26,46,0.55)`}}>
+                Ayakkabını bırak, biz halledelim.{" "}
+                <strong style={{color:`rgba(45,26,46,0.8)`, fontWeight:700}}>Kapıdan kapıya, 2 günde tertemiz teslim.</strong>
+              </p>
+            </Reveal>
+
+            <Reveal delay={250}>
+              <div className="flex flex-wrap items-center gap-4 mb-10">
+                <Link href="/siparis"
+                  className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 hover:scale-[1.02] transition-all"
+                  style={{background: PRI, color: "#fff", boxShadow:`0 8px 32px rgba(91,45,110,0.35)`}}>
+                  Ücretsiz Fiyat Al
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </Link>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
+                  style={{borderColor: STN, color:`rgba(45,26,46,0.7)`, background:"#fff"}}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={350}>
+              <div className="flex flex-wrap gap-8 pt-6" style={{borderTop:`1px solid ${STN}`}}>
+                {[
+                  { val: 150, suffix: "+", label: "Mutlu müşteri" },
+                  { val: 2,   suffix: " gün", label: "Ort. teslim" },
+                  { val: 100, suffix: "%", label: "Memnuniyet" },
+                ].map(s => (
+                  <div key={s.label}>
+                    <p className="text-3xl font-black tabular-nums" style={{color: PRI}}>
+                      <Counter target={s.val} suffix={s.suffix} />
+                    </p>
+                    <p className="text-[11px] mt-1 uppercase tracking-widest" style={{color:`rgba(45,26,46,0.35)`}}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
-          <Reveal delay={150}>
-            <p className="text-base md:text-lg max-w-xl leading-relaxed mb-10" style={{color:`rgba(45,26,46,0.55)`}}>
-              Ayakkabını bırak, biz halledelim.{" "}
-              <strong style={{color:`rgba(45,26,46,0.8)`, fontWeight:700}}>Kapıdan kapıya, 2 günde tertemiz teslim.</strong>
-            </p>
-          </Reveal>
-          <Reveal delay={250}>
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-              <Link href="/siparis"
-                className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 hover:scale-[1.02] transition-all"
-                style={{background: PRI, color: MUV, boxShadow:`0 8px 32px rgba(91,45,110,0.3)`}}>
-                Ücretsiz Fiyat Al
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all"
-                style={{borderColor: STN, color:`rgba(45,26,46,0.6)`}}>
-                💬 WhatsApp
-              </a>
+
+          {/* Sağ — Ayakkabı Görseli */}
+          <div className={`relative flex items-center justify-center transition-all duration-1000 ${heroVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+            {/* Mor halka efekti */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[420px] h-[420px] rounded-full border-2 opacity-20 animate-spin"
+                style={{borderColor: PRI, animationDuration:"20s"}} />
+              <div className="absolute w-[320px] h-[320px] rounded-full border opacity-15"
+                style={{borderColor: MUV}} />
+              {/* Mor glow blob */}
+              <div className="absolute w-[350px] h-[350px] rounded-full opacity-20"
+                style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`}} />
             </div>
-          </Reveal>
-          <Reveal delay={350}>
-            <div className="flex flex-wrap gap-10 md:gap-16 pt-8" style={{borderTop:`1px solid ${STN}`}}>
-              {[
-                { val: 150, suffix: "+", label: "Mutlu müşteri" },
-                { val: 2,   suffix: " gün", label: "Ort. teslim" },
-                { val: 100, suffix: "%", label: "Memnuniyet" },
-              ].map(s => (
-                <div key={s.label}>
-                  <p className="text-3xl md:text-4xl font-black tabular-nums" style={{color: PRI}}>
-                    <Counter target={s.val} suffix={s.suffix} />
-                  </p>
-                  <p className="text-[11px] mt-1 uppercase tracking-widest" style={{color:`rgba(45,26,46,0.35)`}}>{s.label}</p>
-                </div>
-              ))}
+
+            {/* Ayakkabı resmi */}
+            <div className="relative z-10">
+              <img
+                src="/hero-ayakkabi.png"
+                alt="Kirli ve temiz ayakkabı"
+                className="w-full max-w-[520px] object-contain drop-shadow-2xl"
+                style={{filter:"drop-shadow(0 20px 60px rgba(91,45,110,0.25))"}}
+              />
             </div>
-          </Reveal>
+
+            {/* Sağ alt ok / kurye badge */}
+            <div className="absolute bottom-8 left-4 flex items-center gap-2 px-4 py-2.5 rounded-full z-20"
+              style={{background: PRI, boxShadow:`0 4px 20px rgba(91,45,110,0.4)`}}>
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="text-xs font-bold text-white">Kurye kapında</span>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -458,8 +489,8 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-12">
           {[
             { n:"01", icon:"📱", t:"Fotoğraf Gönder", a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
-            { n:"02", icon:"🚗", t:"Kirli Bırak",  a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
-            { n:"03", icon:"✨", t:"Temiz Gelsin", a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
+            { n:"02", icon:"🚗", t:"Kirli Bırak",     a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
+            { n:"03", icon:"✨", t:"Temiz Gelsin",    a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
               <div className="p-8 border-b md:border-b-0 md:border-r last:border-0" style={{borderColor:`rgba(191,165,184,0.12)`}}>
@@ -504,7 +535,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none" style={{color: DRK}}>
                 Mahallenize <span style={{color: PRI}}>geliyoruz.</span>
               </h2>
-              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kirli gönder, temiz gelsin. Anadolu Yakası'nın tüm ilçelerine.</p>
+              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kirli gönder, temiz gelsin. Anadolu Yakası&apos;nın tüm ilçelerine.</p>
             </div>
           </div>
         </Reveal>
@@ -628,7 +659,8 @@ export default function Home() {
       <footer className="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
         style={{background:`rgba(45,26,46,0.95)`, borderTop:`1px solid rgba(191,165,184,0.15)`}}>
         <div className="flex items-center gap-3">
-          <img src="/temizgelsin-logo.png?v=1" alt="Temiz Gelsin" style={{height:"40px", width:"auto", filter:"brightness(0) invert(1)", opacity:0.85}} />
+          <img src="/temizgelsin-logo.png?v=1" alt="Temiz Gelsin"
+            style={{height:"40px", width:"auto", filter:"brightness(0) invert(1)", opacity:0.85}} />
           <span className="text-[9px] uppercase tracking-[0.2em]" style={{color:`rgba(191,165,184,0.4)`}}>Temiz Gelsin · 2025</span>
         </div>
         <div className="flex flex-wrap gap-6 text-[11px] uppercase tracking-widest" style={{color:`rgba(191,165,184,0.5)`}}>
