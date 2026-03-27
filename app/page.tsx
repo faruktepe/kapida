@@ -289,17 +289,14 @@ export default function Home() {
       <Nav active="/" />
 
       {/* ── HERO ── */}
-      <section className="min-h-screen flex items-center px-6 md:px-12 pt-20 pb-8 relative overflow-hidden" style={{background: BG}}>
-        {/* Arka plan mor glow */}
+      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 pb-8 relative overflow-hidden" style={{background: BG}}>
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 right-0 w-[700px] h-[700px] opacity-[0.07] rounded-full"
-            style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform:"translate(20%,-50%)"}} />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
+            style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform:"translate(30%,-30%)"}} />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
+            style={{background:`radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform:"translate(-30%,30%)"}} />
         </div>
-
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-
-          {/* Sol — Metin */}
-          <div className="relative z-10">
+        <div className="max-w-5xl relative">
             <Reveal>
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border"
                 style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
