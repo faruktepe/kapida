@@ -628,7 +628,7 @@ export default function Home() {
       <footer className="px-6 md:px-12 py-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
         style={{background:`rgba(45,26,46,0.95)`, borderTop:`1px solid rgba(191,165,184,0.15)`}}>
         <div className="flex items-center gap-3">
-          <img src="/temizgelsin%20logo.png?v=1" alt="Temiz Gelsin" style={{height:"36px", width:"auto"}} />
+          <img src="/temizgelsin-logo.png?v=1" alt="Temiz Gelsin" style={{height:"36px", width:"auto"}} />
           <span className="text-[9px] uppercase tracking-[0.2em]" style={{color:`rgba(191,165,184,0.4)`}}>Temiz Gelsin · 2025</span>
         </div>
         <div className="flex flex-wrap gap-6 text-[11px] uppercase tracking-widest" style={{color:`rgba(191,165,184,0.5)`}}>

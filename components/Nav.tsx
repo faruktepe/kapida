@@ -26,7 +26,7 @@ export default function Nav({ active }: { active?: string }) {
 
         <Link href="/" className="flex items-center shrink-0">
           <img
-            src="/temizgelsin%20logo.png?v=1"
+            src="/temizgelsin-logo.png?v=1"
             alt="Temiz Gelsin"
             style={{height:"44px", width:"auto", objectFit:"contain", maxWidth:"160px"}}
           />
