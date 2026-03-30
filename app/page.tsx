@@ -369,17 +369,27 @@ export default function Home() {
             <Reveal delay={180}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
                 {[
-                  "Kapıdan teslim alım",
-                  "2 gün ort. teslim",
-                  "Profesyonel bakım",
-                  "Anında fiyat",
+                  { icon: "🚚", text: "Kapıdan teslim alım" },
+                  { icon: "🧼", text: "Profesyonel bakım" },
+                  { icon: "⚡", text: "Anında fiyat" },
+                  { icon: "🛡️", text: "Güvenli hizmet" },
                 ].map((item) => (
                   <div
-                    key={item}
-                    className="px-4 py-3 rounded-2xl border text-sm font-semibold"
-                    style={{ borderColor: STN, background: "#fff", color: DRK }}
+                    key={item.text}
+                    className="group flex items-center gap-3 px-5 py-4 rounded-2xl border text-sm font-semibold transition-all duration-300 hover:scale-[1.03]"
+                    style={{
+                      borderColor: STN,
+                      background: "#fff",
+                      color: DRK,
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.03)"
+                    }}
                   >
-                    {item}
+                    <span className="text-lg group-hover:scale-110 transition-transform">
+                      {item.icon}
+                    </span>
+                    <span>
+                      {item.text}
+                    </span>
                   </div>
                 ))}
               </div>
