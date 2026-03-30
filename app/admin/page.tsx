@@ -775,6 +775,12 @@ export default function AdminPage() {
     setOrders((prev) => prev.map((order) => (order.id === id ? { ...order, status } : order)));
   };
 
+  const deleteOrder = async (id: string, orderNumber: string) => {
+    if (!confirm(`${orderNumber} numaralı sipariş silinsin mi?`)) return;
+    await supabase.from("orders").delete().eq("id", id);
+    setOrders((prev) => prev.filter((order) => order.id !== id));
+  };
+
   const toggleGalleryItem = async (id: string, current: boolean) => {
     await supabase.from("gallery").update({ active: !current }).eq("id", id);
     setGallery((prev) => prev.map((item) => (item.id === id ? { ...item, active: !current } : item)));
@@ -1055,15 +1061,24 @@ export default function AdminPage() {
                             </p>
                           </div>
 
-                          <select
-                            value={order.status}
-                            onChange={(e) => updateStatus(order.id, e.target.value)}
-                            className="rounded-xl border border-black/10 px-3 py-2 text-sm text-black outline-none transition focus:border-black"
-                          >
-                            {DURUMLAR.map((d) => (
-                              <option key={d}>{d}</option>
-                            ))}
-                          </select>
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={order.status}
+                              onChange={(e) => updateStatus(order.id, e.target.value)}
+                              className="rounded-xl border border-black/10 px-3 py-2 text-sm text-black outline-none transition focus:border-black"
+                            >
+                              {DURUMLAR.map((d) => (
+                                <option key={d}>{d}</option>
+                              ))}
+                            </select>
+
+                            <button
+                              onClick={() => deleteOrder(order.id, order.order_number)}
+                              className="rounded-xl border border-red-200 px-3 py-2 text-xs font-medium text-red-500 transition hover:border-red-400 hover:text-red-600"
+                            >
+                              Sil
+                            </button>
+                          </div>
                         </div>
 
                         <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4">
