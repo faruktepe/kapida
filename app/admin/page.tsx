@@ -258,7 +258,7 @@ function ReferralTab() {
           <button
             onClick={handleCreate}
             disabled={saving}
-            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
+            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
           >
             {saving ? "Kaydediliyor..." : "Kod Oluştur"}
           </button>
@@ -501,7 +501,7 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
+          className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
         >
           {loading ? "Yükleniyor..." : "Kaydet"}
         </button>
@@ -660,7 +660,7 @@ export default function AdminPage() {
           <button
             onClick={handleGiris}
             disabled={loginLoading}
-            className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
+            className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
           >
             {loginLoading ? "Kontrol ediliyor..." : "Giriş Yap"}
           </button>
@@ -686,7 +686,7 @@ export default function AdminPage() {
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-medium transition",
                   tab === t
-                    ? "bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
+                    ? "bg-black text-white [color:white] shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
                     : "bg-black/5 text-black/55 hover:bg-black/10 hover:text-black"
                 )}
               >
@@ -754,7 +754,7 @@ export default function AdminPage() {
                     className={cn(
                       "rounded-full border px-4 py-2 text-xs font-medium transition",
                       filter === s
-                        ? "border-black bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.14)]"
+                        ? "border-black bg-black text-white [color:white] shadow-[0_8px_24px_rgba(0,0,0,0.14)]"
                         : "border-black/10 bg-white text-black/65 hover:border-black hover:text-black"
                     )}
                   >
@@ -902,7 +902,7 @@ export default function AdminPage() {
                             "flex-1 rounded-xl px-3 py-2 text-xs font-medium transition",
                             item.active
                               ? "border border-black/10 bg-white text-black/70 hover:border-black hover:text-black"
-                              : "bg-black text-white hover:bg-black/85"
+                              : "bg-black text-white [color:white] hover:bg-black/85"
                           )}
                         >
                           {item.active ? "Gizle" : "Yayınla"}
