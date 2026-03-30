@@ -350,13 +350,17 @@ export default function Home() {
             </Reveal>
 
             <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              
+            <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <h1
-                className="font-black leading-[0.9] tracking-tight mb-6"
-                style={{ fontSize: "clamp(2.8rem, 7vw, 6.5rem)", color: DRK }}
+                className="font-black tracking-tight mb-6 leading-[0.9]"
+                style={{ fontSize: "clamp(3rem, 8vw, 7rem)", color: DRK }}
               >
-                Kapından alıyoruz.<br />
-                <span style={{ color: PRI }}>tertemiz getiriyoruz.</span>
+                <span style={{ display: "block" }}>Kirli bırak.</span>
+                <span style={{ display: "block", color: PRI }}>Temiz gelsin.</span>
               </h1>
+            </div>
+
             </div>
 
             <Reveal delay={120}>
