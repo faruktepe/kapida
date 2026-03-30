@@ -2,7 +2,13 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useMemo, useState, type ReactNode, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+  type ChangeEvent,
+} from "react";
 import { supabase } from "@/lib/supabase";
 
 const DURUMLAR = [
@@ -88,28 +94,158 @@ function formatDateTR(date: string) {
   }
 }
 
+function formatDateTimeTR(date: string) {
+  try {
+    return new Date(date).toLocaleString("tr-TR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    return "-";
+  }
+}
+
+function parsePrice(value: unknown): number {
+  if (typeof value === "number") return value;
+  if (typeof value !== "string") return 0;
+
+  const cleaned = value
+    .replace(/\s/g, "")
+    .replace(/₺/g, "")
+    .replace(/TL/gi, "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+
+  const match = cleaned.match(/-?\d+(\.\d+)?/);
+  return match ? Number(match[0]) : 0;
+}
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("tr-TR", {
+    style: "currency",
+    currency: "TRY",
+    maximumFractionDigits: 0,
+  }).format(value || 0);
+}
+
+function isToday(date: string) {
+  const d = new Date(date);
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
+}
+
+function isRecent(date: string, hours = 24) {
+  const diff = Date.now() - new Date(date).getTime();
+  return diff <= hours * 60 * 60 * 1000;
+}
+
+function getStatusStyle(status: string) {
+  switch (status) {
+    case "Teklif Bekleniyor":
+      return {
+        badge:
+          "border-amber-200 bg-amber-50 text-amber-700",
+        card:
+          "border-l-4 border-l-amber-400",
+      };
+    case "Onaylandı":
+      return {
+        badge:
+          "border-sky-200 bg-sky-50 text-sky-700",
+        card:
+          "border-l-4 border-l-sky-400",
+      };
+    case "Kuryede":
+      return {
+        badge:
+          "border-violet-200 bg-violet-50 text-violet-700",
+        card:
+          "border-l-4 border-l-violet-400",
+      };
+    case "İşlemde":
+      return {
+        badge:
+          "border-blue-200 bg-blue-50 text-blue-700",
+        card:
+          "border-l-4 border-l-blue-500",
+      };
+    case "Tamamlandı":
+      return {
+        badge:
+          "border-emerald-200 bg-emerald-50 text-emerald-700",
+        card:
+          "border-l-4 border-l-emerald-400",
+      };
+    case "Teslim Edildi":
+      return {
+        badge:
+          "border-green-200 bg-green-50 text-green-700",
+        card:
+          "border-l-4 border-l-green-500",
+      };
+    default:
+      return {
+        badge:
+          "border-stone-200 bg-stone-50 text-stone-600",
+        card:
+          "",
+      };
+  }
+}
+
 function StatCard({
   title,
   value,
-  subtle,
+  description,
+  dark,
 }: {
   title: string;
-  value: number | string;
-  subtle?: boolean;
+  value: string | number;
+  description?: string;
+  dark?: boolean;
 }) {
-  if (subtle) {
-    return (
-      <div className="rounded-2xl border border-stone-200 bg-white p-5 transition-all shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-        <p className="text-3xl font-semibold tracking-tight text-black">{value}</p>
-        <p className="mt-2 text-xs uppercase tracking-[0.16em] text-black/45">{title}</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="rounded-2xl border border-black bg-black p-5 transition-all shadow-[0_10px_35px_rgba(0,0,0,0.18)]">
-      <p className="text-3xl font-semibold tracking-tight text-white">{value}</p>
-      <p className="mt-2 text-xs uppercase tracking-[0.16em] text-white/70">{title}</p>
+    <div
+      className={cn(
+        "rounded-3xl border p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)]",
+        dark
+          ? "border-black bg-black"
+          : "border-stone-200 bg-white"
+      )}
+    >
+      <p
+        className={cn(
+          "text-[11px] uppercase tracking-[0.18em]",
+          dark ? "text-white/60" : "text-black/40"
+        )}
+      >
+        {title}
+      </p>
+      <p
+        className={cn(
+          "mt-3 text-3xl font-semibold tracking-tight",
+          dark ? "text-white" : "text-black"
+        )}
+      >
+        {value}
+      </p>
+      {description ? (
+        <p
+          className={cn(
+            "mt-2 text-sm",
+            dark ? "text-white/70" : "text-black/50"
+          )}
+        >
+          {description}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -130,7 +266,9 @@ function SectionCard({
       <div className="flex flex-col gap-4 border-b border-stone-100 px-6 py-5 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-black">{title}</h2>
-          {description ? <p className="mt-1 text-sm text-black/45">{description}</p> : null}
+          {description ? (
+            <p className="mt-1 text-sm text-black/45">{description}</p>
+          ) : null}
         </div>
         {right}
       </div>
@@ -215,10 +353,15 @@ function ReferralTab() {
 
   return (
     <div className="space-y-6">
-      <SectionCard title="Yeni Referans Kodu" description="Yeni indirim veya kampanya kodu oluştur.">
+      <SectionCard
+        title="Yeni Referans Kodu"
+        description="Yeni indirim veya kampanya kodu oluştur."
+      >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div>
-            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">Kod</label>
+            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+              Kod
+            </label>
             <input
               value={form.code}
               onChange={(e) => setForm((v) => ({ ...v, code: e.target.value.toUpperCase() }))}
@@ -228,7 +371,9 @@ function ReferralTab() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">İndirim (%)</label>
+            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+              İndirim (%)
+            </label>
             <input
               type="number"
               min="1"
@@ -240,7 +385,9 @@ function ReferralTab() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">Maks. Kullanım</label>
+            <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+              Maks. Kullanım
+            </label>
             <input
               type="number"
               min="1"
@@ -256,11 +403,14 @@ function ReferralTab() {
 
         <div className="mt-5">
           <button
-            onClick={handleCreate} style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
+            onClick={handleCreate}
+            style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
             disabled={saving}
-            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
+            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
           >
-            {saving ? "Kaydediliyor..." : "Kod Oluştur"}
+            <span style={{ color: "#fff", WebkitTextFillColor: "#fff" }}>
+              {saving ? "Kaydediliyor..." : "Kod Oluştur"}
+            </span>
           </button>
         </div>
       </SectionCard>
@@ -279,11 +429,21 @@ function ReferralTab() {
               <table className="w-full min-w-[700px] text-sm">
                 <thead className="bg-stone-50">
                   <tr className="border-b border-stone-200">
-                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">Kod</th>
-                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">İndirim</th>
-                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">Kullanım</th>
-                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">Durum</th>
-                    <th className="px-4 py-3 text-right text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">İşlem</th>
+                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
+                      Kod
+                    </th>
+                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
+                      İndirim
+                    </th>
+                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
+                      Kullanım
+                    </th>
+                    <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
+                      Durum
+                    </th>
+                    <th className="px-4 py-3 text-right text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
+                      İşlem
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -298,7 +458,9 @@ function ReferralTab() {
                     >
                       <td className="px-4 py-4 font-mono font-semibold text-black">{r.code}</td>
                       <td className="px-4 py-4 text-black">%{r.discount_percent}</td>
-                      <td className="px-4 py-4 text-black">{r.used_count} / {r.max_uses ?? "sınırsız"}</td>
+                      <td className="px-4 py-4 text-black">
+                        {r.used_count} / {r.max_uses ?? "sınırsız"}
+                      </td>
                       <td className="px-4 py-4">
                         <span
                           className={cn(
@@ -424,7 +586,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
     <SectionCard title="Yeni Fotoğraf Ekle" description="Galeriye önce/sonra görselleri yükle.">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">Başlık</label>
+          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+            Başlık
+          </label>
           <input
             value={form.title}
             onChange={(e) => setForm((v) => ({ ...v, title: e.target.value }))}
@@ -434,7 +598,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
 
         <div>
-          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">Hizmet</label>
+          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+            Hizmet
+          </label>
           <input
             value={form.service}
             onChange={(e) => setForm((v) => ({ ...v, service: e.target.value }))}
@@ -444,7 +610,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
 
         <div>
-          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">Kategori</label>
+          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+            Kategori
+          </label>
           <select
             value={form.category}
             onChange={(e) => setForm((v) => ({ ...v, category: e.target.value }))}
@@ -459,7 +627,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
 
         <div>
-          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">İlçe</label>
+          <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+            İlçe
+          </label>
           <input
             value={form.district}
             onChange={(e) => setForm((v) => ({ ...v, district: e.target.value }))}
@@ -476,7 +646,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
 
           return (
             <div key={type}>
-              <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">{label}</label>
+              <label className="mb-2 block text-[11px] uppercase tracking-[0.16em] text-black/45">
+                {label}
+              </label>
               <label className="block cursor-pointer">
                 <div className="flex h-44 items-center justify-center overflow-hidden rounded-2xl border border-dashed border-black/15 bg-stone-50 transition hover:border-black/35">
                   {preview ? (
@@ -484,7 +656,9 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
                   ) : (
                     <div className="text-center text-black/25">
                       <p className="mb-1 text-3xl text-black/30">+</p>
-                      <p className="text-[11px] uppercase tracking-[0.16em] text-black/35">Görsel Yükle</p>
+                      <p className="text-[11px] uppercase tracking-[0.16em] text-black/35">
+                        Görsel Yükle
+                      </p>
                     </div>
                   )}
                 </div>
@@ -499,11 +673,14 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="mt-5">
         <button
-          onClick={handleSubmit} style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
+          onClick={handleSubmit}
+          style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
           disabled={loading}
-          className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
+          className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
         >
-          {loading ? "Yükleniyor..." : "Kaydet"}
+          <span style={{ color: "#fff", WebkitTextFillColor: "#fff" }}>
+            {loading ? "Yükleniyor..." : "Kaydet"}
+          </span>
         </button>
       </div>
     </SectionCard>
@@ -523,6 +700,7 @@ export default function AdminPage() {
   const [filter, setFilter] = useState("Tümü");
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"siparisler" | "galeri" | "referanslar">("siparisler");
+  const [lastRefresh, setLastRefresh] = useState<string>("");
 
   useEffect(() => {
     fetch("/api/admin/auth")
@@ -536,6 +714,17 @@ export default function AdminPage() {
       })
       .catch(() => setGiris(false));
   }, []);
+
+  useEffect(() => {
+    if (!giris) return;
+
+    const interval = setInterval(() => {
+      fetchOrders(false);
+      fetchGallery(false);
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [giris]);
 
   const handleGiris = async () => {
     setLoginLoading(true);
@@ -568,14 +757,15 @@ export default function AdminPage() {
     setSifre("");
   };
 
-  const fetchOrders = async () => {
-    setLoading(true);
+  const fetchOrders = async (showLoader = true) => {
+    if (showLoader) setLoading(true);
     const { data } = await supabase.from("orders").select("*").order("created_at", { ascending: false });
     setOrders((data ?? []) as Order[]);
-    setLoading(false);
+    setLastRefresh(new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }));
+    if (showLoader) setLoading(false);
   };
 
-  const fetchGallery = async () => {
+  const fetchGallery = async (_showLoader = true) => {
     const { data } = await supabase.from("gallery").select("*").order("created_at", { ascending: false });
     setGallery(data ?? []);
   };
@@ -600,29 +790,58 @@ export default function AdminPage() {
     const byStatus = filter === "Tümü" ? orders : orders.filter((o) => o.status === filter);
     const q = search.trim().toLowerCase();
 
-    if (!q) return byStatus;
+    const searched = !q
+      ? byStatus
+      : byStatus.filter((order) => {
+          const info = parseJSON<CustomerInfo>(order.customer_info, {});
+          const text = [
+            order.order_number,
+            order.brand,
+            order.model ?? "",
+            order.color,
+            order.shoe_type,
+            order.price,
+            order.status,
+            info.ad ?? "",
+            info.telefon ?? "",
+            info.ilce ?? "",
+            info.adres ?? "",
+          ]
+            .join(" ")
+            .toLowerCase();
 
-    return byStatus.filter((order) => {
-      const info = parseJSON<CustomerInfo>(order.customer_info, {});
-      const text = [
-        order.order_number,
-        order.brand,
-        order.model ?? "",
-        order.color,
-        order.shoe_type,
-        order.price,
-        order.status,
-        info.ad ?? "",
-        info.telefon ?? "",
-        info.ilce ?? "",
-        info.adres ?? "",
-      ]
-        .join(" ")
-        .toLowerCase();
+          return text.includes(q);
+        });
 
-      return text.includes(q);
+    return [...searched].sort((a, b) => {
+      const aRecent = isRecent(a.created_at) ? 1 : 0;
+      const bRecent = isRecent(b.created_at) ? 1 : 0;
+
+      if (aRecent !== bRecent) return bRecent - aRecent;
+      if (a.status === "Teklif Bekleniyor" && b.status !== "Teklif Bekleniyor") return -1;
+      if (b.status === "Teklif Bekleniyor" && a.status !== "Teklif Bekleniyor") return 1;
+
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
   }, [orders, filter, search]);
+
+  const dashboardStats = useMemo(() => {
+    const totalRevenue = orders.reduce((sum, order) => sum + parsePrice(order.price), 0);
+    const todayOrders = orders.filter((order) => isToday(order.created_at)).length;
+    const pendingQuotes = orders.filter((order) => order.status === "Teklif Bekleniyor").length;
+    const processing = orders.filter((order) => order.status === "İşlemde").length;
+    const delivered = orders.filter((order) => order.status === "Teslim Edildi").length;
+    const avgBasket = orders.length ? totalRevenue / orders.length : 0;
+
+    return {
+      totalRevenue,
+      todayOrders,
+      pendingQuotes,
+      processing,
+      delivered,
+      avgBasket,
+    };
+  }, [orders]);
 
   if (giris === null) {
     return (
@@ -659,10 +878,13 @@ export default function AdminPage() {
 
           <button
             onClick={handleGiris}
+            style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
             disabled={loginLoading}
-            style={{ color: "#fff" }} className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
+            className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white transition hover:bg-black/85 disabled:opacity-50"
           >
-            {loginLoading ? "Kontrol ediliyor..." : "Giriş Yap"}
+            <span style={{ color: "#fff", WebkitTextFillColor: "#fff" }}>
+              {loginLoading ? "Kontrol ediliyor..." : "Giriş Yap"}
+            </span>
           </button>
         </div>
       </main>
@@ -676,17 +898,21 @@ export default function AdminPage() {
           <div>
             <p className="text-[11px] uppercase tracking-[0.22em] text-black/40">Temiz Gelsin</p>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight text-black">Admin Dashboard</h1>
+            <p className="mt-1 text-sm text-black/45">
+              Son yenileme: {lastRefresh || "-"}
+            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             {(["siparisler", "galeri", "referanslar"] as const).map((t) => (
               <button
                 key={t}
-                onClick={() => setTab(t)} style={tab === t ? { color: "#fff" } : undefined}
+                onClick={() => setTab(t)}
+                style={tab === t ? { color: "#fff", WebkitTextFillColor: "#fff" } : undefined}
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-medium transition",
                   tab === t
-                    ? "bg-black text-white [color:white] shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
+                    ? "bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
                     : "bg-black/5 text-black/55 hover:bg-black/10 hover:text-black"
                 )}
               >
@@ -717,18 +943,37 @@ export default function AdminPage() {
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
         {tab === "siparisler" ? (
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-              <StatCard title="Toplam Sipariş" value={orders.length} />
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
               <StatCard
-                title="Teklif Bekleniyor"
-                value={orders.filter((o) => o.status === "Teklif Bekleniyor").length}
-                subtle
+                title="Toplam Sipariş"
+                value={orders.length}
+                description="Tüm zamanlar"
+                dark
               />
-              <StatCard title="İşlemde" value={orders.filter((o) => o.status === "İşlemde").length} subtle />
               <StatCard
-                title="Teslim Edildi"
-                value={orders.filter((o) => o.status === "Teslim Edildi").length}
-                subtle
+                title="Bugün Gelen"
+                value={dashboardStats.todayOrders}
+                description="Günlük sipariş"
+              />
+              <StatCard
+                title="Teklif Bekleyen"
+                value={dashboardStats.pendingQuotes}
+                description="Öncelikli takip"
+              />
+              <StatCard
+                title="İşlemde"
+                value={dashboardStats.processing}
+                description="Aktif operasyon"
+              />
+              <StatCard
+                title="Toplam Ciro"
+                value={formatCurrency(dashboardStats.totalRevenue)}
+                description="Sipariş toplamı"
+              />
+              <StatCard
+                title="Ort. Sepet"
+                value={formatCurrency(dashboardStats.avgBasket)}
+                description="Sipariş başı"
               />
             </div>
 
@@ -750,11 +995,12 @@ export default function AdminPage() {
                 {["Tümü", ...DURUMLAR].map((s) => (
                   <button
                     key={s}
-                    onClick={() => setFilter(s)} style={filter === s ? { color: "#fff" } : undefined}
+                    onClick={() => setFilter(s)}
+                    style={filter === s ? { color: "#fff", WebkitTextFillColor: "#fff" } : undefined}
                     className={cn(
                       "rounded-full border px-4 py-2 text-xs font-medium transition",
                       filter === s
-                        ? "border-black bg-black text-white [color:white] shadow-[0_8px_24px_rgba(0,0,0,0.14)]"
+                        ? "border-black bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.14)]"
                         : "border-black/10 bg-white text-black/65 hover:border-black hover:text-black"
                     )}
                   >
@@ -772,16 +1018,41 @@ export default function AdminPage() {
                   {filteredOrders.map((order) => {
                     const info = parseJSON<CustomerInfo>(order.customer_info, {});
                     const hizmetler = parseJSON<string[]>(order.services, []);
+                    const statusStyle = getStatusStyle(order.status);
+                    const recent = isRecent(order.created_at);
 
                     return (
                       <div
                         key={order.id}
-                        className="rounded-3xl border border-stone-200 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+                        className={cn(
+                          "rounded-3xl border border-stone-200 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]",
+                          statusStyle.card
+                        )}
                       >
                         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                           <div>
-                            <p className="font-mono text-sm font-semibold text-black">{order.order_number}</p>
-                            <p className="mt-1 text-xs text-black/40">{formatDateTR(order.created_at)}</p>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="font-mono text-sm font-semibold text-black">
+                                {order.order_number}
+                              </p>
+                              {recent ? (
+                                <span className="rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-red-600">
+                                  Yeni
+                                </span>
+                              ) : null}
+                              <span
+                                className={cn(
+                                  "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]",
+                                  statusStyle.badge
+                                )}
+                              >
+                                {order.status}
+                              </span>
+                            </div>
+
+                            <p className="mt-2 text-xs text-black/40">
+                              {formatDateTimeTR(order.created_at)}
+                            </p>
                           </div>
 
                           <select
@@ -810,12 +1081,16 @@ export default function AdminPage() {
                           </div>
                           <div>
                             <p className="text-[11px] uppercase tracking-[0.14em] text-black/40">Fiyat</p>
-                            <p className="mt-1 text-sm font-semibold text-black">{order.price || "-"}</p>
+                            <p className="mt-1 text-sm font-semibold text-black">
+                              {order.price || "-"}
+                            </p>
                           </div>
                         </div>
 
                         <div className="mt-5">
-                          <p className="text-[11px] uppercase tracking-[0.14em] text-black/40">Ayakkabı & Hizmetler</p>
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-black/40">
+                            Ayakkabı & Hizmetler
+                          </p>
                           <p className="mt-1 text-sm text-black">
                             {order.brand}
                             {order.model ? ` — ${order.model}` : ""}
@@ -889,20 +1164,36 @@ export default function AdminPage() {
                         ))}
                       </div>
 
-                      <p className="text-sm font-semibold text-black">{item.title}</p>
-                      <p className="mt-1 text-xs text-black/45">
-                        {item.service}
-                        {item.district ? ` · ${item.district}` : ""}
-                      </p>
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-black">{item.title}</p>
+                          <p className="mt-1 text-xs text-black/45">
+                            {item.service}
+                            {item.district ? ` · ${item.district}` : ""}
+                          </p>
+                        </div>
+
+                        <span
+                          className={cn(
+                            "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]",
+                            item.active
+                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                              : "border-stone-200 bg-stone-50 text-stone-500"
+                          )}
+                        >
+                          {item.active ? "Yayında" : "Pasif"}
+                        </span>
+                      </div>
 
                       <div className="mt-4 flex gap-2">
                         <button
                           onClick={() => toggleGalleryItem(item.id, item.active)}
+                          style={!item.active ? { color: "#fff", WebkitTextFillColor: "#fff" } : undefined}
                           className={cn(
                             "flex-1 rounded-xl px-3 py-2 text-xs font-medium transition",
                             item.active
                               ? "border border-black/10 bg-white text-black/70 hover:border-black hover:text-black"
-                              : "bg-black text-white [color:white] hover:bg-black/85"
+                              : "bg-black text-white hover:bg-black/85"
                           )}
                         >
                           {item.active ? "Gizle" : "Yayınla"}
