@@ -660,7 +660,7 @@ export default function AdminPage() {
           <button
             onClick={handleGiris}
             disabled={loginLoading}
-            className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
+            style={{ color: "#fff" }} className="mt-5 w-full rounded-2xl bg-black py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
           >
             {loginLoading ? "Kontrol ediliyor..." : "Giriş Yap"}
           </button>
