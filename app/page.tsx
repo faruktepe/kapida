@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import ScratchReveal from "@/components/ScratchReveal";
+import { supabase } from "@/lib/supabase";
 import { useEffect, useRef, useState } from "react";
 
 export const dynamic = "force-dynamic";
@@ -296,7 +297,25 @@ function GaleriOnizleme() {
 
 export default function Home() {
   const [heroVisible, setHeroVisible] = useState(false);
+  const [heroGallery, setHeroGallery] = useState<{ before_url: string | null; after_url: string | null } | null>(null);
+
   useEffect(() => { setTimeout(() => setHeroVisible(true), 50); }, []);
+
+  useEffect(() => {
+    const fetchHeroGallery = async () => {
+      const { data } = await supabase
+        .from("gallery")
+        .select("before_url,after_url")
+        .eq("active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (data) setHeroGallery(data);
+    };
+
+    fetchHeroGallery();
+  }, []);
 
   return (
     <ScratchReveal>
@@ -418,7 +437,13 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
                     <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(212,197,176,0.22), rgba(191,165,184,0.18))` }}>
-                      <img src="/before-shoe.jpg" alt="Önce" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      {heroGallery?.before_url ? (
+                        <img src={heroGallery.before_url} alt="Önce" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-sm font-medium" style={{ color: `rgba(45,26,46,0.35)` }}>
+                          Önce görseli
+                        </div>
+                      )}
                       <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.7)`, color: "#fff" }}>
                         Önce
                       </div>
@@ -427,7 +452,13 @@ export default function Home() {
 
                   <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
                     <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(91,45,110,0.18), rgba(191,165,184,0.18))` }}>
-                      <img src="/after-shoe.jpg" alt="Sonra" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      {heroGallery?.after_url ? (
+                        <img src={heroGallery.after_url} alt="Sonra" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-sm font-medium" style={{ color: `rgba(45,26,46,0.35)` }}>
+                          Sonra görseli
+                        </div>
+                      )}
                       <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>
                         Sonra
                       </div>
