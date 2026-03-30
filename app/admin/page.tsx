@@ -682,7 +682,7 @@ export default function AdminPage() {
             {(["siparisler", "galeri", "referanslar"] as const).map((t) => (
               <button
                 key={t}
-                onClick={() => setTab(t)}
+                onClick={() => setTab(t)} style={tab === t ? { color: "#fff" } : undefined}
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-medium transition",
                   tab === t
@@ -750,7 +750,7 @@ export default function AdminPage() {
                 {["Tümü", ...DURUMLAR].map((s) => (
                   <button
                     key={s}
-                    onClick={() => setFilter(s)}
+                    onClick={() => setFilter(s)} style={filter === s ? { color: "#fff" } : undefined}
                     className={cn(
                       "rounded-full border px-4 py-2 text-xs font-medium transition",
                       filter === s
