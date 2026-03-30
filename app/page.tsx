@@ -363,6 +363,10 @@ export default function Home() {
               <p className="text-base md:text-lg max-w-2xl leading-relaxed mb-8" style={{ color: `rgba(45,26,46,0.58)` }}>
                 Sneaker, deri, süet ya da klasik fark etmez. Ayakkabını kapından alıyor,
                 profesyonel bakımını yapıyor ve kısa sürede sana geri teslim ediyoruz.
+
+                <span style={{display:'block',marginTop:'12px',fontWeight:600}}>Her ayakkabı, detaylı bakım ritüelinden geçer.</span>
+                <span style={{display:'block',marginTop:'6px',opacity:0.7}}>Özel solüsyonlar · hassas yüzey koruması · profesyonel ekipman</span>
+                <span style={{display:'block',marginTop:'6px',fontWeight:600}}>✔ Memnuniyet garantili hizmet</span>
               </p>
             </Reveal>
 
@@ -376,7 +380,7 @@ export default function Home() {
                 ].map((item) => (
                   <div
                     key={item.text}
-                    className="group flex items-center gap-3 px-5 py-4 rounded-2xl border text-sm font-semibold transition-all duration-300 hover:scale-[1.03]"
+                    className="group flex items-center gap-3 px-5 py-4 rounded-2xl border text-sm font-semibold transition-all duration-300 hover:scale-[1.05] hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
                     style={{
                       borderColor: STN,
                       background: "#fff",
@@ -469,7 +473,7 @@ export default function Home() {
                           Sonra görseli
                         </div>
                       )}
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>Gerçek müşteri sonucu
                         Sonra
                       </div>
                     </div>
