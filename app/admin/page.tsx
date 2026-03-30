@@ -256,7 +256,7 @@ function ReferralTab() {
 
         <div className="mt-5">
           <button
-            onClick={handleCreate}
+            onClick={handleCreate} style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
             disabled={saving}
             className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
           >
@@ -499,7 +499,7 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="mt-5">
         <button
-          onClick={handleSubmit}
+          onClick={handleSubmit} style={{ color: "#fff", WebkitTextFillColor: "#fff" }}
           disabled={loading}
           className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white [color:white] transition hover:bg-black/85 disabled:opacity-50"
         >
