@@ -117,18 +117,45 @@ function GalleryUploadForm({ onSuccess }: { onSuccess: () => void }) {
 }
 
 export default function AdminPage() {
-  const [giris, setGiris] = useState(false);
+  const [giris, setGiris] = useState<boolean | null>(null);
   const [sifre, setSifre] = useState("");
   const [sifreHata, setSifreHata] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
   const [orders, setOrders] = useState<Record<string, unknown>[]>([]);
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("Tümü");
   const [tab, setTab] = useState<"siparisler" | "galeri">("siparisler");
 
-  const handleGiris = () => {
-    if (sifre === "kapida2025!") { setGiris(true); fetchOrders(); fetchGallery(); }
-    else setSifreHata(true);
+  useEffect(() => {
+    fetch("/api/admin/auth")
+      .then(r => r.json())
+      .then(({ authenticated }) => {
+        setGiris(authenticated);
+        if (authenticated) { fetchOrders(); fetchGallery(); }
+      })
+      .catch(() => setGiris(false));
+  }, []);
+
+  const handleGiris = async () => {
+    setLoginLoading(true);
+    setSifreHata(false);
+    try {
+      const res = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: sifre }),
+      });
+      if (res.ok) { setGiris(true); fetchOrders(); fetchGallery(); }
+      else setSifreHata(true);
+    } catch { setSifreHata(true); }
+    setLoginLoading(false);
+  };
+
+  const handleCikis = async () => {
+    await fetch("/api/admin/auth", { method: "DELETE" });
+    setGiris(false);
+    setSifre("");
   };
   const fetchOrders = async () => {
     setLoading(true);
@@ -155,6 +182,12 @@ export default function AdminPage() {
 
   const filtered = filter === "Tümü" ? orders : orders.filter(o => o.status === filter);
 
+  if (giris === null) return (
+    <main className="min-h-screen flex items-center justify-center bg-black">
+      <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+    </main>
+  );
+
   if (!giris) return (
     <main className="min-h-screen flex items-center justify-center bg-black">
       <div className="bg-white p-10 max-w-sm w-full mx-4">
@@ -162,9 +195,9 @@ export default function AdminPage() {
         <p className="text-black/40 text-sm mb-6">Yönetici girişi yapın.</p>
         <input type="password" value={sifre} onChange={e => { setSifre(e.target.value); setSifreHata(false); }}
           onKeyDown={e => e.key === "Enter" && handleGiris()}
-          className="w-full border border-black/20 p-3 text-sm focus:outline-none focus:border-black mb-3" placeholder="Şifre" />
+          className="w-full border border-black/20 p-3 text-sm focus:outline-none focus:border-black mb-3" placeholder="Şifre" autoFocus />
         {sifreHata && <p className="text-red-500 text-xs mb-3">Hatalı şifre.</p>}
-        <button onClick={handleGiris} className="w-full bg-black text-white py-3 text-sm font-medium hover:bg-black/80">Giriş Yap</button>
+        <button onClick={handleGiris} disabled={loginLoading} className="w-full bg-black text-white py-3 text-sm font-medium hover:bg-black/80 disabled:opacity-50">{loginLoading ? "Kontrol ediliyor..." : "Giriş Yap"}</button>
       </div>
     </main>
   );
@@ -185,7 +218,7 @@ export default function AdminPage() {
         </div>
         <div className="flex items-center gap-4">
           <button onClick={() => { fetchOrders(); fetchGallery(); }} className="text-sm text-white/60 hover:text-white">↻ Yenile</button>
-          <button onClick={() => setGiris(false)} className="text-sm text-white/60 hover:text-white">Çıkış</button>
+          <button onClick={handleCikis} className="text-sm text-white/60 hover:text-white">Çıkış</button>
         </div>
       </header>
 
