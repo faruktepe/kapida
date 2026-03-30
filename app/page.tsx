@@ -373,27 +373,39 @@ export default function Home() {
             <Reveal delay={180}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
                 {[
-                  { icon: "🚚", text: "Kapıdan teslim alım" },
-                  { icon: "🧼", text: "Profesyonel bakım" },
-                  { icon: "⚡", text: "Anında fiyat" },
-                  { icon: "🛡️", text: "Güvenli hizmet" },
+                  { no: "01", title: "Kapıdan Alım", sub: "Kurye yönlendirme" },
+                  { no: "02", title: "Profesyonel Bakım", sub: "Detaylı işlem" },
+                  { no: "03", title: "Anında Fiyat", sub: "Fotoğrafla teklif" },
+                  { no: "04", title: "Güvenli Teslim", sub: "Özenli paketleme" },
                 ].map((item) => (
                   <div
-                    key={item.text}
-                    className="group flex items-center gap-3 px-5 py-4 rounded-2xl border text-sm font-semibold transition-all duration-300 hover:scale-[1.05] hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
+                    key={item.title}
+                    className="group rounded-[24px] border px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(45,26,46,0.08)]"
                     style={{
                       borderColor: STN,
-                      background: "#fff",
-                      color: DRK,
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.03)"
+                      background: "rgba(255,255,255,0.72)",
+                      backdropFilter: "blur(8px)"
                     }}
                   >
-                    <span className="text-lg group-hover:scale-110 transition-transform">
-                      {item.icon}
-                    </span>
-                    <span>
-                      {item.text}
-                    </span>
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.18em]" style={{ color: `rgba(45,26,46,0.28)` }}>
+                          {item.no}
+                        </p>
+                        <p className="mt-2 text-[18px] font-black leading-tight" style={{ color: DRK }}>
+                          {item.title}
+                        </p>
+                        <p className="mt-1 text-[12px]" style={{ color: `rgba(45,26,46,0.45)` }}>
+                          {item.sub}
+                        </p>
+                      </div>
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 transition-all duration-300 group-hover:scale-105"
+                        style={{ background: `rgba(91,45,110,0.08)`, color: PRI, border: `1px solid rgba(91,45,110,0.14)` }}
+                      >
+                        ●
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -458,8 +470,16 @@ export default function Home() {
                           Önce görseli
                         </div>
                       )}
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.7)`, color: "#fff" }}>
-                        Önce
+                      <div
+                        className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
+                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 100%)" }}
+                      >
+                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.72)`, color: "#fff" }}>
+                          Önce
+                        </span>
+                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: `rgba(45,26,46,0.68)` }}>
+                          Orijinal Durum
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -473,35 +493,57 @@ export default function Home() {
                           Sonra görseli
                         </div>
                       )}
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>Gerçek müşteri sonucu
-                        Sonra
+                      <div
+                        className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
+                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 100%)" }}
+                      >
+                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>
+                          Sonra
+                        </span>
+                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: PRI }}>
+                          Temizgelsin Sonucu
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-[24px] p-5 border flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ borderColor: STN, background: `rgba(245,240,232,0.8)` }}>
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.2em] mb-1" style={{ color: `rgba(45,26,46,0.35)` }}>
-                      Hızlı başlangıç
-                    </p>
-                    <p className="text-lg font-black" style={{ color: DRK }}>
-                      Fotoğraf gönder, fiyatı anında öğren.
-                    </p>
-                    <p className="text-sm mt-1" style={{ color: `rgba(45,26,46,0.5)` }}>
-                      Uygunsa siparişi oluştur, kuryeyi yönlendirelim.
-                    </p>
+                <div className="mt-4 rounded-[24px] p-5 border" style={{ borderColor: STN, background: `rgba(245,240,232,0.82)` }}>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <p className="text-[11px] uppercase tracking-[0.2em] mb-1" style={{ color: `rgba(45,26,46,0.35)` }}>
+                        Hızlı başlangıç
+                      </p>
+                      <p className="text-lg font-black" style={{ color: DRK }}>
+                        Fotoğraf gönder, fiyatı anında öğren.
+                      </p>
+                      <p className="text-sm mt-1" style={{ color: `rgba(45,26,46,0.5)` }}>
+                        Uygunsa siparişi oluştur, kuryeyi yönlendirelim.
+                      </p>
+                    </div>
+
+                    <a
+                      href={`https://wa.me/${WHATSAPP}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 px-6 py-3 rounded-full text-sm font-bold transition-all hover:opacity-90"
+                      style={{ background: PRI, color: "#fff" }}
+                    >
+                      WhatsApp’tan Başla
+                    </a>
                   </div>
 
-                  <a
-                    href={`https://wa.me/${WHATSAPP}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0 px-6 py-3 rounded-full text-sm font-bold transition-all hover:opacity-90"
-                    style={{ background: PRI, color: "#fff" }}
-                  >
-                    WhatsApp’tan Başla
-                  </a>
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {["Derin temizlik", "Yüzey bakımı", "Renk canlandırma"].map((item) => (
+                      <div
+                        key={item}
+                        className="rounded-2xl px-3 py-3 text-center text-[11px] font-semibold"
+                        style={{ background: "#fff", color: `rgba(45,26,46,0.66)`, border: `1px solid ${STN}` }}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
