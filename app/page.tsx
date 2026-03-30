@@ -336,7 +336,7 @@ export default function Home() {
                 style={{ fontSize: "clamp(2.8rem, 7vw, 6.5rem)", color: DRK }}
               >
                 Kapından alıyoruz.<br />
-                <span style={{ color: PRI }}>2 günde tertemiz getiriyoruz.</span>
+                <span style={{ color: PRI }}>tertemiz getiriyoruz.</span>
               </h1>
             </div>
 
@@ -565,7 +565,7 @@ export default function Home() {
               Bu kadar <span style={{color: MUV}}>basit.</span>
             </h2>
             <p className="text-sm md:text-base max-w-lg" style={{color:`rgba(191,165,184,0.5)`}}>
-              Kapından alıyor, bakımını yapıyor ve 2 gün içinde geri getiriyoruz.
+              Kapından alıyor, bakımını yapıyor ve tertemiz getiriyoruz.
             </p>
           </div>
         </Reveal>
