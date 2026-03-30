@@ -18,6 +18,11 @@ type ReferralCode = {
   max_uses: number | null; used_count: number; active: boolean; created_at: string;
 };
 
+type ReferralCode = {
+  id: string; code: string; discount_percent: number;
+  max_uses: number | null; used_count: number; active: boolean; created_at: string;
+};
+
 type GalleryItem = {
   id: string; title: string; category: string; service: string;
   district: string; before_url: string | null; after_url: string | null;
@@ -65,6 +70,54 @@ function ReferralTab() {
           <div className="bg-white border border-stone-200 overflow-hidden"><table className="w-full text-sm">
             <thead><tr className="border-b border-stone-100"><th className="text-left text-[10px] uppercase tracking-wider text-black/40 px-4 py-3 font-normal">Kod</th><th className="text-left text-[10px] uppercase tracking-wider text-black/40 px-4 py-3 font-normal">\u0130ndirim</th><th className="text-left text-[10px] uppercase tracking-wider text-black/40 px-4 py-3 font-normal">Kullan\u0131m</th><th className="text-left text-[10px] uppercase tracking-wider text-black/40 px-4 py-3 font-normal">Durum</th><th className="px-4 py-3"></th></tr></thead>
             <tbody>{codes.map((r, i) => (<tr key={r.id} className={`border-b border-stone-100 last:border-0 ${!r.active ? "opacity-40" : ""} ${i % 2 === 0 ? "" : "bg-stone-50/50"}`}><td className="px-4 py-3 font-mono font-bold">{r.code}</td><td className="px-4 py-3">%{r.discount_percent}</td><td className="px-4 py-3"><span className="font-medium">{r.used_count}</span><span className="text-black/30"> / {r.max_uses ?? "\u221e"}</span></td><td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 border ${r.active ? "border-green-200 text-green-700 bg-green-50" : "border-black/10 text-black/30"}`}>{r.active ? "Aktif" : "Pasif"}</span></td><td className="px-4 py-3"><div className="flex gap-2 justify-end"><button onClick={() => toggleActive(r.id, r.active)} className="text-xs px-3 py-1.5 border border-black/20 hover:border-black text-black/50 hover:text-black transition-colors">{r.active ? "Durdur" : "Aktif Et"}</button><button onClick={() => deleteCode(r.id, r.code)} className="text-xs px-3 py-1.5 border border-red-200 text-red-400 hover:border-red-400 hover:text-red-600 transition-colors">Sil</button></div></td></tr>))}</tbody>
+          </table></div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+function ReferralTab() {
+  const [codes, setCodes] = useState<ReferralCode[]>([]);
+  const [form, setForm] = useState({ code: "", discount_percent: "10", max_uses: "" });
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const fetchCodes = async () => { setLoading(true); const { data } = await supabase.from("referral_codes").select("*").order("created_at", { ascending: false }); setCodes(data ?? []); setLoading(false); };
+  useEffect(() => { fetchCodes(); }, []);
+  const handleCreate = async () => {
+    const code = form.code.toUpperCase().trim();
+    if (!code) { setError("Kod zorunlu."); return; }
+    const discount = parseInt(form.discount_percent);
+    if (!discount || discount < 1 || discount > 100) { setError("Indirim 1-100 olmali."); return; }
+    setSaving(true); setError("");
+    const { error: dbError } = await supabase.from("referral_codes").insert({ code, discount_percent: discount, max_uses: form.max_uses ? parseInt(form.max_uses) : null, used_count: 0, active: true });
+    if (dbError) { setError(dbError.code === "23505" ? "Bu kod zaten mevcut." : "Hata: " + dbError.message); }
+    else { setForm({ code: "", discount_percent: "10", max_uses: "" }); fetchCodes(); }
+    setSaving(false);
+  };
+  const toggleActive = async (id: string, current: boolean) => { await supabase.from("referral_codes").update({ active: !current }).eq("id", id); setCodes(c => c.map(r => r.id === id ? { ...r, active: !current } : r)); };
+  const deleteCode = async (id: string, code: string) => { if (!confirm(code + " silinsin mi?")) return; await supabase.from("referral_codes").delete().eq("id", id); setCodes(c => c.filter(r => r.id !== id)); };
+  const inp = "border border-black/15 bg-white px-3 py-2.5 text-sm focus:outline-none focus:border-black transition-colors";
+  return (
+    <div>
+      <div className="bg-white border border-stone-200 p-6 mb-8">
+        <h2 className="font-bold mb-6">Yeni Referans Kodu</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div><label className="text-[10px] uppercase tracking-wider text-black/40 block mb-1.5">Kod *</label><input value={form.code} onChange={e => setForm(v => ({ ...v, code: e.target.value.toUpperCase() }))} className={"w-full " + inp + " font-mono"} placeholder="AHMET10" /></div>
+          <div><label className="text-[10px] uppercase tracking-wider text-black/40 block mb-1.5">Indirim (%) *</label><input type="number" min="1" max="100" value={form.discount_percent} onChange={e => setForm(v => ({ ...v, discount_percent: e.target.value }))} className={"w-full " + inp} /></div>
+          <div><label className="text-[10px] uppercase tracking-wider text-black/40 block mb-1.5">Maks. Kullanim</label><input type="number" min="1" value={form.max_uses} onChange={e => setForm(v => ({ ...v, max_uses: e.target.value }))} className={"w-full " + inp} placeholder="Sinirsis" /></div>
+        </div>
+        {error && <p className="text-red-500 text-xs mb-4">{error}</p>}
+        <button onClick={handleCreate} disabled={saving} className="bg-black text-white px-6 py-2.5 text-sm font-medium hover:bg-black/80 disabled:opacity-50">{saving ? "Kaydediliyor..." : "Olustur"}</button>
+      </div>
+      <div>
+        <h2 className="font-bold mb-4">Mevcut Kodlar ({codes.length})</h2>
+        {loading ? <p className="text-center py-10 text-black/40">Yukleniyor...</p> : codes.length === 0 ? <p className="text-center py-10 text-black/30 text-sm">Henuz kod olusturulmadi.</p> : (
+          <div className="bg-white border border-stone-200 overflow-hidden"><table className="w-full text-sm">
+            <thead><tr className="border-b border-stone-100"><th className="text-left text-[10px] px-4 py-3 font-normal text-black/40">KOD</th><th className="text-left text-[10px] px-4 py-3 font-normal text-black/40">INDIRIM</th><th className="text-left text-[10px] px-4 py-3 font-normal text-black/40">KULLANIM</th><th className="text-left text-[10px] px-4 py-3 font-normal text-black/40">DURUM</th><th className="px-4 py-3"></th></tr></thead>
+            <tbody>{codes.map((r, i) => (<tr key={r.id} className={"border-b border-stone-100 last:border-0 " + (!r.active ? "opacity-40" : "") + (i % 2 !== 0 ? " bg-stone-50/50" : "")}><td className="px-4 py-3 font-mono font-bold">{r.code}</td><td className="px-4 py-3">%{r.discount_percent}</td><td className="px-4 py-3">{r.used_count} / {r.max_uses ?? "sinirsiz"}</td><td className="px-4 py-3"><span className={"text-xs px-2 py-0.5 border " + (r.active ? "border-green-200 text-green-700 bg-green-50" : "border-black/10 text-black/30")}>{r.active ? "Aktif" : "Pasif"}</span></td><td className="px-4 py-3"><div className="flex gap-2 justify-end"><button onClick={() => toggleActive(r.id, r.active)} className="text-xs px-3 py-1.5 border border-black/20 hover:border-black text-black/50 hover:text-black">{r.active ? "Durdur" : "Aktif Et"}</button><button onClick={() => deleteCode(r.id, r.code)} className="text-xs px-3 py-1.5 border border-red-200 text-red-400 hover:border-red-500 hover:text-red-600">Sil</button></div></td></tr>))}</tbody>
           </table></div>
         )}
       </div>
@@ -264,7 +317,7 @@ export default function AdminPage() {
             {(["siparisler", "galeri", "referanslar"] as const).map(t => (
               <button key={t} onClick={() => setTab(t)}
                 className={`px-4 py-1.5 text-xs font-medium rounded transition-colors ${tab === t ? "bg-white text-black" : "text-white/50 hover:text-white"}`}>
-                {t === "siparisler" ? "Siparişler" : "Galeri"}
+                {t === "siparisler" ? "Siparişler" : t === "galeri" ? "Galeri" : "Referans Kodları"}
               </button>
             ))}
           </div>
@@ -335,6 +388,8 @@ export default function AdminPage() {
               )}
           </>
         )}
+
+        {tab === "referanslar" && <ReferralTab />}
 
         {tab === "referanslar" && <ReferralTab />}
 
