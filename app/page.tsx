@@ -368,46 +368,58 @@ export default function Home() {
                 Sneaker, deri, süet ya da klasik fark etmez. Ayakkabını kapından alıyor,
                 profesyonel bakımını yapıyor ve kısa sürede sana geri teslim ediyoruz.
 
-                <span style={{display:'block',marginTop:'12px',fontWeight:600}}>Her ayakkabı, detaylı bakım ritüelinden geçer.</span>
-                <span style={{display:'block',marginTop:'6px',opacity:0.7}}>Özel solüsyonlar · hassas yüzey koruması · profesyonel ekipman</span>
-                <span style={{display:'block',marginTop:'6px',fontWeight:600}}>✔ Memnuniyet garantili hizmet</span>
+                <span style={{display:'block',marginTop:'14px',fontWeight:700}}>Her çift, detaylı bakım sürecinden geçer.</span>
+                <span style={{display:'block',marginTop:'8px',opacity:0.72}}>Derin temizlik · renk canlandırma · güvenli paketleme</span>
               </p>
             </Reveal>
 
             <Reveal delay={180}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
                 {[
-                  { no: "01", title: "Kapıdan Alım", sub: "Kurye yönlendirme" },
-                  { no: "02", title: "Profesyonel Bakım", sub: "Detaylı işlem" },
-                  { no: "03", title: "Anında Fiyat", sub: "Fotoğrafla teklif" },
-                  { no: "04", title: "Güvenli Teslim", sub: "Özenli paketleme" },
+                  { no: "01", title: "Kapıdan alım", sub: "Kurye yönlendirmesi", icon: "↗" },
+                  { no: "02", title: "Profesyonel bakım", sub: "Hassas yüzey işlemi", icon: "✦" },
+                  { no: "03", title: "Anında fiyat", sub: "Fotoğrafla hızlı teklif", icon: "—" },
+                  { no: "04", title: "Güvenli teslim", sub: "Özenli paketleme", icon: "○" },
                 ].map((item) => (
                   <div
                     key={item.title}
-                    className="group rounded-[24px] border px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(45,26,46,0.08)]"
+                    className="group rounded-[28px] border px-5 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_50px_rgba(45,26,46,0.10)]"
                     style={{
                       borderColor: STN,
-                      background: "rgba(255,255,255,0.72)",
-                      backdropFilter: "blur(8px)"
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.68))",
+                      backdropFilter: "blur(10px)",
+                      boxShadow: "0 6px 24px rgba(45,26,46,0.04)"
                     }}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-[10px] uppercase tracking-[0.18em]" style={{ color: `rgba(45,26,46,0.28)` }}>
-                          {item.no}
-                        </p>
-                        <p className="mt-2 text-[18px] font-black leading-tight" style={{ color: DRK }}>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span
+                            className="inline-flex items-center justify-center rounded-full px-2.5 py-1 text-[10px] font-bold"
+                            style={{ background: `rgba(91,45,110,0.08)`, color: PRI, border: `1px solid rgba(91,45,110,0.12)` }}
+                          >
+                            {item.no}
+                          </span>
+                        </div>
+
+                        <p className="text-[22px] font-black leading-[1.02]" style={{ color: DRK }}>
                           {item.title}
                         </p>
-                        <p className="mt-1 text-[12px]" style={{ color: `rgba(45,26,46,0.45)` }}>
+
+                        <p className="mt-3 text-[13px]" style={{ color: `rgba(45,26,46,0.50)` }}>
                           {item.sub}
                         </p>
                       </div>
+
                       <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 transition-all duration-300 group-hover:scale-105"
-                        style={{ background: `rgba(91,45,110,0.08)`, color: PRI, border: `1px solid rgba(91,45,110,0.14)` }}
+                        className="w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shrink-0 transition-all duration-300 group-hover:scale-105"
+                        style={{
+                          background: `linear-gradient(180deg, rgba(91,45,110,0.12), rgba(91,45,110,0.06))`,
+                          color: PRI,
+                          border: `1px solid rgba(91,45,110,0.12)`
+                        }}
                       >
-                        ●
+                        {item.icon}
                       </div>
                     </div>
                   </div>
