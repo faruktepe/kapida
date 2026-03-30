@@ -304,62 +304,173 @@ export default function Home() {
       <Nav active="/" />
 
       {/* ── HERO ── */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 pb-8 relative overflow-hidden" style={{background: BG}}>
+      <section className="min-h-screen flex items-center px-6 md:px-12 pt-24 pb-10 relative overflow-hidden" style={{background: BG}}>
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
-            style={{background:`radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform:"translate(30%,-30%)"}} />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
-            style={{background:`radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform:"translate(-30%,30%)"}} />
+          <div
+            className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
+            style={{ background: `radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform: "translate(30%,-30%)" }}
+          />
+          <div
+            className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
+            style={{ background: `radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform: "translate(-30%,30%)" }}
+          />
         </div>
-        <div className="max-w-5xl relative">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
-              style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{background: PRI}} />
-              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.55)`}}>Anadolu Yakası · Kapıdan Kapıya</span>
+
+        <div className="max-w-7xl mx-auto w-full relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div>
+            <Reveal>
+              <div
+                className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
+                style={{ borderColor: STN, background: `rgba(212,197,176,0.2)` }}
+              >
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: PRI }} />
+                <span className="text-[11px] uppercase tracking-[0.25em]" style={{ color: `rgba(45,26,46,0.55)` }}>
+                  Anadolu Yakası · Kapıdan Kapıya
+                </span>
+              </div>
+            </Reveal>
+
+            <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <h1
+                className="font-black leading-[0.9] tracking-tight mb-6"
+                style={{ fontSize: "clamp(2.8rem, 7vw, 6.5rem)", color: DRK }}
+              >
+                Kapından alıyoruz.<br />
+                <span style={{ color: PRI }}>2 günde tertemiz getiriyoruz.</span>
+              </h1>
             </div>
-          </Reveal>
-          <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h1 className="font-black leading-[0.88] tracking-tight mb-8" style={{fontSize:"clamp(2.8rem, 8vw, 7.5rem)", color: DRK}}>
-              Kirli gönder,<br />
-              <span style={{color: PRI}}>temiz gelsin.</span>
-            </h1>
+
+            <Reveal delay={120}>
+              <p className="text-base md:text-lg max-w-2xl leading-relaxed mb-8" style={{ color: `rgba(45,26,46,0.58)` }}>
+                Sneaker, deri, süet ya da klasik fark etmez. Ayakkabını kapından alıyor,
+                profesyonel bakımını yapıyor ve kısa sürede sana geri teslim ediyoruz.
+              </p>
+            </Reveal>
+
+            <Reveal delay={180}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
+                {[
+                  "Kapıdan teslim alım",
+                  "2 gün ort. teslim",
+                  "Profesyonel bakım",
+                  "Anında fiyat",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="px-4 py-3 rounded-2xl border text-sm font-semibold"
+                    style={{ borderColor: STN, background: "#fff", color: DRK }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={240}>
+              <div className="flex flex-wrap items-center gap-4 mb-10">
+                <a
+                  href={`https://wa.me/${WHATSAPP}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 hover:scale-[1.02] transition-all"
+                  style={{ background: PRI, color: "#fff", boxShadow: `0 8px 32px rgba(91,45,110,0.3)` }}
+                >
+                  Fotoğraf Gönder · Fiyat Al
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+
+                <Link
+                  href="/siparis"
+                  className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
+                  style={{ borderColor: STN, color: `rgba(45,26,46,0.72)` }}
+                >
+                  Sipariş Oluştur
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={320}>
+              <div className="flex flex-wrap gap-10 md:gap-16 pt-8" style={{ borderTop: `1px solid ${STN}` }}>
+                {[
+                  { val: 150, suffix: "+", label: "Mutlu müşteri" },
+                  { val: 2, suffix: " gün", label: "Ort. teslim" },
+                  { val: 100, suffix: "%", label: "Memnuniyet" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="text-3xl md:text-4xl font-black tabular-nums" style={{ color: PRI }}>
+                      <Counter target={s.val} suffix={s.suffix} />
+                    </p>
+                    <p className="text-[11px] mt-1 uppercase tracking-widest" style={{ color: `rgba(45,26,46,0.35)` }}>
+                      {s.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
-          <Reveal delay={150}>
-            <p className="text-base md:text-lg max-w-xl leading-relaxed mb-10" style={{color:`rgba(45,26,46,0.55)`}}>
-              Ayakkabını bırak, biz halledelim.{" "}
-              <strong style={{color:`rgba(45,26,46,0.8)`, fontWeight:700}}>Kapıdan kapıya, 2 günde tertemiz teslim.</strong>
-            </p>
-          </Reveal>
-          <Reveal delay={250}>
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-              <Link href="/siparis"
-                className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 hover:scale-[1.02] transition-all"
-                style={{background: PRI, color: "#fff", boxShadow:`0 8px 32px rgba(91,45,110,0.3)`}}>
-                Ücretsiz Fiyat Al
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
-                style={{borderColor: STN, color:`rgba(45,26,46,0.6)`}}>
-                💬 WhatsApp
-              </a>
-            </div>
-          </Reveal>
-          <Reveal delay={350}>
-            <div className="flex flex-wrap gap-10 md:gap-16 pt-8" style={{borderTop:`1px solid ${STN}`}}>
-              {[
-                { val: 150, suffix: "+", label: "Mutlu müşteri" },
-                { val: 2,   suffix: " gün", label: "Ort. teslim" },
-                { val: 100, suffix: "%", label: "Memnuniyet" },
-              ].map(s => (
-                <div key={s.label}>
-                  <p className="text-3xl md:text-4xl font-black tabular-nums" style={{color: PRI}}>
-                    <Counter target={s.val} suffix={s.suffix} />
-                  </p>
-                  <p className="text-[11px] mt-1 uppercase tracking-widest" style={{color:`rgba(45,26,46,0.35)`}}>{s.label}</p>
+
+          <Reveal delay={180} className="lg:pl-6">
+            <div className="relative">
+              <div
+                className="rounded-[32px] p-4 md:p-5 border shadow-[0_20px_60px_rgba(45,26,46,0.10)]"
+                style={{ background: "#fff", borderColor: STN }}
+              >
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
+                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(212,197,176,0.22), rgba(191,165,184,0.18))` }}>
+                      <img src="/before-shoe.jpg" alt="Önce" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.7)`, color: "#fff" }}>
+                        Önce
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
+                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(91,45,110,0.18), rgba(191,165,184,0.18))` }}>
+                      <img src="/after-shoe.jpg" alt="Sonra" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>
+                        Sonra
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
+
+                <div className="mt-4 rounded-[24px] p-5 border flex flex-col md:flex-row md:items-center justify-between gap-4" style={{ borderColor: STN, background: `rgba(245,240,232,0.8)` }}>
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.2em] mb-1" style={{ color: `rgba(45,26,46,0.35)` }}>
+                      Hızlı başlangıç
+                    </p>
+                    <p className="text-lg font-black" style={{ color: DRK }}>
+                      Fotoğraf gönder, fiyatı anında öğren.
+                    </p>
+                    <p className="text-sm mt-1" style={{ color: `rgba(45,26,46,0.5)` }}>
+                      Uygunsa siparişi oluştur, kuryeyi yönlendirelim.
+                    </p>
+                  </div>
+
+                  <a
+                    href={`https://wa.me/${WHATSAPP}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 px-6 py-3 rounded-full text-sm font-bold transition-all hover:opacity-90"
+                    style={{ background: PRI, color: "#fff" }}
+                  >
+                    WhatsApp’tan Başla
+                  </a>
+                </div>
+              </div>
+
+              <div
+                className="absolute -bottom-5 -left-4 md:left-auto md:-right-6 px-4 py-3 rounded-2xl border shadow-lg"
+                style={{ background: "#fff", borderColor: STN }}
+              >
+                <p className="text-[10px] uppercase tracking-[0.16em]" style={{ color: `rgba(45,26,46,0.35)` }}>
+                  Günlük avantaj
+                </p>
+                <p className="text-sm font-bold mt-1" style={{ color: DRK }}>
+                  3+ hizmette %20 indirim
+                </p>
+              </div>
             </div>
           </Reveal>
         </div>
