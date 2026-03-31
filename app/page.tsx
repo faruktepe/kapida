@@ -367,8 +367,8 @@ export default function Home() {
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </a>
                 <Link href="/siparis"
-                  className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
-                  style={{ borderColor: STN, color: `rgba(45,26,46,0.72)` }}>
+                  className="inline-flex items-center gap-2.5 text-sm font-bold px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
+                  style={{ borderColor: PRI, color: PRI, background: `rgba(91,45,110,0.06)` }}>
                   Sipariş Oluştur
                 </Link>
               </div>
