@@ -85,7 +85,7 @@ export default function Nav({ active }: { active?: string }) {
     <div className="fixed top-0 left-0 right-0 z-50">
       <PromoBar />
       <nav className="flex items-center justify-between px-6 md:px-12 py-3 backdrop-blur-md border-b"
-        style={{ background: `rgba(245,240,232,0.97)`, borderColor: STN }}>
+        style={{ background: `rgba(248,244,255,0.97)`, borderColor: `rgba(91,45,110,0.1)` }}>
 
         <Link href="/" className="flex items-center shrink-0">
           <img
@@ -97,15 +97,25 @@ export default function Nav({ active }: { active?: string }) {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map(link => (
-            <Link key={link.href} href={link.href}
-              className="px-3 py-1.5 text-sm rounded-lg transition-all"
-              style={(active ?? pathname) === link.href
-                ? { color: PRI, fontWeight: 700 }
-                : { color: `rgba(45,26,46,0.5)`, fontWeight: 500 }}>
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map(link => {
+            const isActive = (active ?? pathname) === link.href;
+            return (
+              <Link key={link.href} href={link.href}
+                className="relative px-3 py-1.5 text-sm rounded-lg transition-all group"
+                style={isActive
+                  ? { color: PRI, fontWeight: 800 }
+                  : { color: `rgba(45,26,46,0.65)`, fontWeight: 600 }}>
+                {link.label}
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    background: PRI,
+                    opacity: isActive ? 1 : 0,
+                    transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                    transformOrigin: "center",
+                  }} />
+              </Link>
+            );
+          })}
           <div className="w-px h-5 mx-2" style={{ background: STN }} />
 
           {user ? (
