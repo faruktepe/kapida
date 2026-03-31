@@ -109,7 +109,7 @@ function AyakkabiKarti({
       : [...data.hizmetler, id]
   });
 
-  const toplamFiyat = HIZMETLER.filter(h => data.hizmetler.includes(h.id)).reduce((a,h) => a+h.fiyat, 0);
+  const toplamFiyat = HIZMETLER.filter(h => data.hizmetler.includes(h.id)).reduce((a,h) => a+h.fiyat, 0) * (data.kategori === "premium" ? 1.2 : 1);
 
   return (
     <div className="rounded-2xl border-2 overflow-hidden mb-4"
