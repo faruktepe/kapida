@@ -54,15 +54,15 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
 }
 
 const HIZMETLER = [
-  { slug: "temizlik-bakim",  no: "01", ad: "Temizlik & Bakım",    aciklama: "Buhar temizlik, derin cila, bağcık değişimi dahil.", fiyat: "₺800+",   sure: "1-2 gün", accent: PRI, detaylar: ["Buhar ile derin temizlik", "Profesyonel cila ve parlatma", "Bağcık değişimi", "Koku giderme"] },
-  { slug: "boya-restorasyon",no: "02", ad: "Boya & Restorasyon",  aciklama: "Profesyonel boya ve renk yenileme. Yıpranmışı sıfırlar.", fiyat: "₺1.200+",sure: "2-3 gün", accent: MUV, detaylar: ["Orijinal renk eşleştirme", "Deri yüzey onarımı", "Profesyonel boya uygulaması", "Koruyucu vernik"] },
-  { slug: "taban-degisimi",  no: "03", ad: "Taban Değişimi",      aciklama: "Dış taban komple değişimi. Her tür ayakkabı.", fiyat: "₺600+",   sure: "2-3 gün", accent: PRI, detaylar: ["Dış taban komple değişimi", "İç taban yenileme", "Topuk tamiri", "Her marka ve model"] },
-  { slug: "dikis-onarim",    no: "04", ad: "Dikiş & Onarım",      aciklama: "Yırtık dikişler, çoraplık ve fort tamiri.", fiyat: "₺250+",   sure: "1-2 gün", accent: MUV, detaylar: ["Yırtık dikiş tamiri", "Çoraplık yenileme", "Fort ve çeki tamiri", "Fermuar değişimi"] },
+  { slug: "temizlik-bakim",  no: "01", ad: "Temizlik & Bakım",    aciklama: "Buhar temizlik, derin cila, bağcık değişimi dahil.", fiyat: "₺800+",   sure: "5-7 gün", accent: PRI, detaylar: ["Buhar ile derin temizlik", "Profesyonel cila ve parlatma", "Bağcık değişimi", "Koku giderme"] },
+  { slug: "boya-restorasyon",no: "02", ad: "Boya & Restorasyon",  aciklama: "Profesyonel boya ve renk yenileme. Yıpranmışı sıfırlar.", fiyat: "₺1.200+",sure: "7-10 gün", accent: MUV, detaylar: ["Orijinal renk eşleştirme", "Deri yüzey onarımı", "Profesyonel boya uygulaması", "Koruyucu vernik"] },
+  { slug: "taban-degisimi",  no: "03", ad: "Taban Değişimi",      aciklama: "Dış taban komple değişimi. Her tür ayakkabı.", fiyat: "₺600+",   sure: "7-10 gün", accent: PRI, detaylar: ["Dış taban komple değişimi", "İç taban yenileme", "Topuk tamiri", "Her marka ve model"] },
+  { slug: "dikis-onarim",    no: "04", ad: "Dikiş & Onarım",      aciklama: "Yırtık dikişler, çoraplık ve fort tamiri.", fiyat: "₺250+",   sure: "5-7 gün", accent: MUV, detaylar: ["Yırtık dikiş tamiri", "Çoraplık yenileme", "Fort ve çeki tamiri", "Fermuar değişimi"] },
 ];
 
 const YORUMLAR = [
   { ad: "A. Koç",    ilce: "Kadıköy",  yorum: "Nike'larımı mahvetmiştim sandım. Tertemiz geldi. İnanılmaz iş." },
-  { ad: "S. Tekin",  ilce: "Ataşehir", yorum: "Kurye kapıya geldi, 2 gün sonra teslim. Fiyat-performans mükemmel." },
+  { ad: "S. Tekin",  ilce: "Ataşehir", yorum: "Kurye kapıya geldi, teslim aldı. Fiyat-performans mükemmel." },
   { ad: "M. Doğan",  ilce: "Üsküdar",  yorum: "Beyaz sneaker'lar sararmıştı. Bembeyaz döndüler." },
   { ad: "E. Yılmaz", ilce: "Maltepe",  yorum: "3 hizmet seçtim, %20 indirim geldi. Mantıklı sistem." },
 ];
@@ -134,7 +134,7 @@ function BolgeKontrol() {
               <span className="w-2.5 h-2.5 rounded-full" style={{background: PRI}} />
               <p className="font-bold text-base" style={{color: DRK}}>{seciliIlce.label}&apos;e hizmet veriyoruz!</p>
             </div>
-            <p className="text-sm" style={{color:`rgba(45,26,46,0.5)`}}>2 gün içinde tertemiz — kirli gönder, temiz gelsin.</p>
+            <p className="text-sm" style={{color:`rgba(45,26,46,0.5)`}}>Kapıdan kapıya, profesyonel bakım — kirli gönder, temiz gelsin.</p>
           </div>
           <Link href="/siparis"
             className="shrink-0 px-7 py-3.5 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
@@ -310,10 +310,8 @@ export default function Home() {
         .order("created_at", { ascending: false })
         .limit(1)
         .single();
-
       if (data) setHeroGallery(data);
     };
-
     fetchHeroGallery();
   }, []);
 
@@ -325,23 +323,17 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="min-h-screen flex items-center px-6 md:px-12 pt-24 pb-10 relative overflow-hidden" style={{background: BG}}>
         <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
-            style={{ background: `radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform: "translate(30%,-30%)" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
-            style={{ background: `radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform: "translate(-30%,30%)" }}
-          />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
+            style={{ background: `radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform: "translate(30%,-30%)" }} />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] opacity-[0.04] rounded-full"
+            style={{ background: `radial-gradient(circle, ${MUV} 0%, transparent 70%)`, transform: "translate(-30%,30%)" }} />
         </div>
 
         <div className="max-w-7xl mx-auto w-full relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <Reveal>
-              <div
-                className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
-                style={{ borderColor: STN, background: `rgba(212,197,176,0.2)` }}
-              >
+              <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
+                style={{ borderColor: STN, background: `rgba(212,197,176,0.2)` }}>
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: PRI }} />
                 <span className="text-[11px] uppercase tracking-[0.25em]" style={{ color: `rgba(45,26,46,0.55)` }}>
                   Anadolu Yakası · Kapıdan Kapıya
@@ -350,101 +342,33 @@ export default function Home() {
             </Reveal>
 
             <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              
-            <div className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              <h1
-                className="font-black tracking-tight mb-6 leading-[0.9]"
-                style={{ fontSize: "clamp(3rem, 8vw, 7rem)", color: DRK }}
-              >
-                <span style={{ display: "block" }}>Kirli bırak.</span>
-                <span style={{ display: "block", color: PRI }}>Temiz gelsin.</span>
+              <h1 className="font-black tracking-tight mb-6 leading-[0.9]"
+                style={{ fontSize: "clamp(3rem, 8vw, 7rem)", color: DRK }}>
+                <span style={{ display: "block" }}>Kirli gönder,</span>
+                <span style={{ display: "block", color: PRI }}>temiz gelsin.</span>
               </h1>
-            </div>
-
             </div>
 
             <Reveal delay={120}>
               <p className="text-base md:text-lg max-w-2xl leading-relaxed mb-8" style={{ color: `rgba(45,26,46,0.58)` }}>
                 Sneaker, deri, süet ya da klasik fark etmez. Ayakkabını kapından alıyor,
-                profesyonel bakımını yapıyor ve kısa sürede sana geri teslim ediyoruz.
-
+                profesyonel bakımını yapıyor ve sana geri teslim ediyoruz.
                 <span style={{display:'block',marginTop:'14px',fontWeight:700}}>Her çift, detaylı bakım sürecinden geçer.</span>
                 <span style={{display:'block',marginTop:'8px',opacity:0.72}}>Derin temizlik · renk canlandırma · güvenli paketleme</span>
               </p>
             </Reveal>
 
-            <Reveal delay={180}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 max-w-2xl">
-                {[
-                  { no: "01", title: "Kapıdan alım", sub: "Kurye yönlendirmesi", icon: "↗" },
-                  { no: "02", title: "Profesyonel bakım", sub: "Hassas yüzey işlemi", icon: "✦" },
-                  { no: "03", title: "Anında fiyat", sub: "Fotoğrafla hızlı teklif", icon: "—" },
-                  { no: "04", title: "Güvenli teslim", sub: "Özenli paketleme", icon: "○" },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="group rounded-[28px] border px-5 py-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_50px_rgba(45,26,46,0.10)]"
-                    style={{
-                      borderColor: STN,
-                      background: "linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.68))",
-                      backdropFilter: "blur(10px)",
-                      boxShadow: "0 6px 24px rgba(45,26,46,0.04)"
-                    }}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-3">
-                          <span
-                            className="inline-flex items-center justify-center rounded-full px-2.5 py-1 text-[10px] font-bold"
-                            style={{ background: `rgba(91,45,110,0.08)`, color: PRI, border: `1px solid rgba(91,45,110,0.12)` }}
-                          >
-                            {item.no}
-                          </span>
-                        </div>
-
-                        <p className="text-[22px] font-black leading-[1.02]" style={{ color: DRK }}>
-                          {item.title}
-                        </p>
-
-                        <p className="mt-3 text-[13px]" style={{ color: `rgba(45,26,46,0.50)` }}>
-                          {item.sub}
-                        </p>
-                      </div>
-
-                      <div
-                        className="w-11 h-11 rounded-full flex items-center justify-center text-[15px] font-bold shrink-0 transition-all duration-300 group-hover:scale-105"
-                        style={{
-                          background: `linear-gradient(180deg, rgba(91,45,110,0.12), rgba(91,45,110,0.06))`,
-                          color: PRI,
-                          border: `1px solid rgba(91,45,110,0.12)`
-                        }}
-                      >
-                        {item.icon}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
             <Reveal delay={240}>
               <div className="flex flex-wrap items-center gap-4 mb-10">
-                <a
-                  href={`https://wa.me/${WHATSAPP}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 px-8 py-4 text-sm font-bold rounded-full hover:opacity-90 hover:scale-[1.02] transition-all"
-                  style={{ background: PRI, color: "#fff", boxShadow: `0 8px 32px rgba(91,45,110,0.3)` }}
-                >
+                  style={{ background: PRI, color: "#fff", boxShadow: `0 8px 32px rgba(91,45,110,0.3)` }}>
                   Fotoğraf Gönder · Fiyat Al
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </a>
-
-                <Link
-                  href="/siparis"
+                <Link href="/siparis"
                   className="inline-flex items-center gap-2.5 text-sm font-medium px-6 py-4 rounded-full border-2 transition-all hover:opacity-80"
-                  style={{ borderColor: STN, color: `rgba(45,26,46,0.72)` }}
-                >
+                  style={{ borderColor: STN, color: `rgba(45,26,46,0.72)` }}>
                   Sipariş Oluştur
                 </Link>
               </div>
@@ -454,7 +378,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-10 md:gap-16 pt-8" style={{ borderTop: `1px solid ${STN}` }}>
                 {[
                   { val: 150, suffix: "+", label: "Mutlu müşteri" },
-                  { val: 2, suffix: " gün", label: "Ort. teslim" },
+                  { val: 7,   suffix: " gün", label: "Ort. teslim" },
                   { val: 100, suffix: "%", label: "Memnuniyet" },
                 ].map((s) => (
                   <div key={s.label}>
@@ -472,13 +396,11 @@ export default function Home() {
 
           <Reveal delay={180} className="lg:pl-6">
             <div className="relative">
-              <div
-                className="rounded-[32px] p-4 md:p-5 border shadow-[0_20px_60px_rgba(45,26,46,0.10)]"
-                style={{ background: "#fff", borderColor: STN }}
-              >
+              <div className="rounded-[32px] p-4 md:p-5 border shadow-[0_20px_60px_rgba(45,26,46,0.10)]"
+                style={{ background: "#fff", borderColor: STN }}>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
-                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(212,197,176,0.22), rgba(191,165,184,0.18))` }}>
+                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `rgba(212,197,176,0.2)` }}>
                       {heroGallery?.before_url ? (
                         <img src={heroGallery.before_url} alt="Önce" className="w-full h-full object-cover" />
                       ) : (
@@ -486,22 +408,15 @@ export default function Home() {
                           Önce görseli
                         </div>
                       )}
-                      <div
-                        className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
-                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 100%)" }}
-                      >
-                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.72)`, color: "#fff" }}>
-                          Önce
-                        </span>
-                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: `rgba(45,26,46,0.68)` }}>
-                          Orijinal Durum
-                        </span>
+                      <div className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
+                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 100%)" }}>
+                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: `rgba(45,26,46,0.72)`, color: "#fff" }}>Önce</span>
+                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: `rgba(45,26,46,0.68)` }}>Orijinal Durum</span>
                       </div>
                     </div>
                   </div>
-
                   <div className="rounded-[24px] overflow-hidden border" style={{ borderColor: STN }}>
-                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `linear-gradient(180deg, rgba(91,45,110,0.18), rgba(191,165,184,0.18))` }}>
+                    <div className="h-[240px] md:h-[340px] w-full relative" style={{ background: `rgba(91,45,110,0.08)` }}>
                       {heroGallery?.after_url ? (
                         <img src={heroGallery.after_url} alt="Sonra" className="w-full h-full object-cover" />
                       ) : (
@@ -509,70 +424,41 @@ export default function Home() {
                           Sonra görseli
                         </div>
                       )}
-                      <div
-                        className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
-                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 100%)" }}
-                      >
-                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>
-                          Sonra
-                        </span>
-                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: PRI }}>
-                          Temizgelsin Sonucu
-                        </span>
+                      <div className="absolute left-0 top-0 right-0 flex items-center justify-between px-5 py-4"
+                        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 100%)" }}>
+                        <span className="px-3 py-1 rounded-full text-[11px] font-bold" style={{ background: PRI, color: "#fff" }}>Sonra</span>
+                        <span className="text-[12px] font-black uppercase tracking-[0.14em]" style={{ color: PRI }}>Temizgelsin Sonucu</span>
                       </div>
                     </div>
                   </div>
                 </div>
-
                 <div className="mt-4 rounded-[24px] p-5 border" style={{ borderColor: STN, background: `rgba(245,240,232,0.82)` }}>
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                      <p className="text-[11px] uppercase tracking-[0.2em] mb-1" style={{ color: `rgba(45,26,46,0.35)` }}>
-                        Hızlı başlangıç
-                      </p>
-                      <p className="text-lg font-black" style={{ color: DRK }}>
-                        Fotoğraf gönder, fiyatı anında öğren.
-                      </p>
-                      <p className="text-sm mt-1" style={{ color: `rgba(45,26,46,0.5)` }}>
-                        Uygunsa siparişi oluştur, kuryeyi yönlendirelim.
-                      </p>
+                      <p className="text-[11px] uppercase tracking-[0.2em] mb-1" style={{ color: `rgba(45,26,46,0.35)` }}>Hızlı başlangıç</p>
+                      <p className="text-lg font-black" style={{ color: DRK }}>Fotoğraf gönder, fiyatı anında öğren.</p>
+                      <p className="text-sm mt-1" style={{ color: `rgba(45,26,46,0.5)` }}>Uygunsa siparişi oluştur, kuryeyi yönlendirelim.</p>
                     </div>
-
-                    <a
-                      href={`https://wa.me/${WHATSAPP}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
                       className="shrink-0 px-6 py-3 rounded-full text-sm font-bold transition-all hover:opacity-90"
-                      style={{ background: PRI, color: "#fff" }}
-                    >
-                      WhatsApp’tan Başla
+                      style={{ background: PRI, color: "#fff" }}>
+                      WhatsApp&apos;tan Başla
                     </a>
                   </div>
-
                   <div className="mt-4 grid grid-cols-3 gap-2">
                     {["Derin temizlik", "Yüzey bakımı", "Renk canlandırma"].map((item) => (
-                      <div
-                        key={item}
-                        className="rounded-2xl px-3 py-3 text-center text-[11px] font-semibold"
-                        style={{ background: "#fff", color: `rgba(45,26,46,0.66)`, border: `1px solid ${STN}` }}
-                      >
+                      <div key={item} className="rounded-2xl px-3 py-3 text-center text-[11px] font-semibold"
+                        style={{ background: "#fff", color: `rgba(45,26,46,0.66)`, border: `1px solid ${STN}` }}>
                         {item}
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-
-              <div
-                className="absolute -bottom-5 -left-4 md:left-auto md:-right-6 px-4 py-3 rounded-2xl border shadow-lg"
-                style={{ background: "#fff", borderColor: STN }}
-              >
-                <p className="text-[10px] uppercase tracking-[0.16em]" style={{ color: `rgba(45,26,46,0.35)` }}>
-                  Günlük avantaj
-                </p>
-                <p className="text-sm font-bold mt-1" style={{ color: DRK }}>
-                  3+ hizmette %20 indirim
-                </p>
+              <div className="absolute -bottom-5 -left-4 md:left-auto md:-right-6 px-4 py-3 rounded-2xl border shadow-lg"
+                style={{ background: "#fff", borderColor: STN }}>
+                <p className="text-[10px] uppercase tracking-[0.16em]" style={{ color: `rgba(45,26,46,0.35)` }}>Günlük avantaj</p>
+                <p className="text-sm font-bold mt-1" style={{ color: DRK }}>3+ hizmette %20 indirim</p>
               </div>
             </div>
           </Reveal>
@@ -583,7 +469,7 @@ export default function Home() {
       <div className="overflow-hidden py-3" style={{background: DRK}}>
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, x) => (
-            ["Kirli Gönder, Temiz Gelsin","2 Günde Teslim","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
+            ["Kirli Gönder, Temiz Gelsin","Kapıdan Kapıya","Ücretsiz Fiyat Al","Profesyonel Temizlik","Boya & Restorasyon","Taban Değişimi","Dikiş Tamiri","Memnuniyet Garantisi"].map((item, i) => (
               <span key={`${x}-${i}`} className="text-[11px] uppercase tracking-[0.3em] mx-8 font-semibold" style={{color: MUV}}>
                 {item} <span className="mx-3" style={{color:`rgba(191,165,184,0.35)`}}>✦</span>
               </span>
@@ -675,15 +561,15 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {[
-            { n:"01", ikon: SUREC_IKONLARI.kamera, t:"Fotoğraf Gönder", a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al", ext:true },
-            { n:"02", ikon: SUREC_IKONLARI.kurye,  t:"Kapıda Teslim Et",     a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver", ext:false },
-            { n:"03", ikon: SUREC_IKONLARI.sparkle,t:"Temiz Geri Al",    a:"2 gün sonra kapında. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et", ext:false },
+            { n:"01", ikon: SUREC_IKONLARI.kamera, t:"Fotoğraf Gönder",  a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al", ext:true },
+            { n:"02", ikon: SUREC_IKONLARI.kurye,  t:"Kapıda Teslim Et", a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver", ext:false },
+            { n:"03", ikon: SUREC_IKONLARI.sparkle,t:"Temiz Geri Al",    a:"İşlem tamamlandığında kapına teslim ediyoruz. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et", ext:false },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
-              <div className="p-7 rounded-2xl border h-full flex flex-col transition-all duration-300"
+              <div className="p-7 rounded-2xl border h-full flex flex-col transition-all duration-300 cursor-default"
                 style={{borderColor:`rgba(191,165,184,0.12)`, background:`rgba(255,255,255,0.03)`}}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(91,45,110,0.5)`;
+                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(91,45,110,0.6)`;
                   (e.currentTarget as HTMLDivElement).style.background = `rgba(91,45,110,0.1)`;
                   (e.currentTarget as HTMLDivElement).style.transform = `translateY(-2px)`;
                 }}
@@ -697,19 +583,22 @@ export default function Home() {
                     style={{background: PRI, color: MUV}}>{s.n}</div>
                   <div className="flex-1 h-px" style={{background:`rgba(191,165,184,0.08)`}} />
                 </div>
-                <div className="mb-5 w-12 h-12 rounded-xl flex items-center justify-center" style={{background:`rgba(191,165,184,0.1)`, color: MUV}}><div style={{transform:"scale(1.4)"}}>{s.ikon}</div></div>
-                <h3 className="text-base font-bold mb-2" style={{color:"#fff"}}>{s.t}</h3>
+                <div className="mb-5 w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{background:`rgba(191,165,184,0.1)`, color: MUV}}>
+                  <div style={{transform:"scale(1.4)"}}>{s.ikon}</div>
+                </div>
+                <h3 className="text-base font-bold mb-2.5" style={{color:"#fff"}}>{s.t}</h3>
                 <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(191,165,184,0.75)`}}>{s.a}</p>
                 {s.ext
                   ? <a href={s.href} target="_blank" rel="noopener noreferrer"
-                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest hover:opacity-70 transition-all"
+                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
                       style={{color: MUV}}>
-                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
                     </a>
                   : <Link href={s.href}
-                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest hover:opacity-70 transition-all"
+                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
                       style={{color: MUV}}>
-                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
                     </Link>
                 }
               </div>
@@ -719,15 +608,16 @@ export default function Home() {
 
         <Reveal delay={240}>
           <div className="p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-            style={{background:`rgba(91,45,110,0.2)`, border:`1.5px solid rgba(91,45,110,0.4)`}}>
+            style={{background:`rgba(91,45,110,0.2)`, border:`1.5px solid rgba(91,45,110,0.45)`}}>
             <div>
               <p className="font-bold text-base mb-1" style={{color:"#fff"}}>Hazırsan ilk fotoğrafı gönder.</p>
-              <p className="text-sm" style={{color:`rgba(191,165,184,0.55)`}}>WhatsApp&apos;tan fiyatı anında paylaşalım.</p>
+              <p className="text-sm" style={{color:`rgba(191,165,184,0.7)`}}>WhatsApp&apos;tan hızlıca fiyat verelim.</p>
             </div>
             <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
-              className="group/btn shrink-0 inline-flex items-center gap-2 px-6 py-3 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
-              style={{background: PRI, color: MUV}}>
-              WhatsApp&apos;ta Başla <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+              className="group/btn shrink-0 inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
+              style={{background: PRI, color: MUV, boxShadow:`0 4px 20px rgba(91,45,110,0.4)`}}>
+              WhatsApp&apos;ta Başla
+              <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
             </a>
           </div>
         </Reveal>
@@ -742,7 +632,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none" style={{color: DRK}}>
                 Mahallenize <span style={{color: PRI}}>geliyoruz.</span>
               </h2>
-              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kirli gönder, temiz gelsin. Anadolu Yakası&apos;nın tüm ilçelerine.</p>
+              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kapıdan kapıya profesyonel bakım. Anadolu Yakası&apos;nın tüm ilçelerine.</p>
             </div>
           </div>
         </Reveal>
