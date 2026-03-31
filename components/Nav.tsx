@@ -81,6 +81,7 @@ export default function Nav({ active }: { active?: string }) {
 
   return (
     <>
+      <PromoBar />
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-3 backdrop-blur-md border-b"
         style={{ background: `rgba(245,240,232,0.97)`, borderColor: STN }}>
 
