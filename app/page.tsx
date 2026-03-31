@@ -251,7 +251,7 @@ function GaleriOnizleme() {
   const [hover, setHover] = React.useState<string|null>(null);
   React.useEffect(() => {
     import("@/lib/supabase").then(({supabase}) => {
-      supabase.from("gallery").select("id,title,service,before_url,after_url").eq("active",true).limit(3).order("created_at",{ascending:false}).then(({data}) => setItems(data??[]));
+      supabase.from("gallery").select("id,title,service,before_url,after_url,category").eq("active",true).limit(3).order("created_at",{ascending:false}).then(({data}) => setItems(data??[]));
     });
   },[]);
   const placeholder = (
@@ -305,7 +305,7 @@ export default function Home() {
     const fetchHeroGallery = async () => {
       const { data } = await supabase
         .from("gallery")
-        .select("before_url,after_url")
+        .select("before_url,after_url,title,service")
         .eq("active", true)
         .order("created_at", { ascending: false })
         .limit(1)
