@@ -262,7 +262,17 @@ function AyakkabiKarti({
                     <span className="text-sm font-semibold" style={{color:DRK}}>{h.label}</span>
                     <span className="text-xs ml-2" style={{color:`rgba(45,26,46,0.4)`}}>{h.desc}</span>
                   </div>
-                  <span className="text-sm font-black shrink-0" style={{color: sel ? h.accent : `rgba(45,26,46,0.3)`}}>₺{h.fiyat}+</span>
+                  <div className="text-right">
+                    {isPremium && (
+                      <p className="text-[10px] line-through" style={{color:`rgba(45,26,46,0.3)`}}>₺{h.fiyat}+</p>
+                    )}
+                    <span className="text-sm font-black shrink-0" style={{color: sel ? h.accent : `rgba(45,26,46,0.3)`}}>
+                      ₺{isPremium ? Math.round(h.fiyat * 1.2) : h.fiyat}+
+                    </span>
+                    {isPremium && (
+                      <p className="text-[9px] font-bold" style={{color:"#5B2D6E"}}>Premium</p>
+                    )}
+                  </div>
                 </button>
               );
             })}
