@@ -10,8 +10,9 @@ const STN = "#D4C5B0";
 const BG  = "#F5F0E8";
 const DRK = "#2D1A2E";
 
-const MARKA_MODELLER: Record<string, string[]> = {
-  "Nike":        ["Air Force 1","Air Max 90","Air Max 95","Air Max 97","Air Jordan 1","Air Jordan 4","Air Jordan 11","Dunk Low","Dunk High","React","Pegasus","Blazer","Cortez","Diğer"],
+// ── Standart markalar
+const STANDART_MARKALAR: Record<string, string[]> = {
+  "Nike":        ["Air Force 1","Air Max 90","Air Max 95","Air Max 97","Air Jordan 1","Air Jordan 4","Air Jordan 11","Dunk Low","Dunk High","Pegasus","Blazer","Cortez","Diğer"],
   "Adidas":      ["Stan Smith","Superstar","Gazelle","Samba","NMD R1","Ultraboost","Yeezy 350","Yeezy 500","Forum Low","Campus","Handball Spezial","Diğer"],
   "New Balance": ["574","990","992","993","2002R","550","327","Diğer"],
   "Puma":        ["Suede","RS-X","Clyde","Future Rider","Mayze","Diğer"],
@@ -20,16 +21,31 @@ const MARKA_MODELLER: Record<string, string[]> = {
   "Reebok":      ["Classic Leather","Club C","Freestyle","Instapump","Diğer"],
   "Timberland":  ["6-Inch Boot","Euro Hiker","Diğer"],
   "Dr. Martens": ["1460","1461","Jadon","Diğer"],
-  "Jordan":      ["Air Jordan 1","Air Jordan 3","Air Jordan 4","Air Jordan 6","Air Jordan 11","Diğer"],
   "Asics":       ["Gel-Kayano","Gel-Nimbus","GT-2000","Diğer"],
   "Salomon":     ["XT-6","Speedcross","Diğer"],
   "Diğer":       [],
 };
 
-const MARKALAR = Object.keys(MARKA_MODELLER);
+// ── Premium markalar
+const PREMIUM_MARKALAR: Record<string, string[]> = {
+  "Louboutin":        ["Diğer"],
+  "Hermès":           ["Diğer"],
+  "Balenciaga":       ["Triple S","Speed","Track","Diğer"],
+  "Off-White":        ["Out Of Office","Diğer"],
+  "Bottega Veneta":   ["Diğer"],
+  "Dior":             ["B23","B27","Diğer"],
+  "Gucci":            ["Ace","Rhyton","Diğer"],
+  "Prada":            ["Diğer"],
+  "Common Projects":  ["Achilles","Diğer"],
+  "Maison Margiela":  ["Tabi","Replica","Diğer"],
+  "Golden Goose":     ["Superstar","Slide","Diğer"],
+  "Alexander McQueen":["Oversized Sneaker","Diğer"],
+  "Diğer Premium":    [],
+};
+
 const RENKLER  = ["Siyah","Beyaz","Kahverengi","Lacivert","Gri","Kırmızı","Mavi","Yeşil","Sarı","Pembe","Bej","Diğer"];
 const TURLER   = ["Sneaker","Klasik Ayakkabı","Bot","Çizme","Spor Ayakkabı","Süet Ayakkabı","Topuklu Ayakkabı","Sandalet","Diğer"];
-const ILCELER  = ["Ataşehir","Beykoz","Çekmeköy","Kadıköy","Kartal","Maltepe","Pendik","Sancaktepe","Sultanbeyli","Tuzla","Ümraniye","Üsküdar"];
+const ILCELER  = ["Kadıköy","Üsküdar","Ataşehir","Ümraniye"];
 
 const HIZMETLER = [
   { id:"bakim",      label:"Temizlik & Bakım",   desc:"Buhar temizlik, cila, bağcık değişimi",  fiyat:800,  accent: PRI },
@@ -49,16 +65,18 @@ const RENK_RENKLER: Record<string, string> = {
 };
 
 type Ayakkabi = {
+  kategori: "standart" | "premium";
   marka: string;
   model: string;
   modelCustom: string;
   renk: string;
   tur: string;
   hizmetler: string[];
+  not: string;
 };
 
 function bos(): Ayakkabi {
-  return { marka:"", model:"", modelCustom:"", renk:"", tur:"", hizmetler:[] };
+  return { kategori:"standart", marka:"", model:"", modelCustom:"", renk:"", tur:"", hizmetler:[], not:"" };
 }
 
 function generateOrderNumber() {
@@ -80,32 +98,46 @@ function AyakkabiKarti({
   onRemove: () => void;
   canRemove: boolean;
 }) {
-  const markaModeller = data.marka ? (MARKA_MODELLER[data.marka] || []) : [];
+  const isPremium = data.kategori === "premium";
+  const markaListesi = isPremium ? PREMIUM_MARKALAR : STANDART_MARKALAR;
+  const markaModeller = data.marka ? (markaListesi[data.marka] || []) : [];
+
   const toggle = (id: string) => onChange({
     ...data,
     hizmetler: data.hizmetler.includes(id)
       ? data.hizmetler.filter(h => h !== id)
       : [...data.hizmetler, id]
   });
+
   const toplamFiyat = HIZMETLER.filter(h => data.hizmetler.includes(h.id)).reduce((a,h) => a+h.fiyat, 0);
 
   return (
-    <div className="rounded-2xl border-2 overflow-hidden mb-4" style={{borderColor: STN, background:"#fff"}}>
+    <div className="rounded-2xl border-2 overflow-hidden mb-4"
+      style={{borderColor: isPremium ? `rgba(91,45,110,0.5)` : STN, background:"#fff"}}>
+
       {/* Kart başlığı */}
-      <div className="flex items-center justify-between px-5 py-3 border-b" style={{borderColor: STN, background:`rgba(212,197,176,0.15)`}}>
+      <div className="flex items-center justify-between px-5 py-3 border-b"
+        style={{borderColor: isPremium ? `rgba(91,45,110,0.15)` : STN, background: isPremium ? `rgba(91,45,110,0.04)` : `rgba(212,197,176,0.15)`}}>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black" style={{background: PRI, color: MUV}}>
+          <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black"
+            style={{background: PRI, color: MUV}}>
             {idx + 1}
           </div>
           <span className="text-sm font-bold" style={{color: DRK}}>
             {data.marka && data.model
-              ? `${data.marka} ${data.model === "Diğer" ? data.modelCustom || "Diğer" : data.model}`
+              ? `${data.marka} ${data.model === "Diğer" || data.model === "Diğer Premium" ? data.modelCustom || "Diğer" : data.model}`
               : `Ayakkabı ${idx + 1}`}
           </span>
+          {isPremium && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+              style={{background:`rgba(91,45,110,0.12)`, color: PRI}}>
+              ✦ Premium
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-3">
           {toplamFiyat > 0 && (
-            <span className="text-sm font-black" style={{color: PRI}}>₺{toplamFiyat}+</span>
+            <span className="text-sm font-black" style={{color: PRI}}>₺{toplamFiyat.toLocaleString()}+</span>
           )}
           {canRemove && (
             <button onClick={onRemove} className="text-xs px-3 py-1 rounded-full border transition-all"
@@ -117,18 +149,53 @@ function AyakkabiKarti({
       </div>
 
       <div className="p-5 space-y-5">
+
+        {/* Kategori seçimi */}
+        <div>
+          <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Ayakkabı kategorisi</label>
+          <div className="grid grid-cols-2 gap-3">
+            <button onClick={() => onChange({...data, kategori:"standart", marka:"", model:"", modelCustom:""})}
+              className="px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all text-left flex items-center gap-2"
+              style={!isPremium ? btnSel : btnDef}>
+              <span>👟</span>
+              <div>
+                <p className="font-bold text-sm">Standart</p>
+                <p className="text-[11px] opacity-60">Nike, Adidas, vb.</p>
+              </div>
+            </button>
+            <button onClick={() => onChange({...data, kategori:"premium", marka:"", model:"", modelCustom:""})}
+              className="px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all text-left flex items-center gap-2"
+              style={isPremium ? {borderColor:PRI, background:`rgba(91,45,110,0.06)`, color:PRI} : btnDef}>
+              <span>✦</span>
+              <div>
+                <p className="font-bold text-sm">Premium</p>
+                <p className="text-[11px] opacity-60">Louboutin, Hermès, vb.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Premium uyarısı */}
+        {isPremium && (
+          <div className="p-4 rounded-xl border" style={{borderColor:`rgba(91,45,110,0.2)`, background:`rgba(91,45,110,0.04)`}}>
+            <p className="text-sm font-semibold mb-1" style={{color: PRI}}>✦ Premium bakım</p>
+            <p className="text-xs leading-relaxed" style={{color:`rgba(45,26,46,0.6)`}}>
+              Premium ayakkabılarınız için özel dikkat ve teknikler uyguluyoruz. Lütfen dikkat etmemizi istediğiniz detayları not kısmına ekleyin.
+            </p>
+          </div>
+        )}
+
         {/* Marka */}
         <div>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Marka</label>
-          <div className="grid grid-cols-3 gap-2">
-            {MARKALAR.filter(m => m !== "Diğer").map(m => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {Object.keys(markaListesi).map(m => (
               <button key={m} onClick={() => onChange({...data, marka:m, model:"", modelCustom:""})}
                 className="px-3 py-2.5 text-sm font-semibold rounded-xl border-2 transition-all text-left"
-                style={data.marka===m ? btnSel : btnDef}>{m}</button>
+                style={data.marka===m ? (isPremium ? {borderColor:PRI, background:`rgba(91,45,110,0.06)`, color:PRI} : btnSel) : btnDef}>
+                {m}
+              </button>
             ))}
-            <button onClick={() => onChange({...data, marka:"Diğer", model:""})}
-              className="px-3 py-2.5 text-xs font-medium rounded-xl border-2 transition-all"
-              style={data.marka==="Diğer" ? btnSel : btnDef}>Diğer</button>
           </div>
         </div>
 
@@ -143,7 +210,7 @@ function AyakkabiKarti({
                   style={data.model===m ? btnSel : btnDef}>{m}</button>
               ))}
             </div>
-            {data.model === "Diğer" && (
+            {(data.model === "Diğer" || data.model === "Diğer Premium") && (
               <input value={data.modelCustom} onChange={e => onChange({...data, modelCustom:e.target.value})}
                 className={inputCls+" mt-2"} placeholder="Model adını yazın" style={{borderColor:STN, color:DRK}} />
             )}
@@ -201,6 +268,26 @@ function AyakkabiKarti({
             })}
           </div>
         </div>
+
+        {/* Not alanı */}
+        <div>
+          <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>
+            {isPremium ? "Özel bakım notunuz" : "Not"}{" "}
+            <span className="normal-case font-normal" style={{color:`rgba(45,26,46,0.35)`}}>(isteğe bağlı)</span>
+          </label>
+          <textarea
+            value={data.not}
+            onChange={e => onChange({...data, not:e.target.value})}
+            rows={3}
+            className={inputCls + " resize-none"}
+            style={{borderColor: isPremium ? `rgba(91,45,110,0.3)` : STN, color:DRK}}
+            placeholder={isPremium
+              ? "Örn: Sol topuk dışı hasarlı, renk solması var, dikkatli olunmasını istiyorum..."
+              : "Örn: Sağ ayakkabının burnu çizik, bağcıkları değişsin..."
+            }
+          />
+        </div>
+
       </div>
     </div>
   );
@@ -226,10 +313,8 @@ export default function SiparisPage() {
   };
 
   const addAyakkabi = () => setAyakkabiListesi(prev => [...prev, bos()]);
-
   const removeAyakkabi = (idx: number) => setAyakkabiListesi(prev => prev.filter((_,i) => i !== idx));
 
-  // Toplam fiyat hesapla
   const tumHizmetler = ayakkabiListesi.flatMap(a => HIZMETLER.filter(h => a.hizmetler.includes(h.id)));
   const toplamMin = tumHizmetler.reduce((a,h) => a+h.fiyat, 0);
   const toplamMax = Math.round(toplamMin * 1.3);
@@ -258,7 +343,7 @@ export default function SiparisPage() {
     const { error: dbError } = await supabase.from("orders").insert({
       order_number: no,
       brand: ayakkabiListesi.map(a => a.marka).join(", "),
-      model: ayakkabiListesi.map(a => a.model === "Diğer" ? a.modelCustom : a.model).join(", "),
+      model: ayakkabiListesi.map(a => a.model === "Diğer" || a.model === "Diğer Premium" ? a.modelCustom : a.model).join(", "),
       color: ayakkabiListesi.map(a => a.renk).join(", "),
       shoe_type: ayakkabiListesi.map(a => a.tur).join(", "),
       services: ayakkabiListesi.flatMap(a => a.hizmetler),
@@ -297,7 +382,9 @@ export default function SiparisPage() {
               {copied ? "✓ Kopyalandı" : "Kopyala"}
             </button>
           </div>
-          <p className="text-xs mt-3" style={{color:`rgba(45,26,46,0.4)`}}>{ayakkabiListesi.length} çift ayakkabı</p>
+          <p className="text-xs mt-3" style={{color:`rgba(45,26,46,0.4)`}}>
+            {ayakkabiListesi.length} çift · {ayakkabiListesi.filter(a=>a.kategori==="premium").length > 0 ? "Premium bakım dahil" : "Standart bakım"}
+          </p>
         </div>
         <div className="flex gap-3 justify-center mt-6">
           <Link href={`/siparis-takip?no=${orderNumber}`}
@@ -352,7 +439,6 @@ export default function SiparisPage() {
               </p>
             </div>
 
-            {/* Ayakkabı kartları */}
             {ayakkabiListesi.map((a, i) => (
               <AyakkabiKarti
                 key={i}
@@ -364,7 +450,6 @@ export default function SiparisPage() {
               />
             ))}
 
-            {/* + Ayakkabı Ekle */}
             <button onClick={addAyakkabi}
               className="w-full py-4 rounded-2xl border-2 border-dashed text-sm font-bold transition-all mb-6 flex items-center justify-center gap-2"
               style={{borderColor: MUV, color: PRI, background:`rgba(91,45,110,0.03)`}}>
@@ -379,10 +464,11 @@ export default function SiparisPage() {
                   <div>
                     <p className="text-xs font-semibold" style={{color:`rgba(45,26,46,0.5)`}}>
                       {ayakkabiListesi.length} çift · {tumHizmetler.length} hizmet
+                      {ayakkabiListesi.some(a=>a.kategori==="premium") && " · ✦ Premium"}
                     </p>
                     {kampanya && <p className="text-xs font-bold mt-0.5" style={{color:PRI}}>🎉 3+ hizmet — %20 indirim!</p>}
                   </div>
-                  <p className="text-xl font-black" style={{color:PRI}}>₺{indirimliMin} — ₺{indirimliMax}</p>
+                  <p className="text-xl font-black" style={{color:PRI}}>₺{indirimliMin.toLocaleString()} — ₺{indirimliMax.toLocaleString()}</p>
                 </div>
               </div>
             )}
@@ -448,12 +534,10 @@ export default function SiparisPage() {
                   Referans Kodu <span className="normal-case font-normal" style={{color:`rgba(45,26,46,0.3)`}}>(isteğe bağlı)</span>
                 </label>
                 <div className="flex gap-2">
-                  <div className="relative flex-1">
-                    <input value={iletisim.referralCode}
-                      onChange={e => { const v=e.target.value.toUpperCase(); setIletisim(f=>({...f,referralCode:v})); setReferralValid(null); setReferralDiscount(0); setReferralMsg(""); }}
-                      className={inputCls} placeholder="Örn: KAPIDA15"
-                      style={{borderColor: referralValid===true ? PRI : referralValid===false ? `rgba(107,39,55,0.6)` : STN, color:DRK}} />
-                  </div>
+                  <input value={iletisim.referralCode}
+                    onChange={e => { const v=e.target.value.toUpperCase(); setIletisim(f=>({...f,referralCode:v})); setReferralValid(null); setReferralDiscount(0); setReferralMsg(""); }}
+                    className={inputCls + " flex-1"} placeholder="Örn: KAPIDA15"
+                    style={{borderColor: referralValid===true ? PRI : referralValid===false ? `rgba(107,39,55,0.6)` : STN, color:DRK}} />
                   <button onClick={() => checkReferral(iletisim.referralCode)} disabled={referralLoading||!iletisim.referralCode.trim()}
                     className="px-4 py-3 text-sm font-bold rounded-xl border-2 transition-all disabled:opacity-40"
                     style={{borderColor:PRI, color:PRI, background:`rgba(91,45,110,0.06)`}}>
@@ -469,15 +553,23 @@ export default function SiparisPage() {
               <p className="text-[10px] uppercase tracking-widest mb-3 font-bold" style={{color:`rgba(45,26,46,0.3)`}}>Sipariş Özeti</p>
               {ayakkabiListesi.map((a, i) => (
                 <div key={i} className="mb-3 pb-3" style={{borderBottom: i < ayakkabiListesi.length-1 ? `1px solid ${STN}` : "none"}}>
-                  <p className="text-sm font-bold mb-1" style={{color:DRK}}>
-                    {i+1}. {a.marka} {a.model === "Diğer" ? a.modelCustom : a.model}
-                  </p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="text-sm font-bold" style={{color:DRK}}>
+                      {i+1}. {a.marka} {a.model === "Diğer" || a.model === "Diğer Premium" ? a.modelCustom : a.model}
+                    </p>
+                    {a.kategori === "premium" && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{background:`rgba(91,45,110,0.1)`, color:PRI}}>✦ Premium</span>
+                    )}
+                  </div>
                   {HIZMETLER.filter(h => a.hizmetler.includes(h.id)).map(h => (
                     <div key={h.id} className="flex justify-between text-xs py-0.5">
                       <span style={{color:`rgba(45,26,46,0.5)`}}>{h.label}</span>
                       <span style={{color:`rgba(45,26,46,0.4)`}}>₺{h.fiyat}+</span>
                     </div>
                   ))}
+                  {a.not && (
+                    <p className="text-xs mt-1 italic" style={{color:`rgba(45,26,46,0.45)`}}>Not: {a.not}</p>
+                  )}
                 </div>
               ))}
               {kampanya && (
@@ -492,7 +584,7 @@ export default function SiparisPage() {
               )}
               <div className="flex justify-between font-black mt-3 pt-3 text-base" style={{borderTop:`2px solid ${STN}`}}>
                 <span style={{color:DRK}}>Toplam</span>
-                <span style={{color:PRI}}>₺{refMin} — ₺{refMax}</span>
+                <span style={{color:PRI}}>₺{refMin.toLocaleString()} — ₺{refMax.toLocaleString()}</span>
               </div>
             </div>
 
