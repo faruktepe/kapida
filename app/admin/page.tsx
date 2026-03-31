@@ -1127,6 +1127,26 @@ export default function AdminPage() {
                               ))}
                             </div>
                           ) : null}
+
+                          {(() => {
+                            const detail = parseJSON<Array<{marka:string;model:string;modelCustom:string;renk:string;tur:string;hizmetler:string[];not:string;kategori:string}>>(
+                              (order as unknown as {shoes_detail:unknown}).shoes_detail, []
+                            );
+                            const notlar = detail.filter(a => a.not && a.not.trim());
+                            if (notlar.length === 0) return null;
+                            return (
+                              <div className="mt-3 space-y-2">
+                                {notlar.map((a, i) => (
+                                  <div key={i} className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3">
+                                    <p className="text-[10px] uppercase tracking-[0.14em] text-amber-600 mb-1">
+                                      {a.kategori === "premium" ? "✦ Premium · " : ""}{a.marka} {a.model === "Diğer" ? a.modelCustom : a.model} — Müşteri Notu
+                                    </p>
+                                    <p className="text-sm text-amber-900">{a.not}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            );
+                          })()}
                         </div>
 
                         {info.adres ? (
