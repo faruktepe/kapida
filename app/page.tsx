@@ -321,7 +321,7 @@ export default function Home() {
       <Nav active="/" />
 
       {/* ── HERO ── */}
-      <section className="min-h-screen flex items-center px-6 md:px-12 pt-24 pb-10 relative overflow-hidden" style={{background: BG}}>
+      <section className="min-h-screen flex items-center px-6 md:px-12 pt-36 pb-10 relative overflow-hidden" style={{background: BG}}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] opacity-[0.06] rounded-full"
             style={{ background: `radial-gradient(circle, ${PRI} 0%, transparent 70%)`, transform: "translate(30%,-30%)" }} />
