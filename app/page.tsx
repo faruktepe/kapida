@@ -64,7 +64,7 @@ const YORUMLAR = [
   { ad: "A. Koç",    ilce: "Kadıköy",  yorum: "Nike'larımı mahvetmiştim sandım. Tertemiz geldi. İnanılmaz iş." },
   { ad: "S. Tekin",  ilce: "Ataşehir", yorum: "Kurye kapıya geldi, teslim aldı. Fiyat-performans mükemmel." },
   { ad: "M. Doğan",  ilce: "Üsküdar",  yorum: "Beyaz sneaker'lar sararmıştı. Bembeyaz döndüler." },
-  { ad: "E. Yılmaz", ilce: "Maltepe",  yorum: "3 hizmet seçtim, %20 indirim geldi. Mantıklı sistem." },
+  { ad: "E. Yılmaz", ilce: "Ümraniye", yorum: "3 hizmet seçtim, %20 indirim geldi. Mantıklı sistem." },
 ];
 
 const SUREC_IKONLARI = {
@@ -91,16 +91,16 @@ const SUREC_IKONLARI = {
 function BolgeKontrol() {
   const ILCELER = [
     { id: "kadikoy",    label: "Kadıköy",    aktif: true },
-    { id: "atasehir",   label: "Ataşehir",   aktif: true },
     { id: "uskudar",    label: "Üsküdar",    aktif: true },
-    { id: "maltepe",    label: "Maltepe",    aktif: true },
-    { id: "kartal",     label: "Kartal",     aktif: true },
-    { id: "pendik",     label: "Pendik",     aktif: true },
+    { id: "atasehir",   label: "Ataşehir",   aktif: true },
     { id: "umraniye",   label: "Ümraniye",   aktif: true },
-    { id: "cekmekoy",   label: "Çekmeköy",   aktif: true },
-    { id: "tuzla",      label: "Tuzla",      aktif: true },
-    { id: "beykoz",     label: "Beykoz",     aktif: true },
-    { id: "sancaktepe", label: "Sancaktepe", aktif: true },
+    { id: "maltepe",    label: "Maltepe",    aktif: false },
+    { id: "kartal",     label: "Kartal",     aktif: false },
+    { id: "pendik",     label: "Pendik",     aktif: false },
+    { id: "cekmekoy",   label: "Çekmeköy",   aktif: false },
+    { id: "tuzla",      label: "Tuzla",      aktif: false },
+    { id: "beykoz",     label: "Beykoz",     aktif: false },
+    { id: "sancaktepe", label: "Sancaktepe", aktif: false },
     { id: "sultanbeyli",label: "Sultanbeyli",aktif: false },
     { id: "sile",       label: "Şile",       aktif: false },
     { id: "adalar",     label: "Adalar",     aktif: false },
@@ -251,7 +251,7 @@ function GaleriOnizleme() {
   const [hover, setHover] = React.useState<string|null>(null);
   React.useEffect(() => {
     import("@/lib/supabase").then(({supabase}) => {
-      supabase.from("gallery").select("id,title,service,before_url,after_url,category").eq("active",true).limit(3).order("created_at",{ascending:false}).then(({data}) => setItems(data??[]));
+      supabase.from("gallery").select("id,title,service,before_url,after_url").eq("active",true).limit(3).order("created_at",{ascending:false}).then(({data}) => setItems(data??[]));
     });
   },[]);
   const placeholder = (
@@ -305,7 +305,7 @@ export default function Home() {
     const fetchHeroGallery = async () => {
       const { data } = await supabase
         .from("gallery")
-        .select("before_url,after_url,title,service")
+        .select("before_url,after_url")
         .eq("active", true)
         .order("created_at", { ascending: false })
         .limit(1)
@@ -336,7 +336,7 @@ export default function Home() {
                 style={{ borderColor: STN, background: `rgba(212,197,176,0.2)` }}>
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: PRI }} />
                 <span className="text-[11px] uppercase tracking-[0.25em]" style={{ color: `rgba(45,26,46,0.55)` }}>
-                  Anadolu Yakası · Kapıdan Kapıya
+                  Kadıköy · Üsküdar · Ataşehir · Ümraniye
                 </span>
               </div>
             </Reveal>
@@ -632,7 +632,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none" style={{color: DRK}}>
                 Mahallenize <span style={{color: PRI}}>geliyoruz.</span>
               </h2>
-              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kapıdan kapıya profesyonel bakım. Anadolu Yakası&apos;nın tüm ilçelerine.</p>
+              <p className="text-sm mt-2" style={{color:`rgba(45,26,46,0.45)`}}>Kadıköy, Üsküdar, Ataşehir ve Ümraniye&apos;ye kapıdan kapıya hizmet.</p>
             </div>
           </div>
         </Reveal>
