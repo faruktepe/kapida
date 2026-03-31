@@ -322,6 +322,19 @@ export default function SiparisPage() {
   const [step, setStep] = useState(1);
   const [ayakkabiListesi, setAyakkabiListesi] = useState<Ayakkabi[]>([bos()]);
   const [iletisim, setIletisim] = useState({ ad:"", telefon:"", ilce:"", adres:"", tercih:"" as "arasin"|"onayla"|"", referralCode:"" });
+  const [loggedInUser, setLoggedInUser] = useState<{email:string; ad:string; telefon:string} | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (data.session) {
+        const { data: prof } = await supabase.from("profiles").select("full_name,phone").eq("id", data.session.user.id).single();
+        const ad = prof?.full_name || "";
+        const telefon = prof?.phone || "";
+        setLoggedInUser({ email: data.session.user.email || "", ad, telefon });
+        setIletisim(f => ({ ...f, ad, telefon }));
+      }
+    });
+  }, []);
   const [orderNumber, setOrderNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -549,16 +562,30 @@ export default function SiparisPage() {
             </div>
 
             <div className="space-y-4">
-              <div>
-                <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Ad Soyad *</label>
-                <input value={iletisim.ad} onChange={e => setIletisim(f=>({...f,ad:e.target.value}))}
-                  className={inputCls} placeholder="Ad Soyad" style={{borderColor:STN, color:DRK}} />
-              </div>
-              <div>
-                <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Telefon *</label>
-                <input value={iletisim.telefon} onChange={e => setIletisim(f=>({...f,telefon:e.target.value}))}
-                  className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor:STN, color:DRK}} />
-              </div>
+              {loggedInUser ? (
+                <div className="p-4 rounded-2xl flex items-center gap-3" style={{background:`rgba(91,45,110,0.06)`, border:`1.5px solid rgba(91,45,110,0.2)`}}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black shrink-0" style={{background:PRI, color:MUV}}>
+                    {loggedInUser.ad ? loggedInUser.ad.charAt(0).toUpperCase() : loggedInUser.email.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold" style={{color:DRK}}>{loggedInUser.ad || loggedInUser.email}</p>
+                    <p className="text-xs" style={{color:`rgba(45,26,46,0.45)`}}>{loggedInUser.email}</p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Ad Soyad *</label>
+                    <input value={iletisim.ad} onChange={e => setIletisim(f=>({...f,ad:e.target.value}))}
+                      className={inputCls} placeholder="Ad Soyad" style={{borderColor:STN, color:DRK}} />
+                  </div>
+                  <div>
+                    <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Telefon *</label>
+                    <input value={iletisim.telefon} onChange={e => setIletisim(f=>({...f,telefon:e.target.value}))}
+                      className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor:STN, color:DRK}} />
+                  </div>
+                </>
+              )}
               <div>
                 <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>İlçe *</label>
                 <div className="flex flex-wrap gap-2">
