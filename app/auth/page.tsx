@@ -79,13 +79,7 @@ function AuthContent() {
         />
         {/* Üstüne hafif gradient overlay */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(45,26,46,0.35) 0%, transparent 60%)" }} />
-        {/* Sol üst logo */}
-        <div className="absolute top-8 left-8">
-          <Link href="/">
-            <img src="/temizgelsin-logo.png?v=1" alt="Temiz Gelsin"
-              style={{ height: "40px", width: "auto", filter: "brightness(0) invert(1)", opacity: 0.9 }} />
-          </Link>
-        </div>
+
       </div>
 
       {/* ── SAĞ: Form paneli ── */}
