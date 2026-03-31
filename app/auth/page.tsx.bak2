@@ -13,7 +13,7 @@ const DRK = "#2D1A2E";
 
 const inputCls = `w-full border-2 bg-white px-4 py-3.5 text-sm focus:outline-none transition-all rounded-xl appearance-none`;
 
-function AuthContent() {
+export default function AuthPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/siparis";
@@ -224,14 +224,5 @@ function AuthContent() {
         </div>
       </div>
     </main>
-  );
-}
-
-import { Suspense } from "react";
-export default function AuthPage() {
-  return (
-    <Suspense fallback={<div style={{minHeight:"100vh",background:"#F5F0E8"}} />}>
-      <AuthContent />
-    </Suspense>
   );
 }
