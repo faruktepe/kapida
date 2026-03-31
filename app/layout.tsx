@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import PromoBarWrapper from "@/components/PromoBarWrapper";
 
 const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700", "800", "900"] });
 
@@ -14,7 +13,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="tr">
       <body className={dmSans.className} suppressHydrationWarning>
-        <PromoBarWrapper />
         {children}
       </body>
     </html>
