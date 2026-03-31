@@ -1,8 +1,9 @@
 "use client";
 export const dynamic = "force-dynamic";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const PRI = "#5B2D6E";
 const MUV = "#BFA5B8";
@@ -304,6 +305,20 @@ function AyakkabiKarti({
 }
 
 export default function SiparisPage() {
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // ── Auth guard: giriş yapılmamışsa /auth'a yönlendir ──
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) {
+        router.replace("/auth?redirect=/siparis");
+      } else {
+        setAuthChecked(true);
+      }
+    });
+  }, []);
+
   const [step, setStep] = useState(1);
   const [ayakkabiListesi, setAyakkabiListesi] = useState<Ayakkabi[]>([bos()]);
   const [iletisim, setIletisim] = useState({ ad:"", telefon:"", ilce:"", adres:"", tercih:"" as "arasin"|"onayla"|"", referralCode:"" });
@@ -315,6 +330,19 @@ export default function SiparisPage() {
   const [referralValid, setReferralValid] = useState<null|boolean>(null);
   const [referralDiscount, setReferralDiscount] = useState(0);
   const [referralMsg, setReferralMsg] = useState("");
+
+  // Yükleniyorken bekletme ekranı
+  if (!authChecked) {
+    return (
+      <main className="min-h-screen flex items-center justify-center" style={{background: BG}}>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 rounded-full border-4 border-t-transparent animate-spin"
+            style={{borderColor: `${PRI}40`, borderTopColor: PRI}} />
+          <p className="text-sm font-medium" style={{color:`rgba(45,26,46,0.4)`}}>Yükleniyor...</p>
+        </div>
+      </main>
+    );
+  }
 
   const updateAyakkabi = (idx: number, d: Ayakkabi) => {
     const yeni = [...ayakkabiListesi];
@@ -350,8 +378,10 @@ export default function SiparisPage() {
     }
     setLoading(true); setError("");
     const no = generateOrderNumber();
+    const { data: { session } } = await supabase.auth.getSession();
     const { error: dbError } = await supabase.from("orders").insert({
       order_number: no,
+      user_id: session?.user?.id ?? null,
       brand: ayakkabiListesi.map(a => a.marka).join(", "),
       model: ayakkabiListesi.map(a => a.model === "Diğer" || a.model === "Diğer Premium" ? a.modelCustom : a.model).join(", "),
       color: ayakkabiListesi.map(a => a.renk).join(", "),
