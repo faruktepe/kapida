@@ -373,9 +373,11 @@ export default function SiparisPage() {
   };
 
   const handleSubmit = async () => {
-    if (!iletisim.ad||!iletisim.telefon||!iletisim.ilce||!iletisim.adres||!iletisim.tercih) {
-      setError("Lütfen tüm alanları doldurun."); return;
-    }
+    if (!iletisim.ad) { setError("Ad Soyad alanı boş bırakılamaz."); return; }
+    if (!iletisim.telefon) { setError("Telefon numarası boş bırakılamaz."); return; }
+    if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); return; }
+    if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); return; }
+    if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); return; }
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
@@ -516,8 +518,14 @@ export default function SiparisPage() {
             {error && <p className="text-sm mb-4 font-medium" style={{color:`rgba(107,39,55,0.9)`}}>{error}</p>}
 
             <button onClick={() => {
-              const eksik = ayakkabiListesi.some(a => !a.marka || !a.renk || !a.tur || a.hizmetler.length === 0);
-              if (eksik) { setError("Her ayakkabı için marka, renk, tür ve en az bir hizmet seçin."); return; }
+              const eksikAlan = ayakkabiListesi.map((a,i) => {
+                if (!a.marka) return `Ayakkabı ${i+1}: Marka seçilmedi.`;
+                if (!a.renk) return `Ayakkabı ${i+1}: Renk seçilmedi.`;
+                if (!a.tur) return `Ayakkabı ${i+1}: Tür seçilmedi.`;
+                if (a.hizmetler.length === 0) return `Ayakkabı ${i+1}: En az bir hizmet seçin.`;
+                return null;
+              }).find(Boolean);
+              if (eksikAlan) { setError(eksikAlan); return; }
               setError(""); setStep(2);
             }}
               className="w-full py-5 text-base font-bold rounded-full hover:opacity-90 transition-all"
