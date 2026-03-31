@@ -546,59 +546,51 @@ export default function Home() {
       </section>
 
       {/* ── NASIL ÇALIŞIR ── */}
-      <section className="px-6 md:px-12 py-20" style={{background: DRK}}>
+      <section className="px-6 md:px-12 py-24" style={{background: BG}}>
         <Reveal>
-          <div className="mb-10">
-            <p className="text-[10px] uppercase tracking-[0.4em] mb-3" style={{color:`rgba(191,165,184,0.4)`}}>Süreç</p>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-3" style={{color:"#fff"}}>
-              Bu kadar <span style={{color: MUV}}>basit.</span>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-5"
+              style={{borderColor: STN, background:`rgba(212,197,176,0.2)`}}>
+              <span className="text-[11px] uppercase tracking-[0.25em]" style={{color:`rgba(45,26,46,0.5)`}}>Nasıl Çalışır?</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4" style={{color: DRK}}>
+              Bu kadar <span style={{color: PRI}}>basit.</span>
             </h2>
-            <p className="text-sm md:text-base max-w-lg" style={{color:`rgba(191,165,184,0.5)`}}>
+            <p className="text-base max-w-lg mx-auto" style={{color:`rgba(45,26,46,0.5)`}}>
               Kapından alıyor, bakımını yapıyor ve tertemiz getiriyoruz.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
           {[
-            { n:"01", ikon: SUREC_IKONLARI.kamera, t:"Fotoğraf Gönder",  a:"WhatsApp'tan bir fotoğraf at. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al", ext:true },
-            { n:"02", ikon: SUREC_IKONLARI.kurye,  t:"Kapıda Teslim Et", a:"Kuryemiz kapında. Kirli olanı alır, gider. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver", ext:false },
-            { n:"03", ikon: SUREC_IKONLARI.sparkle,t:"Temiz Geri Al",    a:"İşlem tamamlandığında kapına teslim ediyoruz. Paketlenmiş, bakımlı, tertemiz.", href:"/siparis-takip", cta:"Takip Et", ext:false },
+            { n:"01", emoji:"📸", t:"Fotoğraf Gönder",  a:"WhatsApp'tan ayakkabının fotoğrafını gönder. Anında fiyat verelim, karar senin.", href:`https://wa.me/${WHATSAPP}`, cta:"Fiyat Al →", ext:true },
+            { n:"02", emoji:"🛵", t:"Kapıda Teslim Et", a:"Kuryemiz kapına geliyor, kirli ayakkabıyı teslim alıyor. Sen hiçbir yere gitme.", href:"/siparis", cta:"Sipariş Ver →", ext:false },
+            { n:"03", emoji:"✨", t:"Temiz Geri Al",    a:"Profesyonel bakımdan sonra paketlenmiş ve tertemiz olarak kapına teslim ediyoruz.", href:"/siparis-takip", cta:"Takip Et →", ext:false },
           ].map((s, i) => (
-            <Reveal key={s.n} delay={i * 80}>
-              <div className="p-7 rounded-2xl border h-full flex flex-col transition-all duration-300 cursor-default"
-                style={{borderColor:`rgba(191,165,184,0.12)`, background:`rgba(255,255,255,0.03)`}}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(91,45,110,0.6)`;
-                  (e.currentTarget as HTMLDivElement).style.background = `rgba(91,45,110,0.1)`;
-                  (e.currentTarget as HTMLDivElement).style.transform = `translateY(-2px)`;
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = `rgba(191,165,184,0.12)`;
-                  (e.currentTarget as HTMLDivElement).style.background = `rgba(255,255,255,0.03)`;
-                  (e.currentTarget as HTMLDivElement).style.transform = `translateY(0)`;
-                }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0"
-                    style={{background: PRI, color: MUV}}>{s.n}</div>
-                  <div className="flex-1 h-px" style={{background:`rgba(191,165,184,0.08)`}} />
+            <Reveal key={s.n} delay={i * 100}>
+              <div className="relative rounded-3xl p-8 flex flex-col items-center text-center border-2 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                style={{borderColor: STN, background:"#fff"}}>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full flex items-center justify-center text-xs font-black border-2"
+                  style={{background:"#fff", borderColor: PRI, color: PRI}}>
+                  {s.n}
                 </div>
-                <div className="mb-5 w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{background:`rgba(191,165,184,0.1)`, color: MUV}}>
-                  <div style={{transform:"scale(1.4)"}}>{s.ikon}</div>
+                <div className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl mb-6 mt-4"
+                  style={{background:`rgba(91,45,110,0.07)`}}>
+                  {s.emoji}
                 </div>
-                <h3 className="text-base font-bold mb-2.5" style={{color:"#fff"}}>{s.t}</h3>
-                <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(191,165,184,0.75)`}}>{s.a}</p>
+                <h3 className="text-xl font-black mb-3" style={{color: DRK}}>{s.t}</h3>
+                <p className="text-sm leading-relaxed mb-6 flex-1" style={{color:`rgba(45,26,46,0.55)`}}>{s.a}</p>
                 {s.ext
                   ? <a href={s.href} target="_blank" rel="noopener noreferrer"
-                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
-                      style={{color: MUV}}>
-                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
+                      className="px-6 py-2.5 rounded-full text-sm font-bold border-2 transition-all hover:opacity-80"
+                      style={{borderColor: PRI, color: PRI}}>
+                      {s.cta}
                     </a>
                   : <Link href={s.href}
-                      className="group/btn inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-all"
-                      style={{color: MUV}}>
-                      {s.cta} <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
+                      className="px-6 py-2.5 rounded-full text-sm font-bold border-2 transition-all hover:opacity-80"
+                      style={{borderColor: PRI, color: PRI}}>
+                      {s.cta}
                     </Link>
                 }
               </div>
@@ -606,19 +598,21 @@ export default function Home() {
           ))}
         </div>
 
-        <Reveal delay={240}>
-          <div className="p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-            style={{background:`rgba(91,45,110,0.2)`, border:`1.5px solid rgba(91,45,110,0.45)`}}>
-            <div>
-              <p className="font-bold text-base mb-1" style={{color:"#fff"}}>Hazırsan ilk fotoğrafı gönder.</p>
-              <p className="text-sm" style={{color:`rgba(191,165,184,0.7)`}}>WhatsApp&apos;tan hızlıca fiyat verelim.</p>
+        <Reveal delay={300}>
+          <div className="flex justify-center">
+            <div className="flex items-center gap-4 p-6 rounded-2xl border-2 max-w-xl w-full"
+              style={{borderColor: PRI, background:`rgba(91,45,110,0.05)`}}>
+              <div className="text-3xl">🚀</div>
+              <div className="flex-1">
+                <p className="font-black text-base" style={{color: DRK}}>Hazırsan hemen başla!</p>
+                <p className="text-sm" style={{color:`rgba(45,26,46,0.5)`}}>WhatsApp&apos;tan fotoğraf gönder, fiyatı öğren.</p>
+              </div>
+              <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
+                className="shrink-0 px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 transition-all whitespace-nowrap"
+                style={{background: PRI, color: MUV, boxShadow:`0 4px 20px rgba(91,45,110,0.3)`}}>
+                Başla →
+              </a>
             </div>
-            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer"
-              className="group/btn shrink-0 inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold rounded-full hover:opacity-90 transition-all whitespace-nowrap"
-              style={{background: PRI, color: MUV, boxShadow:`0 4px 20px rgba(91,45,110,0.4)`}}>
-              WhatsApp&apos;ta Başla
-              <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
-            </a>
           </div>
         </Reveal>
       </section>
