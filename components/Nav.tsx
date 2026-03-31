@@ -127,31 +127,72 @@ export default function Nav({ active }: { active?: string }) {
                 </svg>
               </button>
               {dropOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl shadow-lg py-2 z-50"
-                  style={{ background: "#fff", border: `1.5px solid ${STN}` }}>
-                  <div className="px-4 py-3 border-b" style={{ borderColor: STN }}>
-                    <p className="text-xs font-bold" style={{ color: DRK }}>
-                      {user.full_name ?? "Kullanıcı"}
-                    </p>
-                    <p className="text-[11px] mt-0.5 truncate" style={{ color: `rgba(45,26,46,0.4)` }}>
-                      {user.email}
-                    </p>
+                <div className="absolute right-0 top-full mt-3 w-64 rounded-2xl z-50 overflow-hidden"
+                  style={{ background: "#fff", border: `1.5px solid ${STN}`, boxShadow: "0 8px 32px rgba(45,26,46,0.12)" }}>
+                  {/* Kullanıcı bilgisi */}
+                  <div className="px-5 py-4" style={{ background: `rgba(91,45,110,0.04)`, borderBottom: `1px solid ${STN}` }}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black shrink-0"
+                        style={{ background: PRI, color: MUV }}>
+                        {initials}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold truncate" style={{ color: DRK }}>
+                          {user.full_name ?? "Kullanıcı"}
+                        </p>
+                        <p className="text-[11px] truncate" style={{ color: `rgba(45,26,46,0.4)` }}>
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <Link href="/profil" onClick={() => setDropOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
-                    style={{ color: DRK }}>
-                    👤 Hesabım
-                  </Link>
-                  <Link href="/siparislerim" onClick={() => setDropOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
-                    style={{ color: DRK }}>
-                    📦 Siparişlerim
-                  </Link>
-                  <div className="border-t mt-1 pt-1" style={{ borderColor: STN }}>
+                  {/* Menü öğeleri */}
+                  <div className="py-2">
+                    <Link href="/profil" onClick={() => setDropOpen(false)}
+                      className="flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all hover:opacity-80 group"
+                      style={{ color: DRK }}>
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all"
+                        style={{ background: `rgba(91,45,110,0.07)` }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={PRI} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                          <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm" style={{ color: DRK }}>Hesabım</p>
+                        <p className="text-[11px]" style={{ color: `rgba(45,26,46,0.4)` }}>Profil ve ayarlar</p>
+                      </div>
+                    </Link>
+                    <Link href="/siparislerim" onClick={() => setDropOpen(false)}
+                      className="flex items-center gap-3 px-5 py-3 text-sm font-medium transition-all hover:opacity-80 group"
+                      style={{ color: DRK }}>
+                      <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                        style={{ background: `rgba(191,165,184,0.2)` }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={PRI} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 8h14M5 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0zm14 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0zM5 8l1 12h12L19 8"/>
+                          <path d="M10 12v4m4-4v4"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm" style={{ color: DRK }}>Siparişlerim</p>
+                        <p className="text-[11px]" style={{ color: `rgba(45,26,46,0.4)` }}>Geçmiş siparişler</p>
+                      </div>
+                    </Link>
+                  </div>
+                  {/* Çıkış */}
+                  <div className="px-3 pb-3" style={{ borderTop: `1px solid ${STN}` }}>
                     <button onClick={handleCikis}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm w-full text-left hover:bg-gray-50 transition-colors"
-                      style={{ color: `rgba(107,39,55,0.8)` }}>
-                      🚪 Çıkış Yap
+                      className="flex items-center gap-3 w-full px-3 py-2.5 mt-2 rounded-xl text-sm font-medium transition-all hover:opacity-80"
+                      style={{ background: `rgba(107,39,55,0.05)`, color: `rgba(107,39,55,0.8)` }}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        style={{ background: `rgba(107,39,55,0.08)` }}>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(107,39,55,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                          <polyline points="16 17 21 12 16 7"/>
+                          <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                      </div>
+                      Çıkış Yap
                     </button>
                   </div>
                 </div>
