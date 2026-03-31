@@ -19,25 +19,6 @@ const NAV_LINKS = [
   { href: "/sss",           label: "SSS" },
 ];
 
-function PromoBar() {
-  const [visible, setVisible] = React.useState(true);
-  if (!visible) return null;
-  return (
-    <div className="w-full flex items-center justify-center gap-3 px-4 py-2.5 text-xs font-semibold relative"
-      style={{ background: "#2D1A2E", color: "#BFA5B8" }}>
-      <span className="animate-pulse w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#BFA5B8" }} />
-      <span>
-        🎉 İlk siparişinde <strong style={{ color: "#fff" }}>%15 indirim!</strong>
-        {" "}Kod: <strong style={{ color: "#fff", letterSpacing: "0.05em" }}>TEMİZ100</strong>
-        {" "}— Sipariş sayfasında kullan.
-      </span>
-      <button onClick={() => setVisible(false)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 opacity-40 hover:opacity-80 transition-opacity text-base leading-none"
-        style={{ color: "#BFA5B8" }}>✕</button>
-    </div>
-  );
-}
-
 export default function Nav({ active }: { active?: string }) {
   const [open, setOpen]       = useState(false);
   const [user, setUser]       = useState<{ email?: string; full_name?: string } | null>(null);
@@ -81,6 +62,7 @@ export default function Nav({ active }: { active?: string }) {
     : user?.email?.slice(0, 2).toUpperCase() ?? "?";
 
   return (
+    <>
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-3 backdrop-blur-md border-b"
         style={{ background: `rgba(245,240,232,0.97)`, borderColor: STN }}>
 
@@ -195,9 +177,7 @@ export default function Nav({ active }: { active?: string }) {
           </button>
         </div>
       </nav>
-
-      {/* Mobile menu */}
-      {open && (
+    {open && (
         <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)}>
           <div className="absolute top-[57px] left-0 right-0 border-b shadow-lg" onClick={e => e.stopPropagation()}
             style={{ background: BG, borderColor: STN }}>
