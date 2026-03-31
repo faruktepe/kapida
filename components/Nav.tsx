@@ -27,9 +27,9 @@ function PromoBar() {
       style={{ background: "#2D1A2E", color: "#BFA5B8" }}>
       <span className="animate-pulse w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#BFA5B8" }} />
       <span>
-        🎉 İlk siparişinde <strong style={{ color: "#fff" }}>%15 indirim!</strong>
+        🎉 İlk siparişinde <strong style={{ color: "#fff" }}>%20 indirim!</strong>
         {" "}Kod:{" "}
-        <strong style={{ color: "#fff", letterSpacing: "0.05em" }}>TEMİZ100</strong>
+        <strong style={{ color: "#fff", letterSpacing: "0.05em" }}>TEMİZ20</strong>
         {" "}— Sipariş sayfasında kullan.
       </span>
       <button onClick={() => setVisible(false)}
