@@ -115,12 +115,12 @@ export default function Nav({ active }: { active?: string }) {
                       {user.email}
                     </p>
                   </div>
-                  <Link href="/hesabim" onClick={() => setDropOpen(false)}
+                  <Link href="/profil" onClick={() => setDropOpen(false)}
                     className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
                     style={{ color: DRK }}>
                     👤 Hesabım
                   </Link>
-                  <Link href="/hesabim/siparislerim" onClick={() => setDropOpen(false)}
+                  <Link href="/siparislerim" onClick={() => setDropOpen(false)}
                     className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
                     style={{ color: DRK }}>
                     📦 Siparişlerim
@@ -155,7 +155,7 @@ export default function Nav({ active }: { active?: string }) {
         {/* Mobile */}
         <div className="flex md:hidden items-center gap-2">
           {user ? (
-            <Link href="/hesabim"
+            <Link href="/profil"
               className="w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-black"
               style={{ background: PRI, color: MUV }}>
               {initials}
@@ -195,7 +195,7 @@ export default function Nav({ active }: { active?: string }) {
               <div className="pt-2 pb-1 space-y-2">
                 {user ? (
                   <>
-                    <Link href="/hesabim" onClick={() => setOpen(false)}
+                    <Link href="/profil" onClick={() => setOpen(false)}
                       className="flex items-center justify-center w-full py-3.5 text-sm font-bold rounded-2xl border-2 transition-all"
                       style={{ borderColor: STN, color: DRK }}>
                       👤 Hesabım
