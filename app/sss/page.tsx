@@ -13,8 +13,8 @@ const WHATSAPP = "905319623790";
 
 const SSS_DATA = [
   { s:"Hangi bölgelere hizmet veriyorsunuz?",    c:"Şu an Kadıköy, Üsküdar, Ataşehir ve Ümraniye'de hizmet veriyoruz. Yakında tüm Anadolu Yakası'na genişliyoruz!" },
-  { s:"Ayakkabıyı ne zaman teslim alıyorsunuz?", c:"Sipariş verildikten sonra 24 saat içinde kuryemiz kapınıza gelir." },
-  { s:"Bakım ne kadar sürer?",                   c:"Standart temizlik & bakım 1-2 iş günü, onarım gerektiren işlemler 2-3 iş günü sürer." },
+  { s:"Ayakkabıyı ne zaman teslim alıyorsunuz?", c:"Sipariş verdikten sonra sizi arayarak uygun bir saat aralığı belirleriz. Belirlenen saat aralığında kuryemiz en geç 2 saat içinde kapınızda olur." },
+  { s:"Bakım ne kadar sürer?",                   c:"Tüm işlemlerimiz 7 iş günü içinde tamamlanır. Premium bakım ve onarım gerektiren işlemler bu süre içinde özenle hazırlanır." },
   { s:"Fiyatlar nasıl belirleniyor?",             c:"Hizmet türü ve ayakkabı durumuna göre fiyat belirlenir. Form doldurduktan sonra tahmini aralık gösterilir. Net fiyat için sizi arayabiliriz." },
   { s:"Ayakkabıma zarar gelirse ne olur?",        c:"Her ayakkabı teslim alınırken fotoğraflanır ve kayıt altına alınır. Olası hasarlarda tam karşılık ödenir." },
   { s:"Topuklu ayakkabı hizmetiniz var mı?",      c:"Evet, topuklu ayakkabı tamiri için 'Taban Değişimi' veya 'Onarım' seçeneğini seçin." },
