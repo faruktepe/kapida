@@ -581,7 +581,7 @@ export default function SiparisPage() {
                 const alan = eksikField === "marka" ? "Marka" : eksikField === "renk" ? "Renk" : eksikField === "tur" ? "Tür" : "Hizmet";
                 setError(`Ayakkabı ${eksikIdx+1}: ${alan} seçilmedi.`);
                 setKartError({ idx: eksikIdx, field: eksikField });
-                setTimeout(() => { const el = kartRefs.current[eksikIdx]; if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50);
+                setTimeout(() => { const el = kartRefs.current[eksikIdx]; if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 150; window.scrollTo({ top: Math.max(0, y), behavior: "smooth" }); } }, 100);
                 return;
               }
               setKartError(null);
