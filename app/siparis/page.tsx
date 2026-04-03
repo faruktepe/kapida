@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SlotSecici from "@/components/SlotSecici";
 
 const PRI = "#5B2D6E";
 const MUV = "#BFA5B8";
@@ -363,6 +364,7 @@ export default function SiparisPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const [seciliSlot, setSeciliSlot] = useState<{id:string; tarih:string; saat:string} | null>(null);
   const [kartError, setKartError] = useState<{idx: number; field: string} | null>(null);
   const kartRefs = useRef<(HTMLDivElement | null)[]>([]);
   const fieldScrollRef = useRef<HTMLDivElement>(null);
@@ -371,6 +373,7 @@ export default function SiparisPage() {
   const ilceRef = useRef<HTMLDivElement>(null);
   const adresRef = useRef<HTMLTextAreaElement>(null);
   const tercihRef = useRef<HTMLDivElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const [fieldError2, setFieldError2] = useState("");
   const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => { if (ref.current) { const y = ref.current.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50); };
   const [referralLoading, setReferralLoading] = useState(false);
@@ -425,6 +428,7 @@ export default function SiparisPage() {
     if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); setFieldError2("ilce"); scrollTo(ilceRef); return; }
     if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); setFieldError2("adres"); scrollTo(adresRef); return; }
     if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); setFieldError2("tercih"); scrollTo(tercihRef); return; }
+    if (!seciliSlot) { setError("Lütfen bir teslim saati seçin."); slotRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
@@ -440,6 +444,9 @@ export default function SiparisPage() {
       price_choice: iletisim.tercih,
       customer_info: { ad:iletisim.ad, telefon:iletisim.telefon, ilce:iletisim.ilce, adres:iletisim.adres },
       status: iletisim.tercih==="arasin" ? "Teklif Bekleniyor" : "Onaylandı",
+      slot_id: seciliSlot?.id || null,
+      slot_date: seciliSlot?.tarih || null,
+      slot_time: seciliSlot?.saat || null,
       referral_code: referralValid&&iletisim.referralCode ? iletisim.referralCode.toUpperCase().trim() : null,
       referral_discount: referralValid ? referralDiscount : 0,
       shoes_count: ayakkabiListesi.length,
@@ -719,6 +726,29 @@ export default function SiparisPage() {
                 <span style={{color:DRK}}>Toplam</span>
                 <span style={{color:PRI}}>₺{refMin.toLocaleString()} — ₺{refMax.toLocaleString()}</span>
               </div>
+            </div>
+
+            {/* Saat Seçimi */}
+            <div ref={slotRef} className="mb-6">
+              <label className="text-[11px] uppercase tracking-widest mb-3 block font-bold" style={{color:DRK}}>
+                Teslim Saati *
+              </label>
+              <SlotSecici
+                seciliSlot={seciliSlot?.id || null}
+                onSecim={(id, tarih, saat) => setSeciliSlot({ id, tarih, saat })}
+              />
+              {seciliSlot && (
+                <div className="mt-3 px-4 py-2.5 rounded-xl flex items-center gap-2"
+                  style={{background:`rgba(91,45,110,0.07)`, border:`1.5px solid ${PRI}`}}>
+                  <span style={{color:PRI}}>✓</span>
+                  <p className="text-sm font-bold" style={{color:PRI}}>
+                    {seciliSlot.tarih === new Date().toISOString().split("T")[0] ? "Bugün" :
+                     seciliSlot.tarih === new Date(Date.now()+86400000).toISOString().split("T")[0] ? "Yarın" :
+                     new Date(seciliSlot.tarih+"T00:00:00").toLocaleDateString("tr-TR", {day:"numeric",month:"long"})}
+                    {" "}{seciliSlot.saat}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Tercih */}
