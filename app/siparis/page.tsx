@@ -91,7 +91,7 @@ const inputCls = `w-full border-2 bg-white px-4 py-3.5 text-sm focus:outline-non
 
 // ── Tek ayakkabı kartı ──
 function AyakkabiKarti({
-  idx, data, onChange, onRemove, canRemove, fieldError
+  idx, data, onChange, onRemove, canRemove, fieldError, fieldRef
 }: {
   idx: number;
   data: Ayakkabi;
@@ -99,6 +99,7 @@ function AyakkabiKarti({
   onRemove: () => void;
   canRemove: boolean;
   fieldError?: string;
+  fieldRef?: React.RefObject<HTMLDivElement>;
 }) {
   const isPremium = data.kategori === "premium";
   const markaListesi = isPremium ? PREMIUM_MARKALAR : STANDART_MARKALAR;
@@ -188,7 +189,7 @@ function AyakkabiKarti({
         )}
 
         {/* Marka */}
-        <div>
+        <div ref={fieldError === "marka" ? fieldRef : undefined}>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Marka</label>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {Object.keys(markaListesi).map(m => (
@@ -225,7 +226,7 @@ function AyakkabiKarti({
         )}
 
         {/* Renk */}
-        <div>
+        <div ref={fieldError === "renk" ? fieldRef : undefined}>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Renk</label>
           <div className="flex flex-wrap gap-2">
             {RENKLER.map(r => (
@@ -245,7 +246,7 @@ function AyakkabiKarti({
         )}
 
         {/* Tür */}
-        <div>
+        <div ref={fieldError === "tur" ? fieldRef : undefined}>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Tür</label>
           <div className="flex flex-wrap gap-2">
             {TURLER.map(t => (
@@ -262,7 +263,7 @@ function AyakkabiKarti({
         )}
 
         {/* Hizmetler */}
-        <div>
+        <div ref={fieldError === "hizmet" ? fieldRef : undefined}>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Hizmetler</label>
           <div className="space-y-2">
             {HIZMETLER.map(h => {
@@ -362,11 +363,13 @@ export default function SiparisPage() {
   const [error, setError] = useState("");
   const [kartError, setKartError] = useState<{idx: number; field: string} | null>(null);
   const kartRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const fieldScrollRef = useRef<HTMLDivElement>(null);
   const adRef = useRef<HTMLInputElement>(null);
   const telefonRef = useRef<HTMLInputElement>(null);
   const ilceRef = useRef<HTMLDivElement>(null);
   const adresRef = useRef<HTMLTextAreaElement>(null);
   const tercihRef = useRef<HTMLDivElement>(null);
+  const [fieldError2, setFieldError2] = useState("");
   const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => { if (ref.current) { const y = ref.current.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50); };
   const [referralLoading, setReferralLoading] = useState(false);
   const [referralValid, setReferralValid] = useState<null|boolean>(null);
@@ -415,11 +418,11 @@ export default function SiparisPage() {
   };
 
   const handleSubmit = async () => {
-    if (!iletisim.ad) { setError("Ad Soyad alanı boş bırakılamaz."); scrollTo(adRef); return; }
-    if (!iletisim.telefon) { setError("Telefon numarası boş bırakılamaz."); scrollTo(telefonRef); return; }
-    if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); scrollTo(ilceRef); return; }
-    if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); scrollTo(adresRef); return; }
-    if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); scrollTo(tercihRef); return; }
+    if (!iletisim.ad) { setError("Ad Soyad alanı boş bırakılamaz."); setFieldError2("ad"); scrollTo(adRef); return; }
+    if (!iletisim.telefon) { setError("Telefon numarası boş bırakılamaz."); setFieldError2("telefon"); scrollTo(telefonRef); return; }
+    if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); setFieldError2("ilce"); scrollTo(ilceRef); return; }
+    if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); setFieldError2("adres"); scrollTo(adresRef); return; }
+    if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); setFieldError2("tercih"); scrollTo(tercihRef); return; }
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
@@ -532,6 +535,7 @@ export default function SiparisPage() {
                 onRemove={() => removeAyakkabi(i)}
                 canRemove={ayakkabiListesi.length > 1}
                 fieldError={kartError?.idx === i ? kartError.field : undefined}
+                fieldRef={kartError?.idx === i ? fieldScrollRef : undefined}
               />
             </div>
             ))}
@@ -581,7 +585,7 @@ export default function SiparisPage() {
                 const alan = eksikField === "marka" ? "Marka" : eksikField === "renk" ? "Renk" : eksikField === "tur" ? "Tür" : "Hizmet";
                 setError(`Ayakkabı ${eksikIdx+1}: ${alan} seçilmedi.`);
                 setKartError({ idx: eksikIdx, field: eksikField });
-                setTimeout(() => { kartRefs.current[eksikIdx]?.scrollIntoView({ behavior: "smooth", block: "center" }); }, 100);
+                setTimeout(() => { fieldScrollRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }, 150);
                 return;
               }
               setKartError(null);
@@ -608,6 +612,9 @@ export default function SiparisPage() {
             </div>
 
             <div className="space-y-4">
+              {!loggedInUser && fieldError === "ad" && (
+                <p className="text-xs font-bold mb-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Ad Soyad alanı boş bırakılamaz.</p>
+              )}
               {loggedInUser ? (
                 <div className="p-4 rounded-2xl flex items-center gap-3" style={{background:`rgba(91,45,110,0.06)`, border:`1.5px solid rgba(91,45,110,0.2)`}}>
                   <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black shrink-0" style={{background:PRI, color:MUV}}>
@@ -623,12 +630,12 @@ export default function SiparisPage() {
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Ad Soyad *</label>
                     <input value={iletisim.ad} onChange={e => setIletisim(f=>({...f,ad:e.target.value}))}
-                      ref={adRef} className={inputCls} placeholder="Ad Soyad" style={{borderColor:STN, color:DRK}} />
+                      ref={adRef} className={inputCls} placeholder="Ad Soyad" style={{borderColor: fieldError2==="ad" ? "rgba(107,39,55,0.6)" : STN, color:DRK}} />
                   </div>
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Telefon *</label>
                     <input value={iletisim.telefon} onChange={e => setIletisim(f=>({...f,telefon:e.target.value}))}
-                      ref={telefonRef} className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor:STN, color:DRK}} />
+                      ref={telefonRef} className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor: fieldError2==="telefon" ? "rgba(107,39,55,0.6)" : STN, color:DRK}} />
                   </div>
                 </>
               )}
