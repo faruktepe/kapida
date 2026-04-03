@@ -629,13 +629,14 @@ export default function SiparisPage() {
                 <>
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Ad Soyad *</label>
-                    <input value={iletisim.ad} onChange={e => setIletisim(f=>({...f,ad:e.target.value}))}
+                    <input value={iletisim.ad} onChange={e => { setIletisim(f=>({...f,ad:e.target.value})); setFieldError2(""); }}
                       ref={adRef} className={inputCls} placeholder="Ad Soyad" style={{borderColor: fieldError2==="ad" ? "rgba(107,39,55,0.6)" : STN, color:DRK}} />
                   </div>
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Telefon *</label>
-                    <input value={iletisim.telefon} onChange={e => setIletisim(f=>({...f,telefon:e.target.value}))}
+                    <input value={iletisim.telefon} onChange={e => { setIletisim(f=>({...f,telefon:e.target.value})); setFieldError2(""); }}
                       ref={telefonRef} className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor: fieldError2==="telefon" ? "rgba(107,39,55,0.6)" : STN, color:DRK}} />
+                <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Telefon numarası boş bırakılamaz.</p>
                   </div>
                 </>
               )}
@@ -648,12 +649,14 @@ export default function SiparisPage() {
                       style={iletisim.ilce===ilce ? btnSel : btnDef}>{ilce}</button>
                   ))}
                 </div>
+                {fieldError2==="ilce" && <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen ilçenizi seçin.</p>}
               </div>
               <div>
                 <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Adres *</label>
-                <textarea ref={adresRef} value={iletisim.adres} onChange={e => setIletisim(f=>({...f,adres:e.target.value}))}
+                <textarea ref={adresRef} value={iletisim.adres} onChange={e => { setIletisim(f=>({...f,adres:e.target.value})); setFieldError2(""); }}
                   className={inputCls+" h-24 resize-none"} placeholder="Mahalle, sokak, bina no, daire..."
                   style={{borderColor:STN, color:DRK}} />
+                {fieldError2==="adres" && <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Adres alanı boş bırakılamaz.</p>}
               </div>
 
               {/* Referans kodu */}
@@ -740,6 +743,7 @@ export default function SiparisPage() {
                 </button>
               ))}
             </div>
+            {fieldError2==="tercih" && <p className="text-xs font-bold mb-4 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen sipariş tercihinizi seçin.</p>}
 
             {error && (
               <div className="mb-4 p-4 rounded-2xl flex items-center gap-3"
