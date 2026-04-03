@@ -265,13 +265,13 @@ function AyakkabiKarti({
                   </div>
                   <div className="text-right">
                     {isPremium && (
-                      <p className="text-[10px] line-through" style={{color:`rgba(45,26,46,0.3)`}}>₺{h.fiyat}+</p>
+                      <p className="text-xs line-through font-medium" style={{color:`rgba(45,26,46,0.4)`}}>₺{h.fiyat}+</p>
                     )}
-                    <span className="text-sm font-black shrink-0" style={{color: sel ? h.accent : `rgba(45,26,46,0.3)`}}>
+                    <span className="text-base font-black shrink-0" style={{color: sel ? h.accent : DRK}}>
                       ₺{isPremium ? Math.round(h.fiyat * 1.2) : h.fiyat}+
                     </span>
                     {isPremium && (
-                      <p className="text-[9px] font-bold" style={{color:"#5B2D6E"}}>Premium</p>
+                      <p className="text-[9px] font-bold uppercase tracking-wide mt-0.5" style={{color: PRI}}>Premium</p>
                     )}
                   </div>
                 </button>
