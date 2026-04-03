@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-const BEFORE = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/before/Gemini_Generated_Image_g7kumcg7kumcg7ku.png";
-const AFTER  = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/after/Gemini_Generated_Image_4ndoex4ndoex4ndo.png";
+const BEFORE = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/before/1774950082758_Ekran%20Resmi%202026-03-31%2000.10.07.png";
+const AFTER  = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/after/1774950082758_Ekran%20Resmi%202026-03-31%2000.10.21.png";
 
 const REVEAL_THRESHOLD     = 0.25;
 const BRUSH_RADIUS_MOBILE  = 140;
