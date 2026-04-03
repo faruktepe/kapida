@@ -457,8 +457,8 @@ export default function Home() {
               </div>
               <div className="absolute -bottom-5 -left-4 md:left-auto md:-right-6 px-4 py-3 rounded-2xl shadow-lg"
                 style={{ background: PRI, borderColor: PRI }}>
-                <p className="text-[10px] uppercase tracking-[0.16em]" style={{ color: `rgba(191,165,184,0.7)` }}>Günlük avantaj</p>
-                <p className="text-sm font-bold mt-1" style={{ color: MUV }}>3+ hizmette %20 indirim</p>
+                <p className="text-[10px] uppercase tracking-[0.16em]" style={{ color: `rgba(255,255,255,0.7)` }}>Günlük avantaj</p>
+                <p className="text-sm font-bold mt-1" style={{ color: "#fff" }}>3+ hizmette %20 indirim</p>
               </div>
             </div>
           </Reveal>
