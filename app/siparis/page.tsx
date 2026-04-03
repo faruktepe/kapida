@@ -502,7 +502,7 @@ export default function SiparisPage() {
     if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); setFieldError2("ilce"); scrollTo(ilceRef); return; }
     if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); setFieldError2("adres"); scrollTo(adresRef); return; }
     if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); setFieldError2("tercih"); scrollTo(tercihRef); return; }
-    if (!seciliSlot) { setError("Lütfen bir teslim saati seçin."); scrollTo(slotRef); return; }
+    // slot validasyonu geçici devre dışı
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
