@@ -579,7 +579,7 @@ export default function SiparisPage() {
                 return;
               }
               setKartError(null);
-              setError(""); setStep(2);
+              setError(""); setStep(2); setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
             }}
               className="w-full py-5 text-base font-bold rounded-full hover:opacity-90 transition-all"
               style={{...btnPri, boxShadow:`0 8px 24px rgba(91,45,110,0.3)`}}>
