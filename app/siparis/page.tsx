@@ -1,6 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -339,6 +339,12 @@ export default function SiparisPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const adRef = useRef<HTMLInputElement>(null);
+  const telefonRef = useRef<HTMLInputElement>(null);
+  const ilceRef = useRef<HTMLDivElement>(null);
+  const adresRef = useRef<HTMLTextAreaElement>(null);
+  const tercihRef = useRef<HTMLDivElement>(null);
+  const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50); };
   const [referralLoading, setReferralLoading] = useState(false);
   const [referralValid, setReferralValid] = useState<null|boolean>(null);
   const [referralDiscount, setReferralDiscount] = useState(0);
@@ -386,11 +392,11 @@ export default function SiparisPage() {
   };
 
   const handleSubmit = async () => {
-    if (!iletisim.ad) { setError("Ad Soyad alanı boş bırakılamaz."); return; }
-    if (!iletisim.telefon) { setError("Telefon numarası boş bırakılamaz."); return; }
-    if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); return; }
-    if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); return; }
-    if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); return; }
+    if (!iletisim.ad) { setError("Ad Soyad alanı boş bırakılamaz."); scrollTo(adRef); return; }
+    if (!iletisim.telefon) { setError("Telefon numarası boş bırakılamaz."); scrollTo(telefonRef); return; }
+    if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); scrollTo(ilceRef); return; }
+    if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); scrollTo(adresRef); return; }
+    if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); scrollTo(tercihRef); return; }
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
@@ -577,18 +583,18 @@ export default function SiparisPage() {
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Ad Soyad *</label>
                     <input value={iletisim.ad} onChange={e => setIletisim(f=>({...f,ad:e.target.value}))}
-                      className={inputCls} placeholder="Ad Soyad" style={{borderColor:STN, color:DRK}} />
+                      ref={adRef} className={inputCls} placeholder="Ad Soyad" style={{borderColor:STN, color:DRK}} />
                   </div>
                   <div>
                     <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Telefon *</label>
                     <input value={iletisim.telefon} onChange={e => setIletisim(f=>({...f,telefon:e.target.value}))}
-                      className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor:STN, color:DRK}} />
+                      ref={telefonRef} className={inputCls} placeholder="05XX XXX XX XX" type="tel" style={{borderColor:STN, color:DRK}} />
                   </div>
                 </>
               )}
               <div>
                 <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>İlçe *</label>
-                <div className="flex flex-wrap gap-2">
+                <div ref={ilceRef} className="flex flex-wrap gap-2">
                   {ILCELER.map(ilce => (
                     <button key={ilce} onClick={() => setIletisim(f=>({...f,ilce}))}
                       className="px-4 py-2.5 text-sm font-semibold rounded-full border-2 transition-all"
@@ -598,7 +604,7 @@ export default function SiparisPage() {
               </div>
               <div>
                 <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color:DRK}}>Adres *</label>
-                <textarea value={iletisim.adres} onChange={e => setIletisim(f=>({...f,adres:e.target.value}))}
+                <textarea ref={adresRef} value={iletisim.adres} onChange={e => setIletisim(f=>({...f,adres:e.target.value}))}
                   className={inputCls+" h-24 resize-none"} placeholder="Mahalle, sokak, bina no, daire..."
                   style={{borderColor:STN, color:DRK}} />
               </div>
@@ -664,7 +670,7 @@ export default function SiparisPage() {
             </div>
 
             {/* Tercih */}
-            <div className="space-y-3 mb-6">
+            <div ref={tercihRef} className="space-y-3 mb-6">
               {[
                 {val:"onayla", icon:"🚗", title:"Fiyat uygun — kurye gönder", sub:"Kuryemiz en kısa sürede kapınıza gelir"},
                 {val:"arasin", icon:"📞", title:"Net fiyat almak istiyorum",  sub:"Sizi arayarak kesin fiyat bildireceğiz"},
