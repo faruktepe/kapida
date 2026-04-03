@@ -41,7 +41,15 @@ export default function SlotSecici({
         if (!data) { setYukleniyor(false); return; }
         const filtered = data.filter((slot) => {
           const slotDt = new Date(slot.date + "T" + slot.start_time);
-          return slotDt > enErken;
+          // 2 saat kuralı
+          if (slotDt <= enErken) return false;
+          // 21:00 sonrası gösterme
+          const startHour = parseInt(slot.start_time.split(":")[0]);
+          if (startHour >= 21) return false;
+          // Pazar günleri hizmet yok (0 = Pazar)
+          const slotDate = new Date(slot.date + "T00:00:00");
+          if (slotDate.getDay() === 0) return false;
+          return true;
         });
         setSlots(filtered);
         setYukleniyor(false);
