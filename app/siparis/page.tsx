@@ -91,13 +91,14 @@ const inputCls = `w-full border-2 bg-white px-4 py-3.5 text-sm focus:outline-non
 
 // ── Tek ayakkabı kartı ──
 function AyakkabiKarti({
-  idx, data, onChange, onRemove, canRemove
+  idx, data, onChange, onRemove, canRemove, fieldError
 }: {
   idx: number;
   data: Ayakkabi;
   onChange: (d: Ayakkabi) => void;
   onRemove: () => void;
   canRemove: boolean;
+  fieldError?: string;
 }) {
   const isPremium = data.kategori === "premium";
   const markaListesi = isPremium ? PREMIUM_MARKALAR : STANDART_MARKALAR;
@@ -200,6 +201,11 @@ function AyakkabiKarti({
           </div>
         </div>
 
+        {/* Marka hata */}
+        {fieldError === "marka" && (
+          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir marka seçin.</p>
+        )}
+
         {/* Model */}
         {data.marka && markaModeller.length > 0 && (
           <div>
@@ -233,6 +239,11 @@ function AyakkabiKarti({
           </div>
         </div>
 
+        {/* Renk hata */}
+        {fieldError === "renk" && (
+          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir renk seçin.</p>
+        )}
+
         {/* Tür */}
         <div>
           <label className="text-[11px] uppercase tracking-widest mb-2 block font-bold" style={{color: DRK}}>Tür</label>
@@ -244,6 +255,11 @@ function AyakkabiKarti({
             ))}
           </div>
         </div>
+
+        {/* Tür hata */}
+        {fieldError === "tur" && (
+          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir tür seçin.</p>
+        )}
 
         {/* Hizmetler */}
         <div>
@@ -279,6 +295,11 @@ function AyakkabiKarti({
             })}
           </div>
         </div>
+
+        {/* Hizmet hata */}
+        {fieldError === "hizmet" && (
+          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen en az bir hizmet seçin.</p>
+        )}
 
         {/* Not alanı */}
         <div>
@@ -339,6 +360,8 @@ export default function SiparisPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const [kartError, setKartError] = useState<{idx: number; field: string} | null>(null);
+  const kartRefs = useRef<(HTMLDivElement | null)[]>([]);
   const adRef = useRef<HTMLInputElement>(null);
   const telefonRef = useRef<HTMLInputElement>(null);
   const ilceRef = useRef<HTMLDivElement>(null);
@@ -501,14 +524,16 @@ export default function SiparisPage() {
             </div>
 
             {ayakkabiListesi.map((a, i) => (
+              <div key={i} ref={el => { kartRefs.current[i] = el; }}>
               <AyakkabiKarti
-                key={i}
                 idx={i}
                 data={a}
-                onChange={(d) => updateAyakkabi(i, d)}
+                onChange={(d) => { updateAyakkabi(i, d); setKartError(null); }}
                 onRemove={() => removeAyakkabi(i)}
                 canRemove={ayakkabiListesi.length > 1}
+                fieldError={kartError?.idx === i ? kartError.field : undefined}
               />
+            </div>
             ))}
 
             <button onClick={addAyakkabi}
@@ -537,14 +562,23 @@ export default function SiparisPage() {
             {error && <p className="text-sm mb-4 font-medium" style={{color:`rgba(107,39,55,0.9)`}}>{error}</p>}
 
             <button onClick={() => {
-              const eksikAlan = ayakkabiListesi.map((a,i) => {
-                if (!a.marka) return `Ayakkabı ${i+1}: Marka seçilmedi.`;
-                if (!a.renk) return `Ayakkabı ${i+1}: Renk seçilmedi.`;
-                if (!a.tur) return `Ayakkabı ${i+1}: Tür seçilmedi.`;
-                if (a.hizmetler.length === 0) return `Ayakkabı ${i+1}: En az bir hizmet seçin.`;
-                return null;
-              }).find(Boolean);
-              if (eksikAlan) { setError(eksikAlan); return; }
+              let eksikIdx = -1;
+              let eksikField = "";
+              for (let i = 0; i < ayakkabiListesi.length; i++) {
+                const a = ayakkabiListesi[i];
+                if (!a.marka) { eksikIdx = i; eksikField = "marka"; break; }
+                if (!a.renk)  { eksikIdx = i; eksikField = "renk";  break; }
+                if (!a.tur)   { eksikIdx = i; eksikField = "tur";   break; }
+                if (a.hizmetler.length === 0) { eksikIdx = i; eksikField = "hizmet"; break; }
+              }
+              if (eksikIdx >= 0) {
+                const alan = eksikField === "marka" ? "Marka" : eksikField === "renk" ? "Renk" : eksikField === "tur" ? "Tür" : "Hizmet";
+                setError(`Ayakkabı ${eksikIdx+1}: ${alan} seçilmedi.`);
+                setKartError({ idx: eksikIdx, field: eksikField });
+                setTimeout(() => kartRefs.current[eksikIdx]?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+                return;
+              }
+              setKartError(null);
               setError(""); setStep(2);
             }}
               className="w-full py-5 text-base font-bold rounded-full hover:opacity-90 transition-all"
