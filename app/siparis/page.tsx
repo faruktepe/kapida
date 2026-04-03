@@ -344,6 +344,8 @@ export default function SiparisPage() {
   const [step, setStep] = useState(1);
   const [ayakkabiListesi, setAyakkabiListesi] = useState<Ayakkabi[]>([bos()]);
   const [iletisim, setIletisim] = useState({ ad:"", telefon:"", ilce:"", adres:"", tercih:"" as "arasin"|"onayla"|"", referralCode:"" });
+  const [slots, setSlots] = useState<{id:string; date:string; start_time:string; end_time:string; capacity:number; booked:number}[]>([]);
+  const [seciliSlot, setSeciliSlot] = useState<string | null>(null);
   const [loggedInUser, setLoggedInUser] = useState<{email:string; ad:string; telefon:string} | null>(null);
 
   useEffect(() => {
@@ -369,6 +371,7 @@ export default function SiparisPage() {
   const ilceRef = useRef<HTMLDivElement>(null);
   const adresRef = useRef<HTMLTextAreaElement>(null);
   const tercihRef = useRef<HTMLDivElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const [fieldError2, setFieldError2] = useState("");
   const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => { if (ref.current) { const y = ref.current.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50); };
   const [referralLoading, setReferralLoading] = useState(false);
@@ -388,6 +391,19 @@ export default function SiparisPage() {
       </main>
     );
   }
+
+  // Slotları yükle
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    supabase
+      .from("time_slots")
+      .select("*")
+      .eq("active", true)
+      .gte("date", today)
+      .order("date", { ascending: true })
+      .order("start_time", { ascending: true })
+      .then(({ data }) => setSlots(data || []));
+  }, []);
 
   const updateAyakkabi = (idx: number, d: Ayakkabi) => {
     const yeni = [...ayakkabiListesi];
@@ -423,6 +439,7 @@ export default function SiparisPage() {
     if (!iletisim.ilce) { setError("Lütfen ilçenizi seçin."); setFieldError2("ilce"); scrollTo(ilceRef); return; }
     if (!iletisim.adres) { setError("Adres alanı boş bırakılamaz."); setFieldError2("adres"); scrollTo(adresRef); return; }
     if (!iletisim.tercih) { setError("Lütfen sipariş tercihinizi seçin."); setFieldError2("tercih"); scrollTo(tercihRef); return; }
+    if (!seciliSlot) { setError("Lütfen bir teslim saati seçin."); scrollTo(slotRef); return; }
     setLoading(true); setError("");
     const no = generateOrderNumber();
     const { data: { session } } = await supabase.auth.getSession();
@@ -438,6 +455,9 @@ export default function SiparisPage() {
       price_choice: iletisim.tercih,
       customer_info: { ad:iletisim.ad, telefon:iletisim.telefon, ilce:iletisim.ilce, adres:iletisim.adres },
       status: iletisim.tercih==="arasin" ? "Teklif Bekleniyor" : "Onaylandı",
+      slot_id: seciliSlot || null,
+      slot_date: seciliSlot ? slots.find(s => s.id === seciliSlot)?.date : null,
+      slot_time: seciliSlot ? (() => { const s = slots.find(sl => sl.id === seciliSlot); return s ? `${s.start_time.slice(0,5)}-${s.end_time.slice(0,5)}` : null; })() : null,
       referral_code: referralValid&&iletisim.referralCode ? iletisim.referralCode.toUpperCase().trim() : null,
       referral_discount: referralValid ? referralDiscount : 0,
       shoes_count: ayakkabiListesi.length,
@@ -717,6 +737,67 @@ export default function SiparisPage() {
                 <span style={{color:DRK}}>Toplam</span>
                 <span style={{color:PRI}}>₺{refMin.toLocaleString()} — ₺{refMax.toLocaleString()}</span>
               </div>
+            </div>
+
+            {/* Saat Seçimi */}
+            <div ref={slotRef} className="mb-6">
+              <label className="text-[11px] uppercase tracking-widest mb-3 block font-bold" style={{color:DRK}}>
+                Teslim Saati *
+              </label>
+              {slots.length === 0 ? (
+                <div className="p-4 rounded-2xl text-center" style={{background:`rgba(212,197,176,0.2)`, border:`1px solid ${STN}`}}>
+                  <p className="text-sm" style={{color:`rgba(45,26,46,0.4)`}}>Şu an uygun saat aralığı bulunmuyor.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {(() => {
+                    const gunler: Record<string, typeof slots> = {};
+                    slots.forEach(s => {
+                      if (!gunler[s.date]) gunler[s.date] = [];
+                      gunler[s.date].push(s);
+                    });
+                    return Object.entries(gunler).map(([tarih, gunSlots]) => {
+                      const d = new Date(tarih + "T00:00:00");
+                      const bugun = new Date().toISOString().split("T")[0];
+                      const yarin = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+                      const gunAdi = tarih === bugun ? "Bugün" : tarih === yarin ? "Yarın" :
+                        d.toLocaleDateString("tr-TR", { weekday: "long", day: "numeric", month: "long" });
+                      return (
+                        <div key={tarih}>
+                          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{color:`rgba(45,26,46,0.4)`}}>
+                            {gunAdi} — {d.toLocaleDateString("tr-TR", { day:"numeric", month:"long" })}
+                          </p>
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                            {gunSlots.map(slot => {
+                              const dolu = slot.booked >= slot.capacity;
+                              const secili = seciliSlot === slot.id;
+                              return (
+                                <button
+                                  key={slot.id}
+                                  disabled={dolu}
+                                  onClick={() => setSeciliSlot(slot.id)}
+                                  className="p-3 rounded-xl border-2 text-left transition-all"
+                                  style={
+                                    dolu ? {borderColor:STN, background:`rgba(212,197,176,0.1)`, opacity:0.5, cursor:"not-allowed"} :
+                                    secili ? {borderColor:PRI, background:`rgba(91,45,110,0.07)`} :
+                                    {borderColor:STN, background:"#fff"}
+                                  }>
+                                  <p className="text-sm font-bold" style={{color: dolu ? `rgba(45,26,46,0.3)` : secili ? PRI : DRK}}>
+                                    {slot.start_time.slice(0,5)} – {slot.end_time.slice(0,5)}
+                                  </p>
+                                  <p className="text-[10px] mt-0.5" style={{color: dolu ? `rgba(45,26,46,0.3)` : `rgba(45,26,46,0.4)`}}>
+                                    {dolu ? "Dolu" : `${slot.capacity - slot.booked} yer kaldı`}
+                                  </p>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
+              )}
             </div>
 
             {/* Tercih */}
