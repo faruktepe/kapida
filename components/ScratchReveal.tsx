@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-const BEFORE = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/before/1774950082758_Ekran%20Resmi%202026-03-31%2000.10.07.png";
-const AFTER  = "https://gsmpyuuiyugoifbccehx.supabase.co/storage/v1/object/public/gallery-images/after/1774950082758_Ekran%20Resmi%202026-03-31%2000.10.21.png";
+const BEFORE = "";
+const AFTER  = "";
 
 const REVEAL_THRESHOLD     = 0.25;
 const BRUSH_RADIUS_MOBILE  = 140;
@@ -50,7 +50,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     // After arka plan
     const bg = document.createElement("div");
     bg.id = "sbg";
-    bg.style.cssText = `position:fixed;inset:0;z-index:58;background:#160820 url('${AFTER}') center/cover no-repeat;`;
+    bg.style.cssText = `position:fixed;inset:0;z-index:58;background:#2D1A2E;`;
     document.body.appendChild(bg);
 
     // Önce koyu arka plan
@@ -81,15 +81,11 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
       markReady(); // ← resim yüklendi, scratch aktif
     };
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload  = () => paintBefore(img);
-    img.onerror = () => {
-      // Resim yüklenemese bile scratch aktif et
-      ctx.globalCompositeOperation = "destination-out";
-      markReady();
-    };
-    img.src = BEFORE + "?t=" + Date.now();
+    // Düz mor arka plan - görsel yok
+    ctx.fillStyle = "#5B2D6E";
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "destination-out";
+    markReady();
 
     const drawCursor = (x: number, y: number, press: boolean) => {
       cctx.clearRect(0, 0, W, H);
