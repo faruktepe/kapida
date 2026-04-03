@@ -203,7 +203,7 @@ function AyakkabiKarti({
 
         {/* Marka hata */}
         {fieldError === "marka" && (
-          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir marka seçin.</p>
+          <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen bir marka seçin.</p>
         )}
 
         {/* Model */}
@@ -241,7 +241,7 @@ function AyakkabiKarti({
 
         {/* Renk hata */}
         {fieldError === "renk" && (
-          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir renk seçin.</p>
+          <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen bir renk seçin.</p>
         )}
 
         {/* Tür */}
@@ -258,7 +258,7 @@ function AyakkabiKarti({
 
         {/* Tür hata */}
         {fieldError === "tur" && (
-          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen bir tür seçin.</p>
+          <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen bir tür seçin.</p>
         )}
 
         {/* Hizmetler */}
@@ -298,7 +298,7 @@ function AyakkabiKarti({
 
         {/* Hizmet hata */}
         {fieldError === "hizmet" && (
-          <p className="text-xs font-semibold mt-1" style={{color:"rgba(107,39,55,0.9)"}}>⚠ Lütfen en az bir hizmet seçin.</p>
+          <p className="text-xs font-bold mt-2 px-3 py-1.5 rounded-lg" style={{color:"rgba(107,39,55,1)", background:"rgba(107,39,55,0.08)", border:"1px solid rgba(107,39,55,0.3)"}}>⚠️ Lütfen en az bir hizmet seçin.</p>
         )}
 
         {/* Not alanı */}
@@ -367,7 +367,7 @@ export default function SiparisPage() {
   const ilceRef = useRef<HTMLDivElement>(null);
   const adresRef = useRef<HTMLTextAreaElement>(null);
   const tercihRef = useRef<HTMLDivElement>(null);
-  const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 50); };
+  const scrollTo = (ref: React.RefObject<any>) => { setTimeout(() => { if (ref.current) { const y = ref.current.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50); };
   const [referralLoading, setReferralLoading] = useState(false);
   const [referralValid, setReferralValid] = useState<null|boolean>(null);
   const [referralDiscount, setReferralDiscount] = useState(0);
@@ -559,7 +559,13 @@ export default function SiparisPage() {
               </div>
             )}
 
-            {error && <p className="text-sm mb-4 font-medium" style={{color:`rgba(107,39,55,0.9)`}}>{error}</p>}
+            {error && (
+              <div className="mb-4 p-4 rounded-2xl flex items-center gap-3"
+                style={{background:"rgba(107,39,55,0.08)", border:"2px solid rgba(107,39,55,0.4)"}}>
+                <span className="text-lg shrink-0">⚠️</span>
+                <p className="text-sm font-bold" style={{color:"rgba(107,39,55,1)"}}>{error}</p>
+              </div>
+            )}
 
             <button onClick={() => {
               let eksikIdx = -1;
@@ -575,7 +581,7 @@ export default function SiparisPage() {
                 const alan = eksikField === "marka" ? "Marka" : eksikField === "renk" ? "Renk" : eksikField === "tur" ? "Tür" : "Hizmet";
                 setError(`Ayakkabı ${eksikIdx+1}: ${alan} seçilmedi.`);
                 setKartError({ idx: eksikIdx, field: eksikField });
-                setTimeout(() => kartRefs.current[eksikIdx]?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+                setTimeout(() => { const el = kartRefs.current[eksikIdx]; if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: "smooth" }); } }, 50);
                 return;
               }
               setKartError(null);
@@ -728,7 +734,13 @@ export default function SiparisPage() {
               ))}
             </div>
 
-            {error && <p className="text-sm mb-4 font-medium" style={{color:`rgba(107,39,55,0.9)`}}>{error}</p>}
+            {error && (
+              <div className="mb-4 p-4 rounded-2xl flex items-center gap-3"
+                style={{background:"rgba(107,39,55,0.08)", border:"2px solid rgba(107,39,55,0.4)"}}>
+                <span className="text-lg shrink-0">⚠️</span>
+                <p className="text-sm font-bold" style={{color:"rgba(107,39,55,1)"}}>{error}</p>
+              </div>
+            )}
             <div className="flex gap-3">
               <button onClick={() => setStep(1)} className="flex-1 border-2 py-4 text-sm font-semibold rounded-full transition-all"
                 style={{borderColor:STN, color:`rgba(45,26,46,0.5)`}}>← Geri</button>
