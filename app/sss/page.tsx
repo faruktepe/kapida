@@ -12,7 +12,7 @@ const DRK = "#2D1A2E";
 const WHATSAPP = "905319623790";
 
 const SSS_DATA = [
-  { s:"Hangi bölgelere hizmet veriyorsunuz?",    c:"Şu an İstanbul Anadolu Yakası'nda hizmet veriyoruz: Ataşehir, Beykoz, Çekmeköy, Kadıköy, Kartal, Maltepe, Pendik, Sancaktepe, Sultanbeyli, Tuzla, Ümraniye ve Üsküdar." },
+  { s:"Hangi bölgelere hizmet veriyorsunuz?",    c:"Şu an Kadıköy, Üsküdar, Ataşehir ve Ümraniye'de hizmet veriyoruz. Yakında tüm Anadolu Yakası'na genişliyoruz!" },
   { s:"Ayakkabıyı ne zaman teslim alıyorsunuz?", c:"Sipariş verildikten sonra 24 saat içinde kuryemiz kapınıza gelir." },
   { s:"Bakım ne kadar sürer?",                   c:"Standart temizlik & bakım 1-2 iş günü, onarım gerektiren işlemler 2-3 iş günü sürer." },
   { s:"Fiyatlar nasıl belirleniyor?",             c:"Hizmet türü ve ayakkabı durumuna göre fiyat belirlenir. Form doldurduktan sonra tahmini aralık gösterilir. Net fiyat için sizi arayabiliriz." },
