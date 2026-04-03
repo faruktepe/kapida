@@ -176,9 +176,11 @@ function FiyatHesapla() {
     { id: "suet", label: "Süet" }, { id: "spor", label: "Spor" }, { id: "klasik", label: "Klasik" },
   ];
   const [tip, setTip] = React.useState("sneaker");
+  const [premium, setPremium] = React.useState(false);
   const [secili, setSecili] = React.useState<string[]>([]);
   const toggle = (h: string) => setSecili(p => p.includes(h) ? p.filter(x => x !== h) : [...p, h]);
-  const toplam = secili.reduce((s, h) => s + (FIYATLAR[h]?.[tip] ?? 0), 0);
+  const toplamBase = secili.reduce((s, h) => s + (FIYATLAR[h]?.[tip] ?? 0), 0);
+  const toplam = premium ? Math.round(toplamBase * 1.2) : toplamBase;
   const indirimli = secili.length >= 3 ? Math.round(toplam * 0.8) : toplam;
   const indirimVar = secili.length >= 3;
 
@@ -196,6 +198,23 @@ function FiyatHesapla() {
           ))}
         </div>
       </div>
+      {/* Premium toggle */}
+      <div className="mb-6 flex items-center justify-between p-4 rounded-2xl border-2 transition-all"
+        style={{borderColor: premium ? PRI : STN, background: premium ? `rgba(91,45,110,0.05)` : "#fff"}}>
+        <div className="flex items-center gap-3">
+          <div>
+            <p className="text-sm font-bold" style={{color: DRK}}>✦ Premium Bakım</p>
+            <p className="text-xs" style={{color:`rgba(45,26,46,0.45)`}}>Louboutin, Balenciaga, Gucci vb. — +%20</p>
+          </div>
+        </div>
+        <button onClick={() => setPremium(p => !p)}
+          className="w-12 h-6 rounded-full transition-all relative shrink-0"
+          style={{background: premium ? PRI : STN}}>
+          <span className="absolute top-1 w-4 h-4 rounded-full bg-white transition-all duration-300"
+            style={{left: premium ? "calc(100% - 20px)" : "4px"}} />
+        </button>
+      </div>
+
       <div className="mb-8">
         <p className="text-xs uppercase tracking-widest mb-3" style={{color:`rgba(45,26,46,0.35)`}}>Hizmet seçin</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -213,9 +232,17 @@ function FiyatHesapla() {
                   </div>
                   <span className="text-sm font-semibold" style={{color: DRK}}>{hizmet}</span>
                 </div>
-                <span className="text-sm font-bold" style={{color: sel ? acc : `rgba(45,26,46,0.4)`}}>
-                  ₺{fiyatlar[tip as keyof typeof fiyatlar].toLocaleString()}+
-                </span>
+                <div className="text-right">
+                  {premium && (
+                    <p className="text-[10px] line-through" style={{color:`rgba(45,26,46,0.35)`}}>
+                      ₺{fiyatlar[tip as keyof typeof fiyatlar].toLocaleString()}+
+                    </p>
+                  )}
+                  <span className="text-sm font-bold" style={{color: sel ? acc : DRK}}>
+                    ₺{premium ? Math.round(fiyatlar[tip as keyof typeof fiyatlar] * 1.2).toLocaleString() : fiyatlar[tip as keyof typeof fiyatlar].toLocaleString()}+
+                  </span>
+                  {premium && <p className="text-[9px] font-bold" style={{color: PRI}}>Premium</p>}
+                </div>
               </button>
             );
           })}
