@@ -500,7 +500,7 @@ export default function SiparisPage() {
       {/* Nav */}
       <Nav active="/siparis" />
 
-      <div className="max-w-2xl mx-auto px-6 py-10">
+      <div className="max-w-2xl mx-auto px-6 pt-20 pb-10">
 
         {/* ── ADIM 1: Ayakkabılar ── */}
         {step === 1 && (
