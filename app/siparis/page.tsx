@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Nav from "@/components/Nav";
 import SlotSecici from "@/components/SlotSecici";
 
 const PRI = "#5B2D6E";
