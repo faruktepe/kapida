@@ -54,7 +54,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     document.body.appendChild(bg);
 
     // Önce koyu arka plan
-    ctx.fillStyle = "#160820";
+    ctx.fillStyle = "#2D1A2E";
     ctx.fillRect(0, 0, W, H);
 
     const markReady = () => {
@@ -82,7 +82,7 @@ export default function ScratchReveal({ children }: { children: React.ReactNode 
     };
 
     // Düz mor arka plan - görsel yok
-    ctx.fillStyle = "#5B2D6E";
+    ctx.fillStyle = "#2D1A2E";
     ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = "destination-out";
     markReady();
